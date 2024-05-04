@@ -1,0 +1,618 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E645F1172BE6CE4A0038075F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E645F1162BE6CE4A0038075F /* AppDelegate.swift */; };
+		E645F11B2BE6CE4A0038075F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E645F11A2BE6CE4A0038075F /* ViewController.swift */; };
+		E645F1202BE6CE4B0038075F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E645F11F2BE6CE4B0038075F /* Assets.xcassets */; };
+		E645F1232BE6CE4B0038075F /* Base in Resources */ = {isa = PBXBuildFile; fileRef = E645F1222BE6CE4B0038075F /* Base */; };
+		E645F12E2BE6CE4B0038075F /* KiralaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E645F12D2BE6CE4B0038075F /* KiralaTests.swift */; };
+		E645F1382BE6CE4B0038075F /* KiralaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E645F1372BE6CE4B0038075F /* KiralaUITests.swift */; };
+		E645F13A2BE6CE4B0038075F /* KiralaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E645F1392BE6CE4B0038075F /* KiralaUITestsLaunchTests.swift */; };
+		E645F1472BE6CE880038075F /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E645F1462BE6CE880038075F /* AppContainer.swift */; };
+		E645F1492BE6CE9F0038075F /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E645F1482BE6CE9F0038075F /* AppRouter.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E645F12A2BE6CE4B0038075F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E645F10B2BE6CE4A0038075F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E645F1122BE6CE4A0038075F;
+			remoteInfo = Kirala;
+		};
+		E645F1342BE6CE4B0038075F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E645F10B2BE6CE4A0038075F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E645F1122BE6CE4A0038075F;
+			remoteInfo = Kirala;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E645F1132BE6CE4A0038075F /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kirala.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E645F1162BE6CE4A0038075F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E645F11A2BE6CE4A0038075F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E645F11F2BE6CE4B0038075F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E645F1222BE6CE4B0038075F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E645F1242BE6CE4B0038075F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Kirala/Resources/Info.plist; sourceTree = SOURCE_ROOT; };
+		E645F1292BE6CE4B0038075F /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiralaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E645F12D2BE6CE4B0038075F /* KiralaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KiralaTests.swift; sourceTree = "<group>"; };
+		E645F1332BE6CE4B0038075F /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiralaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E645F1372BE6CE4B0038075F /* KiralaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KiralaUITests.swift; sourceTree = "<group>"; };
+		E645F1392BE6CE4B0038075F /* KiralaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KiralaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E645F1462BE6CE880038075F /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		E645F1482BE6CE9F0038075F /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E645F1102BE6CE4A0038075F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E645F1262BE6CE4B0038075F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E645F1302BE6CE4B0038075F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E645F10A2BE6CE4A0038075F = {
+			isa = PBXGroup;
+			children = (
+				E645F1152BE6CE4A0038075F /* Kirala */,
+				E645F12C2BE6CE4B0038075F /* KiralaTests */,
+				E645F1362BE6CE4B0038075F /* KiralaUITests */,
+				E645F1142BE6CE4A0038075F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E645F1142BE6CE4A0038075F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E645F1132BE6CE4A0038075F /* Kirala.app */,
+				E645F1292BE6CE4B0038075F /* KiralaTests.xctest */,
+				E645F1332BE6CE4B0038075F /* KiralaUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E645F1152BE6CE4A0038075F /* Kirala */ = {
+			isa = PBXGroup;
+			children = (
+				E645F14A2BE6CFF30038075F /* App */,
+				E645F14B2BE6D0020038075F /* Resources */,
+				E645F11A2BE6CE4A0038075F /* ViewController.swift */,
+			);
+			path = Kirala;
+			sourceTree = "<group>";
+		};
+		E645F12C2BE6CE4B0038075F /* KiralaTests */ = {
+			isa = PBXGroup;
+			children = (
+				E645F12D2BE6CE4B0038075F /* KiralaTests.swift */,
+			);
+			path = KiralaTests;
+			sourceTree = "<group>";
+		};
+		E645F1362BE6CE4B0038075F /* KiralaUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E645F1372BE6CE4B0038075F /* KiralaUITests.swift */,
+				E645F1392BE6CE4B0038075F /* KiralaUITestsLaunchTests.swift */,
+			);
+			path = KiralaUITests;
+			sourceTree = "<group>";
+		};
+		E645F14A2BE6CFF30038075F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				E645F1162BE6CE4A0038075F /* AppDelegate.swift */,
+				E645F1462BE6CE880038075F /* AppContainer.swift */,
+				E645F1482BE6CE9F0038075F /* AppRouter.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E645F14B2BE6D0020038075F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E645F11F2BE6CE4B0038075F /* Assets.xcassets */,
+				E645F1212BE6CE4B0038075F /* LaunchScreen.storyboard */,
+				E645F1242BE6CE4B0038075F /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E645F1122BE6CE4A0038075F /* Kirala */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E645F13D2BE6CE4B0038075F /* Build configuration list for PBXNativeTarget "Kirala" */;
+			buildPhases = (
+				E645F10F2BE6CE4A0038075F /* Sources */,
+				E645F1102BE6CE4A0038075F /* Frameworks */,
+				E645F1112BE6CE4A0038075F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Kirala;
+			productName = Kirala;
+			productReference = E645F1132BE6CE4A0038075F /* Kirala.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E645F1282BE6CE4B0038075F /* KiralaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E645F1402BE6CE4B0038075F /* Build configuration list for PBXNativeTarget "KiralaTests" */;
+			buildPhases = (
+				E645F1252BE6CE4B0038075F /* Sources */,
+				E645F1262BE6CE4B0038075F /* Frameworks */,
+				E645F1272BE6CE4B0038075F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E645F12B2BE6CE4B0038075F /* PBXTargetDependency */,
+			);
+			name = KiralaTests;
+			productName = KiralaTests;
+			productReference = E645F1292BE6CE4B0038075F /* KiralaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E645F1322BE6CE4B0038075F /* KiralaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E645F1432BE6CE4B0038075F /* Build configuration list for PBXNativeTarget "KiralaUITests" */;
+			buildPhases = (
+				E645F12F2BE6CE4B0038075F /* Sources */,
+				E645F1302BE6CE4B0038075F /* Frameworks */,
+				E645F1312BE6CE4B0038075F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E645F1352BE6CE4B0038075F /* PBXTargetDependency */,
+			);
+			name = KiralaUITests;
+			productName = KiralaUITests;
+			productReference = E645F1332BE6CE4B0038075F /* KiralaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E645F10B2BE6CE4A0038075F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					E645F1122BE6CE4A0038075F = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					E645F1282BE6CE4B0038075F = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = E645F1122BE6CE4A0038075F;
+					};
+					E645F1322BE6CE4B0038075F = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = E645F1122BE6CE4A0038075F;
+					};
+				};
+			};
+			buildConfigurationList = E645F10E2BE6CE4A0038075F /* Build configuration list for PBXProject "Kirala" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E645F10A2BE6CE4A0038075F;
+			productRefGroup = E645F1142BE6CE4A0038075F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E645F1122BE6CE4A0038075F /* Kirala */,
+				E645F1282BE6CE4B0038075F /* KiralaTests */,
+				E645F1322BE6CE4B0038075F /* KiralaUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E645F1112BE6CE4A0038075F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E645F1202BE6CE4B0038075F /* Assets.xcassets in Resources */,
+				E645F1232BE6CE4B0038075F /* Base in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E645F1272BE6CE4B0038075F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E645F1312BE6CE4B0038075F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E645F10F2BE6CE4A0038075F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E645F11B2BE6CE4A0038075F /* ViewController.swift in Sources */,
+				E645F1472BE6CE880038075F /* AppContainer.swift in Sources */,
+				E645F1172BE6CE4A0038075F /* AppDelegate.swift in Sources */,
+				E645F1492BE6CE9F0038075F /* AppRouter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E645F1252BE6CE4B0038075F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E645F12E2BE6CE4B0038075F /* KiralaTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E645F12F2BE6CE4B0038075F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E645F13A2BE6CE4B0038075F /* KiralaUITestsLaunchTests.swift in Sources */,
+				E645F1382BE6CE4B0038075F /* KiralaUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E645F12B2BE6CE4B0038075F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E645F1122BE6CE4A0038075F /* Kirala */;
+			targetProxy = E645F12A2BE6CE4B0038075F /* PBXContainerItemProxy */;
+		};
+		E645F1352BE6CE4B0038075F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E645F1122BE6CE4A0038075F /* Kirala */;
+			targetProxy = E645F1342BE6CE4B0038075F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E645F1212BE6CE4B0038075F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E645F1222BE6CE4B0038075F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E645F13B2BE6CE4B0038075F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E645F13C2BE6CE4B0038075F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E645F13E2BE6CE4B0038075F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BKLYAYD9CX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Kirala/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alicolak.Kirala;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E645F13F2BE6CE4B0038075F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BKLYAYD9CX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Kirala/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alicolak.Kirala;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E645F1412BE6CE4B0038075F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BKLYAYD9CX;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alicolak.KiralaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kirala.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kirala";
+			};
+			name = Debug;
+		};
+		E645F1422BE6CE4B0038075F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BKLYAYD9CX;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alicolak.KiralaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kirala.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kirala";
+			};
+			name = Release;
+		};
+		E645F1442BE6CE4B0038075F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BKLYAYD9CX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alicolak.KiralaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Kirala;
+			};
+			name = Debug;
+		};
+		E645F1452BE6CE4B0038075F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BKLYAYD9CX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alicolak.KiralaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Kirala;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E645F10E2BE6CE4A0038075F /* Build configuration list for PBXProject "Kirala" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E645F13B2BE6CE4B0038075F /* Debug */,
+				E645F13C2BE6CE4B0038075F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E645F13D2BE6CE4B0038075F /* Build configuration list for PBXNativeTarget "Kirala" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E645F13E2BE6CE4B0038075F /* Debug */,
+				E645F13F2BE6CE4B0038075F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E645F1402BE6CE4B0038075F /* Build configuration list for PBXNativeTarget "KiralaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E645F1412BE6CE4B0038075F /* Debug */,
+				E645F1422BE6CE4B0038075F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E645F1432BE6CE4B0038075F /* Build configuration list for PBXNativeTarget "KiralaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E645F1442BE6CE4B0038075F /* Debug */,
+				E645F1452BE6CE4B0038075F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E645F10B2BE6CE4A0038075F /* Project object */;
+}
