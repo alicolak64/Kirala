@@ -1,8 +1,8 @@
 //
 //  File.swift
-//  
+//  Kirala
 //
-//  Created by Doğukaan Kılıçarslan on 17.11.2021.
+//  Created by Ali Çolak on 5.05.2024.
 //
 
 import Foundation

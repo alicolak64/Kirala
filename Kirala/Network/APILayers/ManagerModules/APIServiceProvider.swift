@@ -1,8 +1,8 @@
 //
 //  APIServiceProvider.swift
-//  
+//  Kirala
 //
-//  Created by Doğukaan Kılıçarslan on 21.10.2022.
+//  Created by Ali Çolak on 5.05.2024.
 //
 
 import Foundation
@@ -11,7 +11,7 @@ protocol URLRequestProtocol {
     func returnUrlRequest(with headers: [HTTPHeaderFields]) throws -> URLRequest
 }
 
-open class ApiServiceProvider<T: Codable>: URLRequestProtocol {
+public class ApiServiceProvider<T: Codable>: URLRequestProtocol {
 
     private var method: HTTPMethod
     private var baseUrl: String

@@ -1,8 +1,8 @@
 //
 //  HTTPHeader.swift
-//  
+//  Kirala
 //
-//  Created by Doğukaan Kılıçarslan on 8.10.2021.
+//  Created by Ali Çolak on 5.05.2024.
 //
 
 import Foundation

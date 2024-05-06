@@ -1,8 +1,8 @@
 //
 //  APIManager.swift
-//  
+//  Kirala
 //
-//  Created by Doğukaan Kılıçarslan on 21.10.2022.
+//  Created by Ali Çolak on 5.05.2024.
 //
 
 import Foundation
@@ -15,7 +15,7 @@ public protocol APIManagerInterface {
 }
 
 public class APIManager: APIManagerInterface {
-    public static let shared = APIManager()
+    static let shared = APIManager()
     
     // Mark: - Session -
     private let session: URLSession
@@ -26,7 +26,7 @@ public class APIManager: APIManagerInterface {
     //Mark: - apiCallListener -
     private var apiCallListener: ApiCallListener?
     
-    public init(apiCallListener: ApiCallListener? = nil) {
+    private init(apiCallListener: ApiCallListener? = nil) {
         self.apiCallListener = apiCallListener
         let config = URLSessionConfiguration.default
         config.waitsForConnectivity = true

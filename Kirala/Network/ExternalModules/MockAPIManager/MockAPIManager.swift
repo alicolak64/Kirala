@@ -1,8 +1,8 @@
 //
 //  MockAPIManager.swift
-//  
+//  Kirala
 //
-//  Created by Doğukaan Kılıçarslan on 9.09.2023.
+//  Created by Ali Çolak on 5.05.2024.
 //
 
 import Foundation
