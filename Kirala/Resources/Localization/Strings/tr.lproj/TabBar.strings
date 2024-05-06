@@ -5,3 +5,9 @@
   Created by Ali Çolak on 6.05.2024.
   
 */
+
+"HOME" = "Ana Sayfa";
+"MY_ADS" = "İlanlarım";
+"MY_ORDERS" = "Siparişlerim";
+"BASKET" = "Sepet";
+"PROFILE" = "Profil";
