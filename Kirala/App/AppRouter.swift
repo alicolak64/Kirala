@@ -53,10 +53,8 @@ final class AppRouter {
 //        let navigationController = app.navigationController
 //        navigationController.viewControllers = [homeViewController]
 //        window.rootViewController = navigationController
-        let viewController = ViewController()
-        let navigationController = app.navigationController
-        navigationController.viewControllers = [viewController]
-        window.rootViewController = navigationController
+        let tabBarController = TabBarBuilder.build()
+        window.rootViewController = tabBarController
     }
     
 }
