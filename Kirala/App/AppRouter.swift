@@ -22,17 +22,7 @@ final class AppRouter {
     // MARK: - Start
     
     func start() {
-        
-        window.rootViewController = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
-        window.makeKeyAndVisible()
-        
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) { [weak self] in // Wait 1 seconds for launch screen
-//            guard let self = self else { return }
-//            self.checkOnboarding()
-//        }
-        
         checkOnboarding()
-        
     }
     
     func checkOnboarding() {
@@ -41,14 +31,20 @@ final class AppRouter {
 //        } else {
 //            startOnboarding()
 //        }
-        startHome()
+        startSplash()
     }
     
     func startOnboarding() {
 //        window.rootViewController = OnboardingBuilder().build()
     }
     
-    func startHome() {
+    func startSplash() {
+        let splashViewController = SplashBuilder.build()
+        window.rootViewController = splashViewController
+        window.makeKeyAndVisible()
+    }
+    
+    func startTabBar() {
 //        let homeViewController = HomeBuilder().build()
 //        let navigationController = app.navigationController
 //        navigationController.viewControllers = [homeViewController]

@@ -16,18 +16,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.up" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ffh-OJ-nzL">
-                                <rect key="frame" x="76" y="326" width="241" height="128"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash" translatesAutoresizingMaskIntoConstraints="NO" id="ffh-OJ-nzL">
+                                <rect key="frame" x="30" y="159" width="333" height="559"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ffh-OJ-nzL" secondAttribute="trailing" constant="76" id="45T-fs-wSS"/>
-                            <constraint firstItem="ffh-OJ-nzL" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="AsS-46-laF"/>
-                            <constraint firstItem="ffh-OJ-nzL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="269.33333333333331" id="RrB-WU-wpC"/>
-                            <constraint firstItem="ffh-OJ-nzL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="76" id="eDu-d8-vNc"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ffh-OJ-nzL" secondAttribute="bottom" constant="363.66666666666669" id="gOB-CE-blg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ffh-OJ-nzL" secondAttribute="bottom" constant="100" id="F1g-Cr-kx3"/>
+                            <constraint firstItem="ffh-OJ-nzL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="Wni-9c-hL8"/>
+                            <constraint firstItem="ffh-OJ-nzL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="g2i-OG-hra"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ffh-OJ-nzL" secondAttribute="trailing" constant="30" id="ndz-Ro-dLM"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -37,7 +36,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="square.and.arrow.up" catalog="system" width="108" height="128"/>
+        <image name="Splash" width="1010" height="368"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
