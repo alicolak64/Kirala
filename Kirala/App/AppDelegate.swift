@@ -18,13 +18,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         #if DEBUG
         DispatchQueue.global().async {
-            // Arka planda yapılacak işlemler
+            // Background tasks
             NFX.sharedInstance().start()
         }
         #endif
         
         return true
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        #if DEBUG
+        NFX.sharedInstance().stop()
+        #endif
+    }
+
 
     
 }
