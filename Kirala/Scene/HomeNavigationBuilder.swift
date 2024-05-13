@@ -11,7 +11,7 @@ final class HomeNavigationBuilder: NavigationBuilderProtocol {
     
     static func build(arguments: TabBarItemArguments) -> UINavigationController {
         let homeViewController = HomeViewController()
-        homeViewController.tabBarItem = UITabBarItem(title: arguments.title, image: UIImage(systemName: arguments.image), tag: arguments.tag)
+        homeViewController.tabBarItem = UITabBarItem(title: arguments.title, image: arguments.image.symbol(), tag: arguments.tag)
         let navigationController = UINavigationController(rootViewController: homeViewController)
         return navigationController
     }
@@ -24,14 +24,14 @@ class HomeViewController: UIViewController {
         let label = UILabel()
         label.text = "Home"
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
+        label.textColor = ColorText.primary.dynamicColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = ColorBackground.primary.dynamicColor
         view.addSubview(titleLabel)
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),

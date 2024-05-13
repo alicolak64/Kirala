@@ -11,7 +11,7 @@ final class BasketNavigationBuilder: NavigationBuilderProtocol {
     
     static func build(arguments: TabBarItemArguments) -> UINavigationController {
         let basketViewController = BasketViewController()
-        basketViewController.tabBarItem = UITabBarItem(title: arguments.title, image: UIImage(systemName: arguments.image), tag: arguments.tag)
+        basketViewController.tabBarItem = UITabBarItem(title: arguments.title, image: arguments.image.symbol(), tag: arguments.tag)
         let navigationController = UINavigationController(rootViewController: basketViewController)
         return navigationController
     }
@@ -24,14 +24,14 @@ class BasketViewController: UIViewController {
         let label = UILabel()
         label.text = "Basket"
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
+        label.textColor = ColorText.primary.dynamicColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = ColorBackground.primary.dynamicColor
         view.addSubview(titleLabel)
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),

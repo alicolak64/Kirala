@@ -11,7 +11,7 @@ final class MyAdsNavigationBuilder: NavigationBuilderProtocol {
     
     static func build(arguments: TabBarItemArguments) -> UINavigationController {
         let adsViewController = AdsViewController()
-        adsViewController.tabBarItem = UITabBarItem(title: arguments.title, image: UIImage(systemName: arguments.image), tag: arguments.tag)
+        adsViewController.tabBarItem = UITabBarItem(title: arguments.title, image: arguments.image.symbol(), tag: arguments.tag)
         let navigationController = UINavigationController(rootViewController: adsViewController)
         return navigationController
     }
@@ -27,14 +27,14 @@ class AdsViewController: UIViewController {
         let label = UILabel()
         label.text = "My Ads"
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
+        label.textColor = ColorText.primary.dynamicColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = ColorBackground.primary.dynamicColor
         view.addSubview(titleLabel)
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),

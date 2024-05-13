@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E60B36FC2BE9730E0082E9C3 /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = E60B36FB2BE9730E0082E9C3 /* netfox */; };
 		E645F1172BE6CE4A0038075F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E645F1162BE6CE4A0038075F /* AppDelegate.swift */; };
 		E645F1202BE6CE4B0038075F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E645F11F2BE6CE4B0038075F /* Assets.xcassets */; };
 		E645F1232BE6CE4B0038075F /* Base in Resources */ = {isa = PBXBuildFile; fileRef = E645F1222BE6CE4B0038075F /* Base */; };
@@ -58,7 +59,6 @@
 		E646EE712BE794D30024269E /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E646EE5B2BE794D20024269E /* HTTPMethod.swift */; };
 		E646EE722BE794D30024269E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E646EE5D2BE794D20024269E /* APIManager.swift */; };
 		E646EE732BE794D30024269E /* APIServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E646EE5E2BE794D20024269E /* APIServiceProvider.swift */; };
-		E646EE792BE79FFD0024269E /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = E646EE782BE79FFD0024269E /* netfox */; };
 		E67563352BE7D41700959F1A /* NoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67563342BE7D41700959F1A /* NoData.swift */; };
 		E67563372BE7D60700959F1A /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67563362BE7D60700959F1A /* NetworkConstants.swift */; };
 		E67563392BE7D6A600959F1A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67563382BE7D6A600959F1A /* AuthService.swift */; };
@@ -74,6 +74,16 @@
 		E67563832BE873E000959F1A /* OrdersNavigationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67563822BE873E000959F1A /* OrdersNavigationBuilder.swift */; };
 		E67563852BE873FB00959F1A /* BasketNavigationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67563842BE873FB00959F1A /* BasketNavigationBuilder.swift */; };
 		E67563872BE8740400959F1A /* ProfileNavigationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67563862BE8740400959F1A /* ProfileNavigationBuilder.swift */; };
+		E689FE372BF26BEA001884D6 /* ColorBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE362BF26BEA001884D6 /* ColorBackground.swift */; };
+		E689FE392BF26BF6001884D6 /* ColorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE382BF26BF6001884D6 /* ColorText.swift */; };
+		E689FE3B2BF26C76001884D6 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE3A2BF26C76001884D6 /* ColorPalette.swift */; };
+		E689FE3E2BF27583001884D6 /* SFSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE3D2BF27583001884D6 /* SFSymbols.swift */; };
+		E689FE422BF27657001884D6 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE412BF27657001884D6 /* Images.swift */; };
+		E689FE552BF29876001884D6 /* SplashContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE542BF29876001884D6 /* SplashContracts.swift */; };
+		E689FE572BF298B0001884D6 /* SplashBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE562BF298B0001884D6 /* SplashBuilder.swift */; };
+		E689FE592BF298C9001884D6 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE582BF298C9001884D6 /* SplashViewModel.swift */; };
+		E689FE5B2BF298D8001884D6 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE5A2BF298D8001884D6 /* SplashViewController.swift */; };
+		E689FE5D2BF298E1001884D6 /* SplashRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE5C2BF298E1001884D6 /* SplashRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,9 +165,6 @@
 		E675636A2BE8493D00959F1A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E675636F2BE86A4400959F1A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Common.strings; sourceTree = "<group>"; };
 		E67563712BE86A7700959F1A /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Common.strings; sourceTree = "<group>"; };
-		E67563722BE86A7700959F1A /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
-		E67563732BE86A7700959F1A /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
-		E67563742BE86A7700959F1A /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
 		E67563762BE86AF500959F1A /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		E67563792BE86D4400959F1A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TabBar.strings; sourceTree = "<group>"; };
 		E675637B2BE86D4D00959F1A /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/TabBar.strings; sourceTree = "<group>"; };
@@ -166,6 +173,19 @@
 		E67563822BE873E000959F1A /* OrdersNavigationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersNavigationBuilder.swift; sourceTree = "<group>"; };
 		E67563842BE873FB00959F1A /* BasketNavigationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketNavigationBuilder.swift; sourceTree = "<group>"; };
 		E67563862BE8740400959F1A /* ProfileNavigationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationBuilder.swift; sourceTree = "<group>"; };
+		E689FE312BF26514001884D6 /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
+		E689FE322BF26514001884D6 /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
+		E689FE332BF26514001884D6 /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
+		E689FE362BF26BEA001884D6 /* ColorBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorBackground.swift; sourceTree = "<group>"; };
+		E689FE382BF26BF6001884D6 /* ColorText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorText.swift; sourceTree = "<group>"; };
+		E689FE3A2BF26C76001884D6 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
+		E689FE3D2BF27583001884D6 /* SFSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSymbols.swift; sourceTree = "<group>"; };
+		E689FE412BF27657001884D6 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		E689FE542BF29876001884D6 /* SplashContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashContracts.swift; sourceTree = "<group>"; };
+		E689FE562BF298B0001884D6 /* SplashBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashBuilder.swift; sourceTree = "<group>"; };
+		E689FE582BF298C9001884D6 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
+		E689FE5A2BF298D8001884D6 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		E689FE5C2BF298E1001884D6 /* SplashRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,7 +193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E646EE792BE79FFD0024269E /* netfox in Frameworks */,
+				E60B36FC2BE9730E0082E9C3 /* netfox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +271,9 @@
 				E645F11F2BE6CE4B0038075F /* Assets.xcassets */,
 				E645F1242BE6CE4B0038075F /* Info.plist */,
 				E67563752BE86AD000959F1A /* Localization */,
+				E689FE342BF26B06001884D6 /* Images */,
+				E689FE352BF26B6A001884D6 /* Colors */,
+				E689FE3C2BF273BA001884D6 /* Fonts */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -436,6 +459,7 @@
 		E67563602BE8488900959F1A /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				E689FE532BF29851001884D6 /* Splash */,
 				E67563612BE848B700959F1A /* TabBar */,
 				E675637E2BE873B100959F1A /* HomeNavigationBuilder.swift */,
 				E67563802BE873D600959F1A /* AdsNavigationBuilder.swift */,
@@ -475,6 +499,44 @@
 			path = Strings;
 			sourceTree = "<group>";
 		};
+		E689FE342BF26B06001884D6 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				E689FE3D2BF27583001884D6 /* SFSymbols.swift */,
+				E689FE412BF27657001884D6 /* Images.swift */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		E689FE352BF26B6A001884D6 /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				E689FE362BF26BEA001884D6 /* ColorBackground.swift */,
+				E689FE382BF26BF6001884D6 /* ColorText.swift */,
+				E689FE3A2BF26C76001884D6 /* ColorPalette.swift */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
+		E689FE3C2BF273BA001884D6 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		E689FE532BF29851001884D6 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				E689FE542BF29876001884D6 /* SplashContracts.swift */,
+				E689FE562BF298B0001884D6 /* SplashBuilder.swift */,
+				E689FE5C2BF298E1001884D6 /* SplashRouter.swift */,
+				E689FE582BF298C9001884D6 /* SplashViewModel.swift */,
+				E689FE5A2BF298D8001884D6 /* SplashViewController.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -492,10 +554,10 @@
 			);
 			name = Kirala;
 			packageProductDependencies = (
-				E646EE782BE79FFD0024269E /* netfox */,
+				E60B36FB2BE9730E0082E9C3 /* netfox */,
 			);
 			productName = Kirala;
-			productReference = E67563722BE86A7700959F1A /* Kirala.app */;
+			productReference = E689FE312BF26514001884D6 /* Kirala.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E645F1282BE6CE4B0038075F /* KiralaTests */ = {
@@ -513,7 +575,7 @@
 			);
 			name = KiralaTests;
 			productName = KiralaTests;
-			productReference = E67563732BE86A7700959F1A /* KiralaTests.xctest */;
+			productReference = E689FE322BF26514001884D6 /* KiralaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		E645F1322BE6CE4B0038075F /* KiralaUITests */ = {
@@ -531,7 +593,7 @@
 			);
 			name = KiralaUITests;
 			productName = KiralaUITests;
-			productReference = E67563742BE86A7700959F1A /* KiralaUITests.xctest */;
+			productReference = E689FE332BF26514001884D6 /* KiralaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -568,7 +630,7 @@
 			);
 			mainGroup = E645F10A2BE6CE4A0038075F;
 			packageReferences = (
-				E646EE762BE79FC30024269E /* XCRemoteSwiftPackageReference "netfox" */,
+				E60B36FA2BE9730E0082E9C3 /* XCRemoteSwiftPackageReference "netfox" */,
 			);
 			productRefGroup = E645F10A2BE6CE4A0038075F;
 			projectDirPath = "";
@@ -617,6 +679,7 @@
 				E645F16F2BE6D3AF0038075F /* UIViewController+Extension.swift in Sources */,
 				E645F1822BE6DE6D0038075F /* SwipePerformable.swift in Sources */,
 				E646EE652BE794D20024269E /* MockAPIManager.swift in Sources */,
+				E689FE5B2BF298D8001884D6 /* SplashViewController.swift in Sources */,
 				E645F16C2BE6D3AF0038075F /* UIImage+Extension.swift in Sources */,
 				E645F1672BE6D3AF0038075F /* String+Extension.swift in Sources */,
 				E645F16B2BE6D3AF0038075F /* UIDevice+Extension.swift in Sources */,
@@ -627,12 +690,16 @@
 				E646EE682BE794D20024269E /* UrlRequest+Extension.swift in Sources */,
 				E645F16E2BE6D3AF0038075F /* UIView+Extension.swift in Sources */,
 				E646EE6E2BE794D20024269E /* HTTPHeader.swift in Sources */,
+				E689FE592BF298C9001884D6 /* SplashViewModel.swift in Sources */,
+				E689FE3B2BF26C76001884D6 /* ColorPalette.swift in Sources */,
+				E689FE572BF298B0001884D6 /* SplashBuilder.swift in Sources */,
 				E646EE732BE794D30024269E /* APIServiceProvider.swift in Sources */,
 				E67563872BE8740400959F1A /* ProfileNavigationBuilder.swift in Sources */,
 				E646EE612BE794D20024269E /* ApiConnectionErrorType.swift in Sources */,
 				E645F1652BE6D3AF0038075F /* Collection+Extension.swift in Sources */,
 				E646EE642BE794D20024269E /* ApiCallListener.swift in Sources */,
 				E646EE6C2BE794D20024269E /* Parameters.swift in Sources */,
+				E689FE552BF29876001884D6 /* SplashContracts.swift in Sources */,
 				E645F17A2BE6D7AA0038075F /* ActionSheetPresentable.swift in Sources */,
 				E67563692BE8493200959F1A /* TabBarViewModel.swift in Sources */,
 				E646EE672BE794D20024269E /* String+Extensions.swift in Sources */,
@@ -642,9 +709,12 @@
 				E675636B2BE8493D00959F1A /* TabBarController.swift in Sources */,
 				E645F1642BE6D3AF0038075F /* AlertMessage.swift in Sources */,
 				E67563632BE8490400959F1A /* TabBarContracts.swift in Sources */,
+				E689FE3E2BF27583001884D6 /* SFSymbols.swift in Sources */,
 				E646EE622BE794D20024269E /* ErrorResponse.swift in Sources */,
 				E67563372BE7D60700959F1A /* NetworkConstants.swift in Sources */,
 				E67563772BE86AF500959F1A /* Localization.swift in Sources */,
+				E689FE5D2BF298E1001884D6 /* SplashRouter.swift in Sources */,
+				E689FE372BF26BEA001884D6 /* ColorBackground.swift in Sources */,
 				E646EE712BE794D30024269E /* HTTPMethod.swift in Sources */,
 				E67563672BE8492400959F1A /* TabBarBuilder.swift in Sources */,
 				E645F1682BE6D3AF0038075F /* UIApplication+Extension.swift in Sources */,
@@ -667,10 +737,12 @@
 				E645F1842BE6DF250038075F /* LoadingPerformable.swift in Sources */,
 				E646EE6B2BE794D20024269E /* ParameterEncoding.swift in Sources */,
 				E645F1492BE6CE9F0038075F /* AppRouter.swift in Sources */,
+				E689FE392BF26BF6001884D6 /* ColorText.swift in Sources */,
 				E645F1732BE6D3AF0038075F /* Favoritable.swift in Sources */,
 				E645F1862BE6DF330038075F /* ErrorPerformable.swift in Sources */,
 				E67563812BE873D600959F1A /* AdsNavigationBuilder.swift in Sources */,
 				E645F1762BE6D3AF0038075F /* Symbolable.swift in Sources */,
+				E689FE422BF27657001884D6 /* Images.swift in Sources */,
 				E646EE6F2BE794D20024269E /* HTTPHeaderFields.swift in Sources */,
 				E646EE6A2BE794D20024269E /* NetworkError.swift in Sources */,
 			);
@@ -1031,7 +1103,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E646EE762BE79FC30024269E /* XCRemoteSwiftPackageReference "netfox" */ = {
+		E60B36FA2BE9730E0082E9C3 /* XCRemoteSwiftPackageReference "netfox" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kasketis/netfox";
 			requirement = {
@@ -1042,9 +1114,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E646EE782BE79FFD0024269E /* netfox */ = {
+		E60B36FB2BE9730E0082E9C3 /* netfox */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E646EE762BE79FC30024269E /* XCRemoteSwiftPackageReference "netfox" */;
+			package = E60B36FA2BE9730E0082E9C3 /* XCRemoteSwiftPackageReference "netfox" */;
 			productName = netfox;
 		};
 /* End XCSwiftPackageProductDependency section */
