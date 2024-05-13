@@ -32,7 +32,7 @@ protocol TabBarViewModelProtocol {
 
 struct TabBarItemArguments {
     var title : String
-    var image : String
+    var image : Symbolable
     var badge : Int?
     var tag : Int
 }

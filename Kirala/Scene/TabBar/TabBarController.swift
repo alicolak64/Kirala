@@ -40,12 +40,17 @@ extension TabBarController: TabBarViewProtocol {
     
     func prepareUI() {
         tabBar.barTintColor = .white
-        tabBar.layer.borderWidth = 0.5
-        tabBar.layer.borderColor = UIColor.lightGray.cgColor
+        
         tabBar.isTranslucent = false
         tabBar.tintColor = .black
         tabBar.unselectedItemTintColor = .gray
-        tabBar.backgroundColor = .white
+        tabBar.backgroundColor = ColorBackground.primary.dynamicColor
+        
+        let lineView = UIView(frame: CGRect(x: 0, y: 0, width: tabBar.frame.width, height: 0.5))
+        lineView.backgroundColor = .lightGray
+        
+        tabBar.addSubview(lineView)
+        
     }
     
     func configureViewControllers(viewControllers: [UINavigationController]) {
@@ -58,7 +63,7 @@ extension TabBarController: TabBarViewProtocol {
     
     func configureInitialTabBar(index: Int) {
         selectedIndex = index
-        tabBar.tintColor = .orange
+        tabBar.tintColor = ColorPalette.appMain.dynamicColor
     }
     
 }
@@ -67,15 +72,15 @@ extension TabBarController: UITabBarControllerDelegate {
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
-        tabBar.tintColor = .orange
-                
+        tabBar.tintColor = ColorPalette.appMain.dynamicColor
+        
         guard
             let barItemView = item.value(forKey: "view") as? UIView,
             let barItemImageView = barItemView.subviews.compactMap({ $0 as? UIImageView }).first
         else { return }
         
         barItemImageView.contentMode = .center
-
+        
         animate(barItemImageView)
         
         

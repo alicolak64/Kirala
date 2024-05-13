@@ -32,15 +32,15 @@ final class TabBarViewModel: TabBarViewModelProtocol {
             
             switch item {
             case .home:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "HOME"), image: "house.fill", badge: nil, tag: 0))
+                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "HOME"), image: Symbols.house_fill, badge: nil, tag: 0))
             case .myAds:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "MY_ADS"), image: "newspaper.fill", badge: nil, tag: 1))
+                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "MY_ADS"), image: Symbols.newspaper_fill, badge: nil, tag: 1))
             case .myOrders:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "MY_ORDERS"), image: "shippingbox.fill", badge: nil, tag: 2))
+                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "MY_ORDERS"), image: Symbols.shippingbox_fill, badge: nil, tag: 2))
             case .basket:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "BASKET"), image: "cart.fill", badge: nil, tag: 3))
+                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "BASKET"), image: Symbols.cart_fill, badge: nil, tag: 3))
             case .profile:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "PROFILE"), image: "person.fill", badge: nil, tag: 4))
+                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "PROFILE"), image: Symbols.person_fill, badge: nil, tag: 4))
             }
             
         }
