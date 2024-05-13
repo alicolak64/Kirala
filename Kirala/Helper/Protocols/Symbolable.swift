@@ -22,4 +22,8 @@ extension Symbolable {
         return UIImage(systemName: symbolName, withConfiguration: configuration)?
             .withRenderingMode(.alwaysTemplate) ?? UIImage()
     }
+    
+    func symbol() -> UIImage {
+        UIImage(systemName: symbolName) ?? UIImage()
+    }
 }

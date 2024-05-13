@@ -27,7 +27,7 @@ extension UIColor {
         )
     }
     
-    public convenience init?(hex: String, alpha: Double = 1.0) {
+    convenience init?(hex: String, alpha: Double = 1.0) {
         var pureString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         if pureString.hasPrefix("#") {
             pureString.remove(at: pureString.startIndex)
