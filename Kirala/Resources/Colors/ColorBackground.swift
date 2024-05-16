@@ -7,25 +7,25 @@
 
 import UIKit
 
-enum ColorBackground: Colorable {    
+enum ColorBackground: Colorable {
     
     case primary
     case secondary
-    case white
+    case tertiary
     
     var lightHex: String {
         switch self {
         case .primary: return "#F5F5F5"
         case .secondary: return "#FFFFFF"
-        case .white: return "#FFFFFF"
+        case .tertiary: return "#F0F0F0"
         }
     }
     
     var darkHex: String {
         switch self {
         case .primary: return "#000000"
-        case .secondary: return "#F5F5F5"
-        case .white: return "#000000"
+        case .secondary: return "#1A1A1A"
+        case .tertiary: return "#333333"
         }
     }
     
