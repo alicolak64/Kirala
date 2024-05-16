@@ -153,9 +153,9 @@ final class EmptyStateView: UIView, EmptyStateViewProtocol {
     
     private let animationDuration: TimeInterval = 0.6
     
-    private lazy var weightCircleView: UIView = {
+    private lazy var imageCircleView: UIView = {
         let view = UIView()
-        view.backgroundColor = ColorBackground.secondary.color
+        view.backgroundColor = ColorBackground.tertiary.dynamicColor
         view.layer.cornerRadius = 50
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -171,7 +171,7 @@ final class EmptyStateView: UIView, EmptyStateViewProtocol {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .semibold)
-        label.textColor = ColorText.primary.color
+        label.textColor = ColorText.primary.dynamicColor
         label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -181,7 +181,7 @@ final class EmptyStateView: UIView, EmptyStateViewProtocol {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 13, weight: .regular)
-        label.textColor = ColorText.secondary.color
+        label.textColor = ColorText.secondary.dynamicColor
         label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -190,7 +190,7 @@ final class EmptyStateView: UIView, EmptyStateViewProtocol {
     
     private lazy var actionButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = ColorText.primary.color
+        button.backgroundColor = ColorText.primary.dynamicColor
         button.layer.cornerRadius = 8
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
@@ -199,31 +199,31 @@ final class EmptyStateView: UIView, EmptyStateViewProtocol {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+                
         backgroundColor = .clear
         state = .hidden
         
-        weightCircleView.addSubview(imageView)
+        imageCircleView.addSubview(imageView)
         
         addSubviews([
-            weightCircleView,
+            imageCircleView,
             titleLabel,
             descriptionLabel,
             actionButton
         ])
         
         NSLayoutConstraint.activate([
-            weightCircleView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            weightCircleView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            weightCircleView.widthAnchor.constraint(equalToConstant: 100),
-            weightCircleView.heightAnchor.constraint(equalToConstant: 100),
+            imageCircleView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            imageCircleView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            imageCircleView.widthAnchor.constraint(equalToConstant: 100),
+            imageCircleView.heightAnchor.constraint(equalToConstant: 100),
             
-            imageView.centerXAnchor.constraint(equalTo: weightCircleView.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: weightCircleView.centerYAnchor),
+            imageView.centerXAnchor.constraint(equalTo: imageCircleView.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: imageCircleView.centerYAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 50),
             imageView.heightAnchor.constraint(equalToConstant: 50),
             
-            titleLabel.topAnchor.constraint(equalTo: weightCircleView.bottomAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: imageCircleView.bottomAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
