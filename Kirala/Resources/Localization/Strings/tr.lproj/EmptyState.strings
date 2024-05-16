@@ -1,0 +1,39 @@
+/* 
+  EmptyState.strings
+  Kirala
+
+  Created by Ali Çolak on 16.05.2024.
+  
+*/
+
+"NO_DATA_TITLE" = "Veri Yok";
+"NO_DATA_DESC" = "Bu bölüm için kullanılabilir veri yok.";
+"NO_DATA_BUTTON" = "Yenile";
+
+"NO_INTERNET_TITLE" = "İnternet Bağlantısı Yok";
+"NO_INTERNET_DESC" = "Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.";
+"NO_INTERNET_BUTTON" = "Tekrar Dene";
+
+"NO_SEARCH_RESULT_TITLE" = "Arama Sonucu Bulunamadı";
+"NO_SEARCH_RESULT_DESC" = "Arama sorgunuz için sonuç bulunamadı.";
+"NO_SEARCH_RESULT_BUTTON" = "Tekrar Dene";
+
+"NO_FAVORITE_TITLE" = "Favori Yok";
+"NO_FAVORITE_DESC" = "Favori öğe bulunmamaktadır.";
+"NO_FAVORITE_BUTTON" = "Favori Ekle";
+
+"EMPTY_CART_TITLE" = "Sepet Boş";
+"EMPTY_CART_DESC" = "Sepetinizde öğe bulunmamaktadır.";
+"EMPTY_CART_BUTTON" = "Öğe Ekle";
+
+"NO_NOTIFICATION_TITLE" = "Bildirim Yok";
+"NO_NOTIFICATION_DESC" = "Kullanılabilir bildirim yok.";
+"NO_NOTIFICATION_BUTTON" = "Yenile";
+
+"NO_ORDER_TITLE" = "Sipariş Yok";
+"NO_ORDER_DESC" = "Kullanılabilir sipariş yok.";
+"NO_ORDER_BUTTON" = "Yenile";
+
+"UNKNOWN_ERROR_TITLE" = "Bilinmeyen Hata";
+"UNKNOWN_ERROR_DESC" = "Bilinmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyin.";
+"UNKNOWN_ERROR_BUTTON" = "Tekrar Dene";

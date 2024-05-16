@@ -1,0 +1,40 @@
+/* 
+  EmptyState.strings
+  Kirala
+
+  Created by Ali Çolak on 16.05.2024.
+  
+*/
+
+
+"NO_DATA_TITLE" = "No Data";
+"NO_DATA_DESC" = "There is no data available for this section.";
+"NO_DATA_BUTTON" = "Refresh";
+
+"NO_INTERNET_TITLE" = "No Internet Connection";
+"NO_INTERNET_DESC" = "Please check your internet connection and try again.";
+"NO_INTERNET_BUTTON" = "Try again";
+
+"NO_SEARCH_RESULT_TITLE" = "No Search Results";
+"NO_SEARCH_RESULT_DESC" = "There are no search results for your query.";
+"NO_SEARCH_RESULT_BUTTON" = "Try again";
+
+"NO_FAVORITE_TITLE" = "No Favorite";
+"NO_FAVORITE_DESC" = "There are no favorite items available.";
+"NO_FAVORITE_BUTTON" = "Add favorite";
+
+"EMPTY_CART_TITLE" = "Empty Cart";
+"EMPTY_CART_DESC" = "There are no items in your cart.";
+"EMPTY_CART_BUTTON" = "Add item";
+
+"NO_NOTIFICATION_TITLE" = "No Notification";
+"NO_NOTIFICATION_DESC" = "There are no notifications available.";
+"NO_NOTIFICATION_BUTTON" = "Refresh";
+
+"NO_ORDER_TITLE" = "No Order";
+"NO_ORDER_DESC" = "There are no orders available.";
+"NO_ORDER_BUTTON" = "Refresh";
+
+"UNKNOWN_ERROR_TITLE" = "Unknown Error";
+"UNKNOWN_ERROR_DESC" = "An unknown error occurred. Please try again later.";
+"UNKNOWN_ERROR_BUTTON" = "Try again";
