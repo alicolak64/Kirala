@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E60B36FC2BE9730E0082E9C3 /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = E60B36FB2BE9730E0082E9C3 /* netfox */; };
 		E645F1172BE6CE4A0038075F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E645F1162BE6CE4A0038075F /* AppDelegate.swift */; };
 		E645F1202BE6CE4B0038075F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E645F11F2BE6CE4B0038075F /* Assets.xcassets */; };
 		E645F1232BE6CE4B0038075F /* Base in Resources */ = {isa = PBXBuildFile; fileRef = E645F1222BE6CE4B0038075F /* Base */; };
@@ -72,8 +71,9 @@
 		E675637F2BE873B100959F1A /* HomeNavigationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E675637E2BE873B100959F1A /* HomeNavigationBuilder.swift */; };
 		E67563812BE873D600959F1A /* AdsNavigationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67563802BE873D600959F1A /* AdsNavigationBuilder.swift */; };
 		E67563832BE873E000959F1A /* OrdersNavigationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67563822BE873E000959F1A /* OrdersNavigationBuilder.swift */; };
-		E67563852BE873FB00959F1A /* BasketNavigationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67563842BE873FB00959F1A /* BasketNavigationBuilder.swift */; };
+		E67563852BE873FB00959F1A /* CartNavigationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67563842BE873FB00959F1A /* CartNavigationBuilder.swift */; };
 		E67563872BE8740400959F1A /* ProfileNavigationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67563862BE8740400959F1A /* ProfileNavigationBuilder.swift */; };
+		E6869EE92BF53B350017C08B /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = E6869EE82BF53B350017C08B /* netfox */; };
 		E689FE372BF26BEA001884D6 /* ColorBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE362BF26BEA001884D6 /* ColorBackground.swift */; };
 		E689FE392BF26BF6001884D6 /* ColorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE382BF26BF6001884D6 /* ColorText.swift */; };
 		E689FE3B2BF26C76001884D6 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE3A2BF26C76001884D6 /* ColorPalette.swift */; };
@@ -84,6 +84,9 @@
 		E689FE592BF298C9001884D6 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE582BF298C9001884D6 /* SplashViewModel.swift */; };
 		E689FE5B2BF298D8001884D6 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE5A2BF298D8001884D6 /* SplashViewController.swift */; };
 		E689FE5D2BF298E1001884D6 /* SplashRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE5C2BF298E1001884D6 /* SplashRouter.swift */; };
+		E6E5E1E42BF54B5500B12BD7 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E5E1E32BF54B5500B12BD7 /* LoadingView.swift */; };
+		E6E5E1E82BF54BB300B12BD7 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E5E1E72BF54BB300B12BD7 /* EmptyStateView.swift */; };
+		E6E5E1EB2BF562EF00B12BD7 /* EmptyState.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6E5E1E92BF562EF00B12BD7 /* EmptyState.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +107,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E63D313A2BF678DE00D82E09 /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
+		E63D313B2BF678DE00D82E09 /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
+		E63D313C2BF678DE00D82E09 /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
 		E645F1162BE6CE4A0038075F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E645F11F2BE6CE4B0038075F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E645F1222BE6CE4B0038075F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -171,11 +177,8 @@
 		E675637E2BE873B100959F1A /* HomeNavigationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationBuilder.swift; sourceTree = "<group>"; };
 		E67563802BE873D600959F1A /* AdsNavigationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsNavigationBuilder.swift; sourceTree = "<group>"; };
 		E67563822BE873E000959F1A /* OrdersNavigationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersNavigationBuilder.swift; sourceTree = "<group>"; };
-		E67563842BE873FB00959F1A /* BasketNavigationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketNavigationBuilder.swift; sourceTree = "<group>"; };
+		E67563842BE873FB00959F1A /* CartNavigationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartNavigationBuilder.swift; sourceTree = "<group>"; };
 		E67563862BE8740400959F1A /* ProfileNavigationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationBuilder.swift; sourceTree = "<group>"; };
-		E689FE312BF26514001884D6 /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
-		E689FE322BF26514001884D6 /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
-		E689FE332BF26514001884D6 /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
 		E689FE362BF26BEA001884D6 /* ColorBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorBackground.swift; sourceTree = "<group>"; };
 		E689FE382BF26BF6001884D6 /* ColorText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorText.swift; sourceTree = "<group>"; };
 		E689FE3A2BF26C76001884D6 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
@@ -186,6 +189,10 @@
 		E689FE582BF298C9001884D6 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		E689FE5A2BF298D8001884D6 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E689FE5C2BF298E1001884D6 /* SplashRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRouter.swift; sourceTree = "<group>"; };
+		E6E5E1E32BF54B5500B12BD7 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		E6E5E1E72BF54BB300B12BD7 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		E6E5E1EA2BF562EF00B12BD7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EmptyState.strings; sourceTree = "<group>"; };
+		E6E5E1EC2BF562F600B12BD7 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/EmptyState.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,7 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E60B36FC2BE9730E0082E9C3 /* netfox in Frameworks */,
+				E6869EE92BF53B350017C08B /* netfox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +240,7 @@
 				E645F1872BE6E03F0038075F /* Model */,
 				E645F1882BE6E0480038075F /* Service */,
 				E67563602BE8488900959F1A /* Scene */,
+				E6E5E1E12BF54AC500B12BD7 /* Views */,
 			);
 			path = Kirala;
 			sourceTree = "<group>";
@@ -456,16 +464,64 @@
 			path = APILayers;
 			sourceTree = "<group>";
 		};
+		E654680F2BF2C92B005532DF /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				E65468102BF2C93F005532DF /* Home */,
+				E65468112BF2C946005532DF /* Ads */,
+				E65468142BF2C95E005532DF /* Orders */,
+				E65468132BF2C958005532DF /* Cart */,
+				E65468122BF2C94F005532DF /* Profile */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		E65468102BF2C93F005532DF /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				E675637E2BE873B100959F1A /* HomeNavigationBuilder.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		E65468112BF2C946005532DF /* Ads */ = {
+			isa = PBXGroup;
+			children = (
+				E67563802BE873D600959F1A /* AdsNavigationBuilder.swift */,
+			);
+			path = Ads;
+			sourceTree = "<group>";
+		};
+		E65468122BF2C94F005532DF /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				E67563862BE8740400959F1A /* ProfileNavigationBuilder.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		E65468132BF2C958005532DF /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				E67563842BE873FB00959F1A /* CartNavigationBuilder.swift */,
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
+		E65468142BF2C95E005532DF /* Orders */ = {
+			isa = PBXGroup;
+			children = (
+				E67563822BE873E000959F1A /* OrdersNavigationBuilder.swift */,
+			);
+			path = Orders;
+			sourceTree = "<group>";
+		};
 		E67563602BE8488900959F1A /* Scene */ = {
 			isa = PBXGroup;
 			children = (
 				E689FE532BF29851001884D6 /* Splash */,
 				E67563612BE848B700959F1A /* TabBar */,
-				E675637E2BE873B100959F1A /* HomeNavigationBuilder.swift */,
-				E67563802BE873D600959F1A /* AdsNavigationBuilder.swift */,
-				E67563822BE873E000959F1A /* OrdersNavigationBuilder.swift */,
-				E67563842BE873FB00959F1A /* BasketNavigationBuilder.swift */,
-				E67563862BE8740400959F1A /* ProfileNavigationBuilder.swift */,
+				E654680F2BF2C92B005532DF /* Navigation */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -495,6 +551,7 @@
 			children = (
 				E675636E2BE86A4400959F1A /* Common.strings */,
 				E67563782BE86D4400959F1A /* TabBar.strings */,
+				E6E5E1E92BF562EF00B12BD7 /* EmptyState.strings */,
 			);
 			path = Strings;
 			sourceTree = "<group>";
@@ -537,6 +594,23 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
+		E6E5E1E12BF54AC500B12BD7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E6E5E1E22BF54B3300B12BD7 /* CustomViews */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E6E5E1E22BF54B3300B12BD7 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				E6E5E1E32BF54B5500B12BD7 /* LoadingView.swift */,
+				E6E5E1E72BF54BB300B12BD7 /* EmptyStateView.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -554,10 +628,10 @@
 			);
 			name = Kirala;
 			packageProductDependencies = (
-				E60B36FB2BE9730E0082E9C3 /* netfox */,
+				E6869EE82BF53B350017C08B /* netfox */,
 			);
 			productName = Kirala;
-			productReference = E689FE312BF26514001884D6 /* Kirala.app */;
+			productReference = E63D313A2BF678DE00D82E09 /* Kirala.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E645F1282BE6CE4B0038075F /* KiralaTests */ = {
@@ -575,7 +649,7 @@
 			);
 			name = KiralaTests;
 			productName = KiralaTests;
-			productReference = E689FE322BF26514001884D6 /* KiralaTests.xctest */;
+			productReference = E63D313B2BF678DE00D82E09 /* KiralaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		E645F1322BE6CE4B0038075F /* KiralaUITests */ = {
@@ -593,7 +667,7 @@
 			);
 			name = KiralaUITests;
 			productName = KiralaUITests;
-			productReference = E689FE332BF26514001884D6 /* KiralaUITests.xctest */;
+			productReference = E63D313C2BF678DE00D82E09 /* KiralaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -649,6 +723,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E645F1202BE6CE4B0038075F /* Assets.xcassets in Resources */,
+				E6E5E1EB2BF562EF00B12BD7 /* EmptyState.strings in Resources */,
 				E67563702BE86A4400959F1A /* Common.strings in Resources */,
 				E675637A2BE86D4400959F1A /* TabBar.strings in Resources */,
 				E645F1232BE6CE4B0038075F /* Base in Resources */,
@@ -694,6 +769,7 @@
 				E689FE3B2BF26C76001884D6 /* ColorPalette.swift in Sources */,
 				E689FE572BF298B0001884D6 /* SplashBuilder.swift in Sources */,
 				E646EE732BE794D30024269E /* APIServiceProvider.swift in Sources */,
+				E6E5E1E82BF54BB300B12BD7 /* EmptyStateView.swift in Sources */,
 				E67563872BE8740400959F1A /* ProfileNavigationBuilder.swift in Sources */,
 				E646EE612BE794D20024269E /* ApiConnectionErrorType.swift in Sources */,
 				E645F1652BE6D3AF0038075F /* Collection+Extension.swift in Sources */,
@@ -709,6 +785,7 @@
 				E675636B2BE8493D00959F1A /* TabBarController.swift in Sources */,
 				E645F1642BE6D3AF0038075F /* AlertMessage.swift in Sources */,
 				E67563632BE8490400959F1A /* TabBarContracts.swift in Sources */,
+				E6E5E1E42BF54B5500B12BD7 /* LoadingView.swift in Sources */,
 				E689FE3E2BF27583001884D6 /* SFSymbols.swift in Sources */,
 				E646EE622BE794D20024269E /* ErrorResponse.swift in Sources */,
 				E67563372BE7D60700959F1A /* NetworkConstants.swift in Sources */,
@@ -728,7 +805,7 @@
 				E645F17E2BE6D8220038075F /* SharePresentable.swift in Sources */,
 				E67563352BE7D41700959F1A /* NoData.swift in Sources */,
 				E645F1692BE6D3AF0038075F /* UICollectionView+Extension.swift in Sources */,
-				E67563852BE873FB00959F1A /* BasketNavigationBuilder.swift in Sources */,
+				E67563852BE873FB00959F1A /* CartNavigationBuilder.swift in Sources */,
 				E645F1662BE6D3AF0038075F /* IndexPath+Extension.swift in Sources */,
 				E646EE702BE794D20024269E /* HTTPHeaders.swift in Sources */,
 				E646EE692BE794D20024269E /* JSONParameterEncoder.swift in Sources */,
@@ -805,6 +882,15 @@
 				E675637B2BE86D4D00959F1A /* tr */,
 			);
 			name = TabBar.strings;
+			sourceTree = "<group>";
+		};
+		E6E5E1E92BF562EF00B12BD7 /* EmptyState.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E6E5E1EA2BF562EF00B12BD7 /* en */,
+				E6E5E1EC2BF562F600B12BD7 /* tr */,
+			);
+			name = EmptyState.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1114,7 +1200,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E60B36FB2BE9730E0082E9C3 /* netfox */ = {
+		E6869EE82BF53B350017C08B /* netfox */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E60B36FA2BE9730E0082E9C3 /* XCRemoteSwiftPackageReference "netfox" */;
 			productName = netfox;
