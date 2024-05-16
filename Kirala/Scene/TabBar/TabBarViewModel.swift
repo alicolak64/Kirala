@@ -37,8 +37,8 @@ final class TabBarViewModel: TabBarViewModelProtocol {
                 items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "MY_ADS"), image: Symbols.newspaper_fill, badge: nil, tag: 1))
             case .myOrders:
                 items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "MY_ORDERS"), image: Symbols.shippingbox_fill, badge: nil, tag: 2))
-            case .basket:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "BASKET"), image: Symbols.cart_fill, badge: nil, tag: 3))
+            case .cart:
+                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "CART"), image: Symbols.cart_fill, badge: 0, tag: 3))
             case .profile:
                 items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "PROFILE"), image: Symbols.person_fill, badge: nil, tag: 4))
             }
@@ -58,8 +58,8 @@ final class TabBarViewModel: TabBarViewModelProtocol {
                 controllers.append(MyAdsNavigationBuilder.build(arguments: items[1]))
             case .myOrders:
                 controllers.append(MyOrdersNavigationBuilder.build(arguments: items[2]))
-            case .basket:
-                controllers.append(BasketNavigationBuilder.build(arguments: items[3]))
+            case .cart:
+                controllers.append(CartNavigationBuilder.build(arguments: items[3]))
             case .profile:
                 controllers.append(ProfileNavigationBuilder.build(arguments: items[4]))
                 

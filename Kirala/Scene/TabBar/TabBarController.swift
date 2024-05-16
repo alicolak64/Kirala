@@ -44,7 +44,7 @@ extension TabBarController: TabBarViewProtocol {
         tabBar.isTranslucent = false
         tabBar.tintColor = .black
         tabBar.unselectedItemTintColor = .gray
-        tabBar.backgroundColor = ColorBackground.primary.dynamicColor
+        tabBar.backgroundColor = ColorBackground.secondary.dynamicColor
         
         let lineView = UIView(frame: CGRect(x: 0, y: 0, width: tabBar.frame.width, height: 0.5))
         lineView.backgroundColor = .lightGray

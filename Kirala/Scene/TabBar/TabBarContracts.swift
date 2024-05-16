@@ -19,7 +19,7 @@ enum TabBarItems: CaseIterable {
     case home
     case myAds
     case myOrders
-    case basket
+    case cart
     case profile
 }
 
