@@ -12,6 +12,7 @@ protocol Symbolable {
     var symbolName: String { get }
     // MARK: - Methods
     func symbol(size: CGFloat, weight: UIImage.SymbolWeight) -> UIImage
+    func symbol() -> UIImage
 }
 
 // MARK: - Default Implementation

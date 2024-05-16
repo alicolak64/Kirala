@@ -10,12 +10,14 @@ import Foundation
 enum LocalizationTable: String {
     case common = "Common"
     case tabBar = "TabBar"
+    case emptyState = "EmptyState"
 }
 
 struct Localization {
     
     static let common = Localization(table: LocalizationTable.common)
     static let tabBar = Localization(table: LocalizationTable.tabBar)
+    static let emptyState = Localization(table: LocalizationTable.emptyState)
     
     private let table: LocalizationTable
     

@@ -11,11 +11,13 @@ enum ColorBackground: Colorable {
     
     case primary
     case secondary
+    case white
     
     var lightHex: String {
         switch self {
-        case .primary: return "#FFFFFF"
-        case .secondary: return "#F5F5F5"
+        case .primary: return "#F5F5F5"
+        case .secondary: return "#FFFFFF"
+        case .white: return "#FFFFFF"
         }
     }
     
@@ -23,6 +25,7 @@ enum ColorBackground: Colorable {
         switch self {
         case .primary: return "#000000"
         case .secondary: return "#F5F5F5"
+        case .white: return "#000000"
         }
     }
     
