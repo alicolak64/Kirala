@@ -7,18 +7,6 @@
 
 import UIKit
 
-protocol LoadingViewProtocol {
-    // MARK: - Methods
-    func showLoading()
-    func hideLoading()
-}
-
-enum LoadingState {
-    // MARK: - Cases
-    case loading
-    case loaded
-}
-
 final class LoadingView: UIView, LoadingViewProtocol {
     
     // MARK: - Properties

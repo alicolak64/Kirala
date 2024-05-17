@@ -84,6 +84,9 @@
 		E689FE592BF298C9001884D6 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE582BF298C9001884D6 /* SplashViewModel.swift */; };
 		E689FE5B2BF298D8001884D6 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE5A2BF298D8001884D6 /* SplashViewController.swift */; };
 		E689FE5D2BF298E1001884D6 /* SplashRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689FE5C2BF298E1001884D6 /* SplashRouter.swift */; };
+		E6B294B02BF752C000BBC20F /* EmptyStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B294AF2BF752C000BBC20F /* EmptyStates.swift */; };
+		E6B294B22BF7530000BBC20F /* EmptyStateContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B294B12BF7530000BBC20F /* EmptyStateContracts.swift */; };
+		E6B294B52BF7534800BBC20F /* LoadingContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B294B42BF7534800BBC20F /* LoadingContracts.swift */; };
 		E6E5E1E42BF54B5500B12BD7 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E5E1E32BF54B5500B12BD7 /* LoadingView.swift */; };
 		E6E5E1E82BF54BB300B12BD7 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E5E1E72BF54BB300B12BD7 /* EmptyStateView.swift */; };
 		E6E5E1EB2BF562EF00B12BD7 /* EmptyState.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6E5E1E92BF562EF00B12BD7 /* EmptyState.strings */; };
@@ -107,9 +110,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E63D313A2BF678DE00D82E09 /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
-		E63D313B2BF678DE00D82E09 /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
-		E63D313C2BF678DE00D82E09 /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
 		E645F1162BE6CE4A0038075F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E645F11F2BE6CE4B0038075F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E645F1222BE6CE4B0038075F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -189,6 +189,12 @@
 		E689FE582BF298C9001884D6 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		E689FE5A2BF298D8001884D6 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E689FE5C2BF298E1001884D6 /* SplashRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRouter.swift; sourceTree = "<group>"; };
+		E6B294AA2BF7521500BBC20F /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
+		E6B294AB2BF7521500BBC20F /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
+		E6B294AC2BF7521500BBC20F /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
+		E6B294AF2BF752C000BBC20F /* EmptyStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStates.swift; sourceTree = "<group>"; };
+		E6B294B12BF7530000BBC20F /* EmptyStateContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateContracts.swift; sourceTree = "<group>"; };
+		E6B294B42BF7534800BBC20F /* LoadingContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingContracts.swift; sourceTree = "<group>"; };
 		E6E5E1E32BF54B5500B12BD7 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E6E5E1E72BF54BB300B12BD7 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		E6E5E1EA2BF562EF00B12BD7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EmptyState.strings; sourceTree = "<group>"; };
@@ -594,6 +600,25 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
+		E6B294AD2BF7527200BBC20F /* EmptyState */ = {
+			isa = PBXGroup;
+			children = (
+				E6B294B12BF7530000BBC20F /* EmptyStateContracts.swift */,
+				E6B294AF2BF752C000BBC20F /* EmptyStates.swift */,
+				E6E5E1E72BF54BB300B12BD7 /* EmptyStateView.swift */,
+			);
+			path = EmptyState;
+			sourceTree = "<group>";
+		};
+		E6B294AE2BF7527C00BBC20F /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				E6B294B42BF7534800BBC20F /* LoadingContracts.swift */,
+				E6E5E1E32BF54B5500B12BD7 /* LoadingView.swift */,
+			);
+			path = Loading;
+			sourceTree = "<group>";
+		};
 		E6E5E1E12BF54AC500B12BD7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -605,8 +630,8 @@
 		E6E5E1E22BF54B3300B12BD7 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
-				E6E5E1E32BF54B5500B12BD7 /* LoadingView.swift */,
-				E6E5E1E72BF54BB300B12BD7 /* EmptyStateView.swift */,
+				E6B294AE2BF7527C00BBC20F /* Loading */,
+				E6B294AD2BF7527200BBC20F /* EmptyState */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -631,7 +656,7 @@
 				E6869EE82BF53B350017C08B /* netfox */,
 			);
 			productName = Kirala;
-			productReference = E63D313A2BF678DE00D82E09 /* Kirala.app */;
+			productReference = E6B294AA2BF7521500BBC20F /* Kirala.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E645F1282BE6CE4B0038075F /* KiralaTests */ = {
@@ -649,7 +674,7 @@
 			);
 			name = KiralaTests;
 			productName = KiralaTests;
-			productReference = E63D313B2BF678DE00D82E09 /* KiralaTests.xctest */;
+			productReference = E6B294AB2BF7521500BBC20F /* KiralaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		E645F1322BE6CE4B0038075F /* KiralaUITests */ = {
@@ -667,7 +692,7 @@
 			);
 			name = KiralaUITests;
 			productName = KiralaUITests;
-			productReference = E63D313C2BF678DE00D82E09 /* KiralaUITests.xctest */;
+			productReference = E6B294AC2BF7521500BBC20F /* KiralaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -782,6 +807,7 @@
 				E646EE722BE794D30024269E /* APIManager.swift in Sources */,
 				E645F16A2BE6D3AF0038075F /* UIColor+Extension.swift in Sources */,
 				E67563392BE7D6A600959F1A /* AuthService.swift in Sources */,
+				E6B294B02BF752C000BBC20F /* EmptyStates.swift in Sources */,
 				E675636B2BE8493D00959F1A /* TabBarController.swift in Sources */,
 				E645F1642BE6D3AF0038075F /* AlertMessage.swift in Sources */,
 				E67563632BE8490400959F1A /* TabBarContracts.swift in Sources */,
@@ -790,6 +816,8 @@
 				E646EE622BE794D20024269E /* ErrorResponse.swift in Sources */,
 				E67563372BE7D60700959F1A /* NetworkConstants.swift in Sources */,
 				E67563772BE86AF500959F1A /* Localization.swift in Sources */,
+				E6B294B52BF7534800BBC20F /* LoadingContracts.swift in Sources */,
+				E6B294B22BF7530000BBC20F /* EmptyStateContracts.swift in Sources */,
 				E689FE5D2BF298E1001884D6 /* SplashRouter.swift in Sources */,
 				E689FE372BF26BEA001884D6 /* ColorBackground.swift in Sources */,
 				E646EE712BE794D30024269E /* HTTPMethod.swift in Sources */,
