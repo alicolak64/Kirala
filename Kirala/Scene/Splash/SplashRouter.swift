@@ -17,5 +17,3 @@ final class SplashRouter: SplashRouterProtocol {
     }
     
 }
-    
-    

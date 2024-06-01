@@ -10,7 +10,6 @@ import Foundation
 final class SplashViewModel: SplashViewModelProtocol {
     
     // MARK: - Dependency Properties
-    
     weak var delegate: SplashViewProtocol?
     private let router: SplashRouterProtocol
     
@@ -19,11 +18,11 @@ final class SplashViewModel: SplashViewModelProtocol {
     private let animationDelay: TimeInterval = 0.5
     
     // MARK: - Init
-    
     init(router: SplashRouterProtocol) {
         self.router = router
     }
     
+    // MARK: - Lifecycle Methods
     func viewDidLoad() {
         delegate?.prepareUI()
         delegate?.startAnimation(duration: animationDuration, delay: animationDelay) { [weak self] in
@@ -34,5 +33,4 @@ final class SplashViewModel: SplashViewModelProtocol {
     func viewDidLayoutSubviews() {
         delegate?.prepareConstraints()
     }
-    
 }
