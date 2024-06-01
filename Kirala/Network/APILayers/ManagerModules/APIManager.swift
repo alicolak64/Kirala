@@ -8,23 +8,23 @@
 import Foundation
 import Network
 
-
-public protocol APIManagerInterface {
+/// A protocol defining the interface for the API manager.
+protocol APIManagerInterface {
     func executeRequest<R: Codable>(urlRequest: URLRequest, completion: @escaping (Result<R, ErrorResponse>) -> Void)
     func executeAsyncRequest<R: Codable>(urlRequest: URLRequest) async throws -> R
 }
 
-public class APIManager: APIManagerInterface {
+/// A class to manage API requests.
+class APIManager: APIManagerInterface {
     static let shared = APIManager()
     
-    // Mark: - Session -
+    // MARK: - Properties
+    
     private let session: URLSession
-    
-    // Mark: - JsonDecoder -
     private var jsonDecoder = JSONDecoder()
-    
-    //Mark: - apiCallListener -
     private var apiCallListener: ApiCallListener?
+    
+    // MARK: - Initializer
     
     private init(apiCallListener: ApiCallListener? = nil) {
         self.apiCallListener = apiCallListener
@@ -35,63 +35,19 @@ public class APIManager: APIManagerInterface {
         self.session = URLSession(configuration: config)
     }
     
+    // MARK: - Public Methods
+    
     /// Executes an asynchronous network request and decodes the response.
     ///
     /// - Parameters:
     ///   - urlRequest: The URLRequest to be executed.
     ///   - completion: A completion handler that receives the result of the request.
-    public func executeRequest<R>(urlRequest: URLRequest, completion: @escaping (Result<R, ErrorResponse>) -> Void) where R : Codable {
+    func executeRequest<R: Codable>(urlRequest: URLRequest, completion: @escaping (Result<R, ErrorResponse>) -> Void) {
         apiCallListener?.onPreExecute()
         debugPrint(urlRequest)
-        session.dataTask(with: urlRequest) { [weak self](data, urlResponse, error) in
-            self?.dataTaskHandler(data, urlResponse, error, completion: completion)
+        session.dataTask(with: urlRequest) { [weak self] data, response, error in
+            self?.dataTaskHandler(data, response, error, completion: completion)
         }.resume()
-    }
-    
-    private func dataTaskHandler<R: Codable>(_ data: Data?, _ response: URLResponse?, _ error: Error?, completion: @escaping (Result<R, ErrorResponse>) -> Void) {
-        defer {
-            apiCallListener?.onPostExecute()
-        }
-        if error != nil {
-            // completion failure
-            debugPrint("task handling error: \(String(describing: error))")
-            completion(.failure(
-                ErrorResponse(
-                    serverResponse:
-                        ServerResponse(
-                            returnMessage: error!.localizedDescription,
-                            returnCode: error!._code),
-                    apiConnectionErrorType: .serverError(error!._code)
-                )
-            ))
-        }
-        
-        if let data = data {
-            do {
-//                debugPrint(String(data: data, encoding: .utf8)!)
-//                debugPrint(data.jsonString ?? "")
-                jsonDecoder.dateDecodingStrategy = .iso8601
-                let dataDecoded = try jsonDecoder.decode(R.self, from: data)
-//                debugPrint("data: \(data)")
-                completion(.success(dataDecoded))
-            } catch let error {
-                // completion failure
-                let errorResponse = ErrorResponse(
-                        serverResponse: ServerResponse(
-                            returnMessage: error.localizedDescription,
-                            returnCode: error._code),
-                    apiConnectionErrorType: .dataDecodedFailed(error.localizedDescription))
-                debugPrint("decoding error:\(errorResponse)")
-            }
-        }
-    }
-    
-    public func cancelRequest() {
-        session.invalidateAndCancel()
-    }
-    
-    deinit {
-        debugPrint("DEINIT APIMANAGER")
     }
     
     /// Executes an asynchronous network request and decodes the response.
@@ -99,26 +55,74 @@ public class APIManager: APIManagerInterface {
     /// - Parameters:
     ///   - urlRequest: The URLRequest to be executed.
     /// - Returns: A result containing the decoded response or an error.
-    public func executeAsyncRequest<R: Codable>(urlRequest: URLRequest) async throws -> R {
+    func executeAsyncRequest<R: Codable>(urlRequest: URLRequest) async throws -> R {
         apiCallListener?.onPreExecute()
         let (data, response) = try await fetchData(for: urlRequest)
         return try processResponse(data, response)
     }
     
+    /// Cancels the current request.
+    func cancelRequest() {
+        session.invalidateAndCancel()
+    }
+    
+    // MARK: - Private Methods
+    
+    private func dataTaskHandler<R: Codable>(_ data: Data?, _ response: URLResponse?, _ error: Error?, completion: @escaping (Result<R, ErrorResponse>) -> Void) {
+        defer {
+            apiCallListener?.onPostExecute()
+        }
+        
+        if let error = error {
+            debugPrint("task handling error: \(error)")
+            let errorResponse = ErrorResponse(
+                serverResponse: ServerResponse(
+                    returnMessage: error.localizedDescription,
+                    returnCode: (error as NSError).code),
+                apiConnectionErrorType: .serverError((error as NSError).code))
+            completion(.failure(errorResponse))
+            return
+        }
+        
+        guard let data = data else {
+            let errorResponse = ErrorResponse(
+                serverResponse: ServerResponse(
+                    returnMessage: "No data received from the server",
+                    returnCode: -1),
+                apiConnectionErrorType: .noData)
+            completion(.failure(errorResponse))
+            return
+        }
+        
+        do {
+            jsonDecoder.dateDecodingStrategy = .iso8601
+            let dataDecoded = try jsonDecoder.decode(R.self, from: data)
+            completion(.success(dataDecoded))
+        } catch let error {
+            let errorResponse = ErrorResponse(
+                serverResponse: ServerResponse(
+                    returnMessage: error.localizedDescription,
+                    returnCode: (error as NSError).code),
+                apiConnectionErrorType: .dataDecodedFailed(error.localizedDescription))
+            debugPrint("decoding error: \(errorResponse)")
+            completion(.failure(errorResponse))
+        }
+    }
+    
     private func fetchData(for urlRequest: URLRequest) async throws -> (Data, URLResponse) {
-        let (data, response) = try await session.data(for: urlRequest)
-        return (data, response)
+        return try await session.data(for: urlRequest)
     }
     
     private func processResponse<R: Codable>(_ data: Data, _ response: URLResponse) throws -> R {
         defer {
             apiCallListener?.onPostExecute()
         }
-        if let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) {
-            return try decodeResponse(data)
-        } else {
+        
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw createErrorResponse(response)
         }
+        
+        return try decodeResponse(data)
     }
     
     private func decodeResponse<R: Codable>(_ data: Data) throws -> R {
@@ -127,7 +131,6 @@ public class APIManager: APIManagerInterface {
     
     private func createErrorResponse(_ response: URLResponse) -> ErrorResponse {
         let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
-        
         let errorResponse = ErrorResponse(
             serverResponse: ServerResponse(
                 returnMessage: "Server returned an error with status code \(statusCode)",

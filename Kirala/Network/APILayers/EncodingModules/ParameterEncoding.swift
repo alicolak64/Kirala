@@ -7,26 +7,29 @@
 
 import Foundation
 
-public enum ParameterEncoding {
+/// An enum to specify the type of parameter encoding.
+enum ParameterEncoding {
     case urlEncoding
     case jsonEncoding
     
-    public func encode(urlRequest: inout URLRequest, parameters: Parameters?) throws {
+    /// Encodes parameters into the URLRequest based on the encoding type.
+    /// - Parameters:
+    ///   - urlRequest: The URLRequest to encode parameters into.
+    ///   - parameters: The parameters to encode.
+    /// - Throws: An error if encoding fails.
+    func encode(urlRequest: inout URLRequest, parameters: Parameters?) throws {
+        guard let parameters = parameters else { return }
+        
         do {
             switch self {
             case .urlEncoding:
-                guard let urlParameters = parameters else { return }
-                try URLParameterEncoder().encode(urlRequest: &urlRequest, with: urlParameters)
+                try URLParameterEncoder().encode(urlRequest: &urlRequest, with: parameters)
                 
             case .jsonEncoding:
-                guard let bodyParameters = parameters else { return }
-                try JSONParameterEncoder().encode(urlRequest: &urlRequest, with: bodyParameters)
-                
+                try JSONParameterEncoder().encode(urlRequest: &urlRequest, with: parameters)
             }
         } catch {
             throw error
         }
     }
 }
-
-

@@ -7,38 +7,55 @@
 
 import Foundation
 
-public struct HTTPHeaders {
+/// A struct representing a collection of HTTP headers.
+struct HTTPHeaders {
     
     private var headers: [HTTPHeader] = []
- 
-    public init() {}
     
-    public init(_ dictionary: [String: String]) {
+    /// Initializes an empty collection of HTTP headers.
+    init() {}
+    
+    /// Initializes a collection of HTTP headers from a dictionary.
+    /// - Parameter dictionary: A dictionary containing header names and values.
+    init(_ dictionary: [String: String]) {
         self.init()
-
         dictionary.forEach { update(HTTPHeader(name: $0.key, value: $0.value)) }
     }
     
-    public mutating func add(_ header: HTTPHeader) {
+    /// Adds a new HTTP header to the collection.
+    /// - Parameter header: The HTTP header to add.
+    mutating func add(_ header: HTTPHeader) {
         update(header)
     }
-
-    public mutating func update(name: String, value: String) {
+    
+    /// Updates the value of an existing header or adds a new one if it does not exist.
+    /// - Parameters:
+    ///   - name: The name of the header.
+    ///   - value: The value of the header.
+    mutating func update(name: String, value: String) {
         update(HTTPHeader(name: name, value: value))
     }
-
-    public mutating func update(_ header: HTTPHeader) {
-        guard let index = headers.firstIndex(of: header) else {
+    
+    /// Updates the value of an existing header or adds a new one if it does not exist.
+    /// - Parameter header: The HTTP header to update.
+    mutating func update(_ header: HTTPHeader) {
+        if let index = headers.firstIndex(of: header) {
+            headers[index] = header
+        } else {
             headers.append(header)
-            return
         }
-
-        headers.replaceSubrange(index...index, with: [header])
     }
     
-    public var dictionary: [String: String] {
-        let namesAndValues = headers.map { ($0.name, $0.value) }
-
-        return Dictionary(namesAndValues, uniquingKeysWith: { _, last in last })
+    /// Removes a header from the collection.
+    /// - Parameter name: The name of the header to remove.
+    mutating func remove(name: String) {
+        headers.removeAll { $0.name == name }
+    }
+    
+    /// Returns the headers as a dictionary.
+    var dictionary: [String: String] {
+        return headers.reduce(into: [String: String]()) { result, header in
+            result[header.name] = header.value
+        }
     }
 }

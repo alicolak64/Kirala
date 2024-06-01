@@ -7,4 +7,5 @@
 
 import Foundation
 
-public typealias Parameters = [String: Any]
+/// A type alias for a dictionary representing URL parameters or JSON body parameters.
+typealias Parameters = [String: Any]

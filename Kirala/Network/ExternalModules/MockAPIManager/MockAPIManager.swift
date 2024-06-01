@@ -7,10 +7,11 @@
 
 import Foundation
 
+/// A class to mock API responses for testing purposes.
 class MockAPIManager: APIManagerInterface {
     
     /// A dictionary to store predefined responses for specific URLs.
-    private var mockResponses: [URL: (Data)] = [:]
+    private var mockResponses: [URL: Data] = [:]
     
     /// Register a mock response for a specific URL.
     ///
@@ -53,23 +54,26 @@ class MockAPIManager: APIManagerInterface {
     /// - Parameters:
     ///   - urlRequest: The URLRequest to be executed.
     /// - Returns: A result containing the decoded response or an error.
-    func executeAsyncRequest<R: Codable>(urlRequest: URLRequest) async throws -> R  {
+    func executeAsyncRequest<R: Codable>(urlRequest: URLRequest) async throws -> R {
         // Check if there's a mock response registered for this URL.
         if let data = mockResponses[urlRequest.url!] {
             // Return the mock response.
             return try decodeResponse(data, type: R.self)
         } else {
             // Simulate an error for unregistered URLs.
-            throw NSError(domain: "MockAPIManager", code: 404)
+            throw ErrorResponse(
+                serverResponse: ServerResponse(returnMessage: "URL not found", returnCode: 404),
+                apiConnectionErrorType: .serverError(404))
         }
     }
     
-    /// Decode a response from data and URLResponse.
+    /// Decode a response from data.
     ///
     /// - Parameters:
     ///   - data: The response data.
+    ///   - type: The type of the response object.
     /// - Returns: The decoded response object.
-    private func decodeResponse<R: Codable>(_ data: Data,type: R.Type) throws -> R {
+    private func decodeResponse<R: Codable>(_ data: Data, type: R.Type) throws -> R {
         let decoder = JSONDecoder()
         return try decoder.decode(type, from: data)
     }
