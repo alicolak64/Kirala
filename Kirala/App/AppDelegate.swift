@@ -48,6 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Handle incoming URLs for iOS 13 and later
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        print(url)
+        handleOAuthCallback(url: url)
         return app.router.handleDeepLink(url: url)
     }
     
@@ -55,6 +57,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return app.router.handleDeepLink(url: url)
     }
+        private func handleOAuthCallback(url: URL) {
+            // URL'i işleyip yetkilendirme kodunu çekin
+            if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                if let code = components.queryItems?.first(where: { $0.name == "token" })?.value {
+                    // Yetkilendirme kodunu kullanarak token almak için gerekli işlemleri yapın
+                    print("Yetkilendirme kodu: \(code)")
+                    app.router.startTabBar()
+                    app.authService.saveAuthToken(token: code)
+                    // Token almak için gerekli diğer işlemleri yapın
+                }
+            }
+        }
     
 }
 

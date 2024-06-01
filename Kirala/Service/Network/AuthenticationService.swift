@@ -26,7 +26,7 @@ final class AuthenticationManager: AuthenticationService {
     }
     
     func loginWithGoogle() -> URL? {
-        let parameters: [String:String] = ["redirect_uri": "kirala://oauth2/redirect"]
+        let parameters: [String:String] = ["redirect_uri": "kiralaapp://oauth2/redirect"]
         let provider = ApiServiceProvider< [String:String]>(method: .get, baseUrl: NetworkConstants.baseUrl, path: NetworkConstants.Endpoints.Auth.loginWithGoogle, data: parameters)
         return try? provider.returnUrlRequest().url
     }

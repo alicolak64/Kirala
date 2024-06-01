@@ -10,7 +10,7 @@ import Foundation
 enum NetworkConstants {
     static var baseUrl: String {
     #if DEBUG
-        return "http://192.168.1.61:8080"
+        return "http://localhost:8080/"
     #else
         return "https://example.com/api"
     #endif
