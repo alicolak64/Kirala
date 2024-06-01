@@ -1,7 +1,31 @@
-/* 
-  Localizable.strings
+/*
+  Common.strings
   Kirala
 
   Created by Ali Çolak on 6.05.2024.
   
 */
+
+"SEARCH_BAR_PLACEHOLDER" = "Search products or categories";
+"CANCEL" = "Cancel";
+"NOTIFICATIONS" = "Notifications";
+"NEW_ADDEDS" = "New Addeds";
+"BEST_SELLERS" = "Best Sellers";
+"MOST_RATED" = "Most Rated";
+"SEE_ALL" = "See All";
+"CATEGORIES" = "Categories";
+"DONE" = "Done";
+"FROM" = "From";
+"TO" = "To";
+"RENT" = "Rent";
+"CHOOSE_DATE" = "Choose Date";
+"CHOOSE_RANGE_RENT" = "Choose Rent Range";
+"DAY" = "day";
+"TOTAL" = "total";
+"PER_DAY" = "per day";
+"PRODUCT" = "products";
+"ALL" = "See All";
+
+
+
+

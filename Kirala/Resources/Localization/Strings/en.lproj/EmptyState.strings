@@ -38,3 +38,28 @@
 "UNKNOWN_ERROR_TITLE" = "Unknown Error";
 "UNKNOWN_ERROR_DESC" = "An unknown error occurred. Please try again later.";
 "UNKNOWN_ERROR_BUTTON" = "Try again";
+
+"N0_LOGIN_FAVORITE_TITLE" = "My Favorites";
+"NO_LOGIN_FAVORITE_DESC" = "Please log in to view your favorites.";
+"NO_LOGIN_FAVORITE_BUTTON" = "Log In";
+
+"NO_LOGIN_CART_TITLE" = "My Cart";
+"NO_LOGIN_CART_DESC" = "Please log in to view your cart.";
+"NO_LOGIN_CART_BUTTON" = "Log In";
+
+"NO_LOGIN_ORDER_TITLE" = "My Orders";
+"NO_LOGIN_ORDER_DESC" = "Please log in to view your orders.";
+"NO_LOGIN_ORDER_BUTTON" = "Log In";
+
+"NO_LOGIN_NOTIFICATION_TITLE" = "My Notifications";
+"NO_LOGIN_NOTIFICATION_DESC" = "Please log in to view your notifications.";
+"NO_LOGIN_NOTIFICATION_BUTTON" = "Log In";
+
+"NO_LOGIN_PROFILE_TITLE" = "My Profile";
+"NO_LOGIN_PROFILE_DESC" = "Please log in to view your profile.";
+"NO_LOGIN_PROFILE_BUTTON" = "Log In";
+
+"NO_LOGIN_ADS_TITLE" = "My Ads";
+"NO_LOGIN_ADS_DESC" = "Please log in to view your ads.";
+"NO_LOGIN_ADS_BUTTON" = "Log In";
+

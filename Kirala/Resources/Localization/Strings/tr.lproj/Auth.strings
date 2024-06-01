@@ -1,0 +1,39 @@
+/* 
+  Auth.strings
+  Kirala
+
+  Created by Ali Çolak on 25.05.2024.
+  
+*/
+
+"EMAIL_PLACEHOLDER" = "E-Posta";
+"PASSWORD_PLACEHOLDER" = "Şifre";
+"FORGOT_PASSWORD" = "Şifremi Unuttum";
+"LOGIN_WITH_APPLE" = "Apple ile Giriş Yap";
+"LOGIN_WITH_GOOGLE" = "Google ile Giriş Yap";
+"REGISTER_WITH_APPLE" = "Apple ile Üye Ol";
+"REGISTER_WITH_GOOGLE" = "Google ile Üye Ol";
+"REGISTER" = "Üye Ol";
+"RESET_PASSWORD" = "Şifremi Yenile";
+"RESET_PASSWORD_TIP" = "Şifrenizi yenilemek istediğiniz e-posta adresinizi giriniz.";
+"NO_ACCOUNT" = "Üye değil misin?";
+"ALREADY_HAVE_ACCOUNT" = "Zaten üye misin?";
+"LOGIN" = "Giriş Yap";
+"OTHER_LOGIN_OPTIONS" = "Diğer Giriş Seçenekleri";
+"OTHER_REGISTER_OPTIONS" = "Diğer Kayıt Seçenekleri";
+"PASSWORD_TIP" = "Sifreniz en az 7 karakter ve en fazla 64 karakter olmali, harf ve
+rakam içermelidir.";
+
+"EMAIL_VALIDATION" = "Geçerli bir e-posta adresi giriniz.";
+"PASSWORD_VALIDATION" = "Geçerli bir şifre giriniz.";
+
+"ACCEPT_MEMBERSHIP_TERMS" = "Üye Ol'a basarak Üyelik Koşulları'nı kabul ediyorum.";
+"CONSENT_FOR_OFFERS" = "Tarafıma avantajlı tekliflerin sunulabilmesi amacıyla kişisel verilerimin işlenmesine ve paylaşılmasına açık rıza veriyorum.";
+"AGREE_TO_RECEIVE_MESSAGES" = "Tarafıma elektronik ileti gönderilmesini kabul ediyorum.";
+"ACKNOWLEDGE_PRIVACY_POLICY" = "Kişisel verilerimin işlenmesine yönelik aydınlatma metnini okudum ve anlıyorum.";
+
+"RESET_PASSWORD_TIP_TITLE" = "Şifre yenileme e-postası size ulaşmazsa;";
+"RESET_PASSWORD_TIP_1" = "• Şifre yenileme e-postasının gelmesi 10 dakikayı bulabilir.";
+"RESET_PASSWORD_TIP_2" = "• Spam ve diğer e-posta klasörlerinizi kontrol ediniz.";
+"RESET_PASSWORD_TIP_3" = "• Girdiğiniz e-posta adresinin doğruluğunu kontrol ediniz.";
+

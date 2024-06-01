@@ -1,0 +1,28 @@
+/* 
+  Filter.strings
+  Kirala
+
+  Created by Ali Çolak on 30.05.2024.
+  
+*/
+
+"CLEAR" = "Clear";
+"SORT" = "Sort";
+"FILTER" = "Filter";
+"CATEGORY" = "Category";
+"BRAND" = "Brand";
+"PRICE" = "Price";
+"RATING" = "Rating";
+"RENTER" = "Renter";
+"RENTAL_PERIOD" = "Rental Period";
+"CITY" = "City";
+"LOW_TO_HIGH" = "Low to High";
+"HIGH_TO_LOW" = "High to Low";
+"BESTSELLER" = "Bestseller";
+"NEWEST" = "Newest";
+"MOST_RATED" = "Most Rated";
+"RENTAL_PERIOD" = "Rental Period";
+"SELECT_ALL" = "Select All";
+"SEARCH" = "Search";
+"APPLY" = "Apply";
+"LIST_PRODUCTS" = "List Products";

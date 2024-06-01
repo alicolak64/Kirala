@@ -1,0 +1,15 @@
+/* 
+  Alerts.strings
+  Kirala
+
+  Created by Ali Çolak on 24.05.2024.
+  
+*/
+
+"NO_LOGIN_TITLE" = "Not Logged In";
+"NO_LOGIN_ACTION" = "Login";
+
+"CANCEL_ACTION" = "Cancel";
+
+
+"NO_LOGIN_FAVORITE_PRODUCT_MESSAGE" = "You need to login to favorite a product.";

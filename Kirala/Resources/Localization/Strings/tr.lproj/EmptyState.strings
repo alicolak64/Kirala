@@ -37,3 +37,30 @@
 "UNKNOWN_ERROR_TITLE" = "Bilinmeyen Hata";
 "UNKNOWN_ERROR_DESC" = "Bilinmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyin.";
 "UNKNOWN_ERROR_BUTTON" = "Tekrar Dene";
+
+"N0_LOGIN_FAVORITE_TITLE" = "Favorilerim";
+"NO_LOGIN_FAVORITE_DESC" = "Favorilerinizi görüntüleyebilmek için lütfen giriş yapın.";
+"NO_LOGIN_FAVORITE_BUTTON" = "Giriş Yap";
+
+"NO_LOGIN_CART_TITLE" = "Sepetim";
+"NO_LOGIN_CART_DESC" = "Sepetinizi görüntüleyebilmek için lütfen giriş yapın.";
+"NO_LOGIN_CART_BUTTON" = "Giriş Yap";
+
+"NO_LOGIN_ORDER_TITLE" = "Siparişlerim";
+"NO_LOGIN_ORDER_DESC" = "Siparişlerinizi görüntüleyebilmek için lütfen giriş yapın.";
+"NO_LOGIN_ORDER_BUTTON" = "Giriş Yap";
+
+"NO_LOGIN_NOTIFICATION_TITLE" = "Bildirimlerim";
+"NO_LOGIN_NOTIFICATION_DESC" = "Bildirimlerinizi görüntüleyebilmek için lütfen giriş yapın.";
+"NO_LOGIN_NOTIFICATION_BUTTON" = "Giriş Yap";
+
+"NO_LOGIN_PROFILE_TITLE" = "Profilim";
+"NO_LOGIN_PROFILE_DESC" = "Profilinizi görüntüleyebilmek için lütfen giriş yapın.";
+"NO_LOGIN_PROFILE_BUTTON" = "Giriş Yap";
+
+"NO_LOGIN_ADS_TITLE" = "İlanlarım";
+"NO_LOGIN_ADS_DESC" = "İlanlarınızı görüntüleyebilmek için lütfen giriş yapın.";
+"NO_LOGIN_ADS_BUTTON" = "Giriş Yap";
+
+
+

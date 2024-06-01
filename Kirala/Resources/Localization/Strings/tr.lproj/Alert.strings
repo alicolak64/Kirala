@@ -1,0 +1,16 @@
+/* 
+  Alerts.strings
+  Kirala
+
+  Created by Ali Çolak on 24.05.2024.
+  
+*/
+
+/* English to Turkish Localization */
+"NO_LOGIN_TITLE" = "Giriş Yapılmadı";
+
+"NO_LOGIN_ACTION" = "Giriş Yap";
+"CANCEL_ACTION" = "Geri";
+
+"NO_LOGIN_FAVORITE_PRODUCT_MESSAGE" = "Bir ürünü favorilere eklemek için giriş yapmanız gerekiyor.";
+

@@ -1,0 +1,27 @@
+/* 
+  Filter.strings
+  Kirala
+
+  Created by Ali Çolak on 30.05.2024.
+  
+*/
+
+"CLEAR" = "Temizle";
+"SORT" = "Sırala";
+"FILTER" = "Filtrele";
+"CATEGORY" = "Kategori";
+"BRAND" = "Marka";
+"PRICE" = "Fiyat";
+"RATING" = "Puan";
+"RENTER" = "Kiralamacı";
+"RENTAL_PERIOD" = "Kiralama Süresi";
+"CITY" = "Şehir";
+"LOW_TO_HIGH" = "En Düşük Fiyat";
+"HIGH_TO_LOW" = "En Yüksek Fiyat";
+"BESTSELLER" = "En Çok Satanlar";
+"NEWEST" = "En Yeniler";
+"MOST_RATED" = "En Çok Değerlendirilenler";
+"RENTAL_PERIOD" = "Kiralama Süresi";
+"SELECT_ALL" = "Tümünü Seç";
+"APPLY" = "Uygula";
+"LIST_PRODUCTS" = "Ürünleri Listele";
