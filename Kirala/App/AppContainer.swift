@@ -14,7 +14,20 @@ final class AppContainer {
     
     // MARK: - Properties
     
-    let router = AppRouter()
-    let navigationController = UINavigationController()
+    let window: UIWindow
+    
+    lazy var router: AppRouter = {
+        AppRouter(window: window)
+    }()
+    
+    lazy var authService: AuthService = {
+        AuthManager(keychainService: KeychainManager())
+    }()
+        
+    // MARK: - Initializers
+    
+    init() {
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+    }
     
 }
