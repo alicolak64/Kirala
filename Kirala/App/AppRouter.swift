@@ -52,7 +52,7 @@ final class AppRouter {
         case "home":
             navigateToHome()
         case "profile":
-            navigateToProfile()
+            navigateToProfile(userId: "")
         case "product":
             if let productId = pathComponents.first {
                 navigateToProduct(productId: productId)
@@ -60,7 +60,7 @@ final class AppRouter {
         case "oauth2":
             if let token = getToken(url: url) {
                 app.authService.saveAuthToken(token: token)
-                showLottieAnimation()
+                navigateToProfileWithLoginSuccess()
             }
         default:
             return false
@@ -74,13 +74,29 @@ final class AppRouter {
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
     }
-
-    private func navigateToProfile() {
+    
+    private func navigateToProfile(userId: String?) {
         let tabBarController = TabBarBuilder.build(with: .profile)
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
     }
+    
+    private func navigateToProfileWithLoginSuccess() {
+        let temporaryViewController = UIViewController()
+        temporaryViewController.view.backgroundColor = .clear
+        
+        window.rootViewController = temporaryViewController
+        window.makeKeyAndVisible()
+        
+        let lottieVC = LottieViewController(lottie: .loginSuccess) { [weak self] in
+            let tabBarController = TabBarBuilder.build(with: .profile)
+            self?.window.rootViewController = tabBarController
+        }
+        lottieVC.modalPresentationStyle = .fullScreen
+        temporaryViewController.present(lottieVC, animated: true)
+    }
 
+    
     private func navigateToProduct(productId: String) {
         print("Product ID: \(productId)")
     }
@@ -111,14 +127,6 @@ final class AppRouter {
         //        window.rootViewController = navigationController
         let tabBarController = TabBarBuilder.build()
         window.rootViewController = tabBarController
-    }
-    
-    private func showLottieAnimation() {
-        let lottieVC = LottieViewController(lottie: .loginSuccess) {
-            self.navigateToProfile()
-        }
-        lottieVC.modalPresentationStyle = .fullScreen
-        window.rootViewController?.present(lottieVC, animated: true, completion: nil)
     }
     
 }
