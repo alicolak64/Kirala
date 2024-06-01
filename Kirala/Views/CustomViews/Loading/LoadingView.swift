@@ -7,38 +7,28 @@
 
 import UIKit
 
+/// A view that displays a loading indicator.
 final class LoadingView: UIView, LoadingViewProtocol {
     
     // MARK: - Properties
     
+    /// The current state of the loading view.
     private var state: LoadingState = .loading {
         didSet {
-            switch state {
-            case .loading:
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    self.activityIndicator.startAnimating()
-                }
-            case .loaded:
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    self.activityIndicator.stopAnimating()
-                }
-            }
+            updateLoadingState()
         }
     }
     
     // MARK: - UI Components
     
+    /// The activity indicator to show loading state.
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
-        indicator.color = ColorPalette.black.color
+        indicator.color = ColorBackground.primary.color
         indicator.hidesWhenStopped = true
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
     }()
-    
-    
     
     // MARK: - Initializers
     
@@ -51,19 +41,15 @@ final class LoadingView: UIView, LoadingViewProtocol {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Lifecycle
+    // MARK: - Layout
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    /// Sets up the layout of the loading view.
+    private func setupLayout() {
+        addSubview(activityIndicator)
         setupConstraints()
     }
     
-    // MARK: - Layout
-    
-    private func setupLayout() {
-        addSubview(activityIndicator)
-    }
-    
+    /// Sets up the constraints for the loading view.
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -71,7 +57,22 @@ final class LoadingView: UIView, LoadingViewProtocol {
         ])
     }
     
-    // MARK: - Delegate Methods
+    // MARK: - Methods
+    
+    /// Updates the loading state of the view.
+    private func updateLoadingState() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            switch self.state {
+            case .loading:
+                self.activityIndicator.startAnimating()
+            case .loaded:
+                self.activityIndicator.stopAnimating()
+            }
+        }
+    }
+    
+    // MARK: - LoadingViewProtocol
     
     func showLoading() {
         state = .loading
@@ -80,6 +81,4 @@ final class LoadingView: UIView, LoadingViewProtocol {
     func hideLoading() {
         state = .loaded
     }
-    
 }
-
