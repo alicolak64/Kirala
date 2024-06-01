@@ -10,5 +10,7 @@ import Foundation
 enum Images: Imageable {
     
     case splash
+    case logo
+    case google
     
 }
