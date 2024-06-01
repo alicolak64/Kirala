@@ -7,47 +7,55 @@
 
 import UIKit
 
-enum ColorPalette: Colorable{
+/// An enum representing the color palette of the application, conforming to the Colorable protocol.
+enum ColorPalette: Colorable {
     
-    case appMain
+    case appPrimary
+    case appSecondary
     case border
-    case black
+    case lightBorder
     case white
     case gray
+    case black
     
-    
+    /// The hexadecimal color value for light mode.
     var lightHex: String {
         switch self {
-        case .appMain:
+        case .appPrimary:
             return "#EB3B59"
+        case .appSecondary:
+            return "#F46E82"
         case .border:
             return "#C0C0C0"
-        case .black:
-            return "#000000"
+        case .lightBorder:
+            return "#E5E5E6"
         case .white:
             return "#FFFFFF"
         case .gray:
             return "#808080"
+        case .black:
+            return "#000000"
         }
     }
     
+    /// The hexadecimal color value for dark mode.
     var darkHex: String {
         switch self {
-        case .appMain:
-            return "#EB3B59"
+        case .appPrimary:
+            return "#FF5B77"
+        case .appSecondary:
+            return "#FF7D97"
         case .border:
-            return "#C0C0C0"
-        case .black:
-            return "#000000"
+            return "#8A8A8A"
+        case .lightBorder:
+            return "#E5E5E6"
         case .white:
             return "#FFFFFF"
         case .gray:
-            return "#808080"
+            return "#A9A9A9"
+        case .black:
+            return "#000000"
         }
     }
-    
-    
-    
-    
-    
 }
+
