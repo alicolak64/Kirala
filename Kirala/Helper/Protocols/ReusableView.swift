@@ -7,19 +7,17 @@
 
 import UIKit
 
+/// A protocol that provides a reusable identifier for UIView subclasses.
 protocol ReusableView {
     
-    // MARK: - Associated Type
-    associatedtype Model
-    
     // MARK: - Static Properties
-    static var identifier: String { get }
     
-    // MARK: - Methods
-    func configure(with model: Model)
+    /// A unique identifier for the reusable view.
+    static var identifier: String { get }
 }
 
-// MARK: Default Implementation
+// MARK: - Default Implementation
+
 extension ReusableView where Self: UIView {
     static var identifier: String {
         return String(describing: self)

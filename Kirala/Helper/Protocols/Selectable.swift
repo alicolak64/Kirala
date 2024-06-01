@@ -1,29 +1,30 @@
 //
-//  Favoritable.swift
-//  UniTurkey
+//  Selectable.swift
+//  Kirala
 //
-//  Created by Ali Çolak on 22.04.2024.
+//  Created by Ali Çolak on 23.05.2024.
 //
 
 import Foundation
 
 /// A protocol to handle the favorite status of an item.
-protocol Favoritable {
+protocol Selectable {
     // MARK: - Properties
     
     /// Indicates whether the item is marked as favorite.
-    var favoriteState: FavoriteState { get set }
+    var selectionState: SelectionState { get set }
     
     // MARK: - Methods
     
     /// Toggles the favorite status of the item.
-    mutating func toggleFavorite()
+    mutating func toogleSelection()
 }
 
 // MARK: - Default Implementation
 
-extension Favoritable {
-    mutating func toggleFavorite() {
-        favoriteState.toggle()
+extension Selectable {
+    mutating func toogleSelection() {
+        selectionState.toggle()
     }
 }
+

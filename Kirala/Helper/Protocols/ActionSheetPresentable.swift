@@ -7,16 +7,33 @@
 
 import UIKit
 
-protocol ActionSheetPresentable {
-    func showActionSheet(title: String, message: String, actions: [UIAlertAction])
+/// A protocol to present action sheets in view controllers.
+protocol ActionSheetable {
+    /// Presents an action sheet with the given title, message, and actions.
+    /// - Parameters:
+    ///   - title: The title of the action sheet.
+    ///   - message: The message of the action sheet.
+    ///   - actions: The actions to add to the action sheet.
+    func showActionSheet(title: String, message: String, actionTitle: String, completion: @escaping () -> Void)
 }
 
-extension ActionSheetPresentable where Self: UIViewController {
+// MARK: - Default Implementation
+
+extension ActionSheetable where Self: UIViewController {
     
-    func showActionSheet(title: String, message: String, actions: [UIAlertAction]) {
-        let actionSheet = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-        actions.forEach { actionSheet.addAction($0) }
-        present(actionSheet, animated: true, completion: nil)
+    func showActionSheet(title: String, message: String, actionTitle: String, completion: @escaping () -> Void) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: Localization.alert.localizedString(for: "CANCEL_ACTION"), style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        let action = UIAlertAction(title: actionTitle, style: .default) { _ in
+            completion()
+        }
+        
+        alertController.addAction(action)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
 }

@@ -17,12 +17,13 @@ protocol Colorable {
 
 // MARK: - Default Implementation
 extension Colorable {
+    
     var lightColor: UIColor {
-        UIColor(hex: lightHex) ?? .white
+        UIColor(hex: lightHex) ?? UIColor.systemBackground
     }
     
     var darkColor: UIColor {
-        UIColor(hex: darkHex) ?? .black
+        UIColor(hex: darkHex) ?? UIColor.label
     }
     
     var color: UIColor {

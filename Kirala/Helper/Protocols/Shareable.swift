@@ -7,11 +7,16 @@
 
 import UIKit
 
-protocol SharePresentable {
-    func share(item: Any)
+/// A protocol to present sharing options in view controllers.
+protocol Shareable {
+    /// Shares the provided item(s) using a `UIActivityViewController`.
+    /// - Parameter items: The item(s) to be shared.
+    func share(items: [Any])
 }
 
-extension SharePresentable where Self: UIViewController {
+// MARK: - Default Implementation
+
+extension Shareable where Self: UIViewController {
     func share(items: [Any]) {
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view
