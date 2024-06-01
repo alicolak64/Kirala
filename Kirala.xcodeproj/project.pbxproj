@@ -130,7 +130,6 @@
 		E652DD012BF7DA6C00CD4866 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E652DD002BF7DA6C00CD4866 /* NotificationsViewModel.swift */; };
 		E652DD032BF7DA7C00CD4866 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E652DD022BF7DA7C00CD4866 /* NotificationsViewController.swift */; };
 		E652DD052BF7FA1400CD4866 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E652DD042BF7FA1400CD4866 /* Searchable.swift */; };
-		E65A7D7A2BF98307006A2E15 /* SliderCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A7D792BF98307006A2E15 /* SliderCounter.swift */; };
 		E65A7D7D2BF983C2006A2E15 /* CampaignCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A7D7C2BF983C2006A2E15 /* CampaignCellPresenter.swift */; };
 		E65A7D7F2BF983CA006A2E15 /* CampaignCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A7D7E2BF983CA006A2E15 /* CampaignCell.swift */; };
 		E66CDB6E2C05F7A800E94F1B /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CDB6D2C05F7A800E94F1B /* Animation.swift */; };
@@ -360,6 +359,9 @@
 		E65A7D792BF98307006A2E15 /* SliderCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCounter.swift; sourceTree = "<group>"; };
 		E65A7D7C2BF983C2006A2E15 /* CampaignCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignCellPresenter.swift; sourceTree = "<group>"; };
 		E65A7D7E2BF983CA006A2E15 /* CampaignCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignCell.swift; sourceTree = "<group>"; };
+		E65F66522C0AA6DF0045AB6D /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kirala.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E65F66532C0AA6DF0045AB6D /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiralaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E65F66542C0AA6DF0045AB6D /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiralaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E66CDB6D2C05F7A800E94F1B /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		E66CDB6F2C05F7C400E94F1B /* CALayer+ApplyShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+ApplyShadow.swift"; sourceTree = "<group>"; };
 		E66CDB712C05F7EF00E94F1B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
@@ -416,9 +418,6 @@
 		E6B294AF2BF752C000BBC20F /* EmptyStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStates.swift; sourceTree = "<group>"; };
 		E6B294B12BF7530000BBC20F /* EmptyStateContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateContracts.swift; sourceTree = "<group>"; };
 		E6B294B42BF7534800BBC20F /* LoadingContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingContracts.swift; sourceTree = "<group>"; };
-		E6B63B142C0A0C810093AA8B /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kirala.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6B63B152C0A0C810093AA8B /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiralaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6B63B162C0A0C810093AA8B /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiralaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B63B172C0A1C350093AA8B /* Notification+Center.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Center.swift"; sourceTree = "<group>"; };
 		E6B6E0A92C06414700884E94 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		E6B6E0AB2C0643AA00884E94 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
@@ -682,9 +681,9 @@
 				E645F1152BE6CE4A0038075F /* Kirala */,
 				E645F12C2BE6CE4B0038075F /* KiralaTests */,
 				E645F1362BE6CE4B0038075F /* KiralaUITests */,
-				E6B63B142C0A0C810093AA8B /* Kirala.app */,
-				E6B63B152C0A0C810093AA8B /* KiralaTests.xctest */,
-				E6B63B162C0A0C810093AA8B /* KiralaUITests.xctest */,
+				E65F66522C0AA6DF0045AB6D /* Kirala.app */,
+				E65F66532C0AA6DF0045AB6D /* KiralaTests.xctest */,
+				E65F66542C0AA6DF0045AB6D /* KiralaUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1388,7 +1387,7 @@
 				E66CDB762C05F82F00E94F1B /* JTAppleCalendar */,
 			);
 			productName = Kirala;
-			productReference = E6B63B142C0A0C810093AA8B /* Kirala.app */;
+			productReference = E65F66522C0AA6DF0045AB6D /* Kirala.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E645F1282BE6CE4B0038075F /* KiralaTests */ = {
@@ -1406,7 +1405,7 @@
 			);
 			name = KiralaTests;
 			productName = KiralaTests;
-			productReference = E6B63B152C0A0C810093AA8B /* KiralaTests.xctest */;
+			productReference = E65F66532C0AA6DF0045AB6D /* KiralaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		E645F1322BE6CE4B0038075F /* KiralaUITests */ = {
@@ -1424,7 +1423,7 @@
 			);
 			name = KiralaUITests;
 			productName = KiralaUITests;
-			productReference = E6B63B162C0A0C810093AA8B /* KiralaUITests.xctest */;
+			productReference = E65F66542C0AA6DF0045AB6D /* KiralaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -1550,7 +1549,6 @@
 				E6B6E0AA2C06414700884E94 /* Double+Extension.swift in Sources */,
 				E632A60D2BFFFEDE00727DFF /* ImageSliderViewPresenter.swift in Sources */,
 				E689FE3B2BF26C76001884D6 /* ColorPalette.swift in Sources */,
-				E65A7D7A2BF98307006A2E15 /* SliderCounter.swift in Sources */,
 				E689FE572BF298B0001884D6 /* SplashBuilder.swift in Sources */,
 				E646EE732BE794D30024269E /* APIServiceProvider.swift in Sources */,
 				E64C03042BFC0F53007771C6 /* CategoriesContracts.swift in Sources */,
