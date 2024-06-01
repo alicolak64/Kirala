@@ -1,0 +1,166 @@
+//
+//  AuthViewModel.swift
+//  Kirala
+//
+//  Created by Ali Çolak on 24.05.2024.
+//
+
+import Foundation
+
+final class AuthViewModel {
+    
+    // MARK: - Dependency Properties
+    
+    weak var delegate: AuthViewProtocol?
+    
+    private let router: AuthRouterProtocol
+    
+    private var cardState: AuthCardState = .login
+    
+    // MARK: - Initializers
+    
+    init(router: AuthRouterProtocol) {
+        self.router = router
+    }
+    
+}
+
+extension AuthViewModel: AuthViewModelProtocol {
+    
+    // MARK: - Lifecycle Methods
+    
+    func viewDidLoad() {
+        delegate?.prepareNavigationBar()
+        delegate?.prepareUI()
+        delegate?.prepareLoginCard()
+        delegate?.prepareRegisterCard()
+        delegate?.prepareResetPasswordCard()
+        delegate?.prepareWarningCard()
+    }
+    
+    func viewWillAppear() {
+        
+    }
+    
+    func viewDidAppear() {
+        delegate?.addSwipeGesture()
+        delegate?.addGestureRecognizers()
+    }
+    
+    func viewDidDisappear() {
+        delegate?.removeSwipeGesture()
+        delegate?.removeGestureRecognizers()
+    }
+    
+    func viewDidLayoutSubviews() {
+        delegate?.prepareConstraints()
+    }
+    
+    // MARK: - Actions
+    
+    func didTapCancelButton() {
+        router.navigate(to: .back)
+    }
+    
+    func didTapLoginButton() {
+        cardState = .login
+        delegate?.hideWarningCard(animated: false)
+        delegate?.showLoginCard()
+    }
+    
+    func didTapRegisterButton() {
+        cardState = .register
+        delegate?.hideWarningCard(animated: false)
+        delegate?.showRegisterCard()
+    }
+    
+    func didTapForgotPasswordButton() {
+        cardState = .resetPassword
+        delegate?.hideWarningCard(animated: false)
+        delegate?.showResetPasswordCard()
+    }
+    
+    func didTapLoginWithAppleButton() {
+        switch cardState {
+        case .login:
+            print("Login with Apple")
+        case .register:
+            print("Register with Apple")
+        case .resetPassword:
+            break
+        }
+    }
+    
+    func didTapLoginWithGoogleButton() {
+        switch cardState {
+        case .login:
+            print("Login with Google")
+        case .register:
+            print("Register with Google")
+        case .resetPassword:
+            break
+        }
+    }
+    
+    func didTapLoginButton(email: String, password: String) {
+        guard email.isValidEmail else {
+            delegate?.showWarningCard(with: Localization.auth.localizedString(for: "EMAIL_VALIDATION"), animated: true)
+            delegate?.showWarninEmailField(type: cardState)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.delegate?.hideWarningCard(animated: true)
+                self.delegate?.hideWarningEmailField(type: self.cardState)
+            }
+            return
+        }
+        
+        guard password.isValidPassword else {
+            delegate?.showWarningCard(with: Localization.auth.localizedString(for: "PASSWORD_VALIDATION"), animated: true)
+            delegate?.showWarningPasswordField(type: cardState)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.delegate?.hideWarningCard(animated: true)
+                self.delegate?.hideWarningPasswordField(type: self.cardState)
+            }
+            return
+        }
+        
+        print("Login with \(email) and \(password)")
+        
+    }
+    
+    func didTapRegisterButton(email: String, password: String) {
+        guard email.isValidEmail else {
+            delegate?.showWarningCard(with: Localization.auth.localizedString(for: "EMAIL_VALIDATION"), animated: true)
+            delegate?.showWarninEmailField(type: cardState)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.delegate?.hideWarningCard(animated: true)
+                self.delegate?.hideWarningEmailField(type: self.cardState)
+            }
+            return
+        }
+        
+        guard password.isValidPassword else {
+            delegate?.showWarningCard(with: Localization.auth.localizedString(for: "PASSWORD_VALIDATION"), animated: true)
+            delegate?.showWarningPasswordField(type: cardState)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.delegate?.hideWarningCard(animated: true)
+                self.delegate?.hideWarningPasswordField(type: self.cardState)
+            }
+            return
+        }
+        print("Register with \(email) and \(password)")
+    }
+    
+    func didTapResetPasswordButton(email: String) {
+        guard email.isValidEmail else {
+            delegate?.showWarningCard(with: Localization.auth.localizedString(for: "EMAIL_VALIDATION"), animated: true)
+            delegate?.showWarninEmailField(type: cardState)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.delegate?.hideWarningCard(animated: true)
+                self.delegate?.hideWarningEmailField(type: self.cardState)
+            }
+            return
+        }
+        print("Reset password with \(email)")
+    }
+    
+}
