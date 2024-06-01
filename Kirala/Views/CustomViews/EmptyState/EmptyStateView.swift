@@ -7,11 +7,15 @@
 
 import UIKit
 
-
+/// View to display empty state information.
 final class EmptyStateView: UIView, EmptyStateViewProtocol {
     
+    // MARK: - Properties
+    
+    /// Delegate to handle output events.
     weak var delegate: EmptyStateViewDelegate?
     
+    /// Current state of the empty state view.
     private var state: EmptyStateState = .hidden {
         didSet {
             switch state {
@@ -23,16 +27,21 @@ final class EmptyStateView: UIView, EmptyStateViewProtocol {
         }
     }
     
+    /// Duration for the show/hide animations.
     private let animationDuration: TimeInterval = 0.6
     
+    // MARK: - UI Components
+    
+    /// Circle view containing the image.
     private lazy var imageCircleView: UIView = {
         let view = UIView()
-        view.backgroundColor = ColorBackground.tertiary.dynamicColor
+        view.backgroundColor = ColorBackground.secondary.dynamicColor
         view.layer.cornerRadius = 50
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
+    /// Image view for the empty state.
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -40,6 +49,7 @@ final class EmptyStateView: UIView, EmptyStateViewProtocol {
         return imageView
     }()
     
+    /// Title label for the empty state.
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .semibold)
@@ -50,6 +60,7 @@ final class EmptyStateView: UIView, EmptyStateViewProtocol {
         return label
     }()
     
+    /// Description label for the empty state.
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 13, weight: .regular)
@@ -60,6 +71,7 @@ final class EmptyStateView: UIView, EmptyStateViewProtocol {
         return label
     }()
     
+    /// Action button for the empty state.
     private lazy var actionButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = ColorText.primary.dynamicColor
@@ -69,9 +81,21 @@ final class EmptyStateView: UIView, EmptyStateViewProtocol {
         return button
     }()
     
+    // MARK: - Initializers
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-                
+        setupLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Setup Layout
+    
+    /// Sets up the layout of the empty state view.
+    private func setupLayout() {
         backgroundColor = .clear
         state = .hidden
         
@@ -107,23 +131,20 @@ final class EmptyStateView: UIView, EmptyStateViewProtocol {
             actionButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             actionButton.widthAnchor.constraint(equalToConstant: 250),
             actionButton.heightAnchor.constraint(equalToConstant: 44)
-            
         ])
-        
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - EmptyStateViewProtocol
     
-    func configure(with state: EmptyStateProtocol) {
-        imageView.image = state.image
-        imageView.tintColor = state.imageTintColor
-        titleLabel.text = state.title
-        descriptionLabel.text = state.description
-        actionButton.setTitle(state.buttonTitle, for: .normal)
-        actionButton.backgroundColor = state.buttonBackgroundColor
-        actionButton.setTitleColor(state.buttonTitleColor, for: .normal)
+    func configure(with state: EmptyState) {
+        let data = state.data
+        imageView.image = data.image
+        imageView.tintColor = data.imageTintColor
+        titleLabel.text = data.title
+        descriptionLabel.text = data.description
+        actionButton.setTitle(data.buttonTitle, for: .normal)
+        actionButton.backgroundColor = data.buttonBackgroundColor
+        actionButton.setTitleColor(data.buttonTitleColor, for: .normal)
     }
     
     func show(withAnimation: Bool = true) {
@@ -152,15 +173,11 @@ final class EmptyStateView: UIView, EmptyStateViewProtocol {
         }
     }
     
-    @objc private func didTapButton() {
-        print("Button Tapped")
-        state = .hidden
-        notify(.didTapButton)
-    }
+    // MARK: - Actions
     
-    private func notify(_ output: EmptyStateViewOutput) {
-        delegate?.handleOutput(output)
+    @objc private func didTapButton() {
+        state = .hidden
+        delegate?.didTapActionButton()
     }
     
 }
-
