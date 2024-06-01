@@ -201,6 +201,10 @@
 		E6BF172A2C080F7600C6EA2D /* SelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BF17292C080F7600C6EA2D /* SelectCell.swift */; };
 		E6BF172D2C08218700C6EA2D /* SortPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BF172C2C08218700C6EA2D /* SortPopupView.swift */; };
 		E6BF172F2C0821AE00C6EA2D /* SortPopupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BF172E2C0821AE00C6EA2D /* SortPopupPresenter.swift */; };
+		E6D0292E2C0B7C8F005E77BE /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E6D0292D2C0B7C8F005E77BE /* Lottie */; };
+		E6D029332C0B80AE005E77BE /* Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D029322C0B80AE005E77BE /* Lottie.swift */; };
+		E6D029352C0B80D7005E77BE /* login-success.json in Resources */ = {isa = PBXBuildFile; fileRef = E6D029342C0B80D7005E77BE /* login-success.json */; };
+		E6D029372C0B825A005E77BE /* LottieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D029362C0B825A005E77BE /* LottieViewController.swift */; };
 		E6D43E382C00CACD00B7B01D /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D43E372C00CACD00B7B01D /* Keychain.swift */; settings = {COMPILER_FLAGS = "-w"; }; };
 		E6D43E3E2C00CDA400B7B01D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D43E3D2C00CDA400B7B01D /* KeychainService.swift */; };
 		E6D43E402C00D1D100B7B01D /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D43E3F2C00D1D100B7B01D /* Bundle+Extension.swift */; };
@@ -359,9 +363,9 @@
 		E65A7D792BF98307006A2E15 /* SliderCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCounter.swift; sourceTree = "<group>"; };
 		E65A7D7C2BF983C2006A2E15 /* CampaignCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignCellPresenter.swift; sourceTree = "<group>"; };
 		E65A7D7E2BF983CA006A2E15 /* CampaignCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignCell.swift; sourceTree = "<group>"; };
-		E65F66522C0AA6DF0045AB6D /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kirala.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E65F66532C0AA6DF0045AB6D /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiralaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E65F66542C0AA6DF0045AB6D /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiralaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E65F66522C0AA6DF0045AB6D /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
+		E65F66532C0AA6DF0045AB6D /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
+		E65F66542C0AA6DF0045AB6D /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
 		E66CDB6D2C05F7A800E94F1B /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		E66CDB6F2C05F7C400E94F1B /* CALayer+ApplyShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+ApplyShadow.swift"; sourceTree = "<group>"; };
 		E66CDB712C05F7EF00E94F1B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
@@ -433,6 +437,9 @@
 		E6BF17292C080F7600C6EA2D /* SelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCell.swift; sourceTree = "<group>"; };
 		E6BF172C2C08218700C6EA2D /* SortPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortPopupView.swift; sourceTree = "<group>"; };
 		E6BF172E2C0821AE00C6EA2D /* SortPopupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortPopupPresenter.swift; sourceTree = "<group>"; };
+		E6D029322C0B80AE005E77BE /* Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lottie.swift; sourceTree = "<group>"; };
+		E6D029342C0B80D7005E77BE /* login-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "login-success.json"; sourceTree = "<group>"; };
+		E6D029362C0B825A005E77BE /* LottieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieViewController.swift; sourceTree = "<group>"; };
 		E6D43E372C00CACD00B7B01D /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		E6D43E3D2C00CDA400B7B01D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		E6D43E3F2C00D1D100B7B01D /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
@@ -453,6 +460,7 @@
 				E6D43E532C00E5FE00B7B01D /* netfox in Frameworks */,
 				E66CDB772C05F82F00E94F1B /* JTAppleCalendar in Frameworks */,
 				E6D43E512C00E5EA00B7B01D /* Kingfisher in Frameworks */,
+				E6D0292E2C0B7C8F005E77BE /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +573,8 @@
 			isa = PBXGroup;
 			children = (
 				E632A56E2BFFC11400727DFF /* FavoriteAnimation.swift */,
+				E6D029322C0B80AE005E77BE /* Lottie.swift */,
+				E6D029362C0B825A005E77BE /* LottieViewController.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -681,9 +691,6 @@
 				E645F1152BE6CE4A0038075F /* Kirala */,
 				E645F12C2BE6CE4B0038075F /* KiralaTests */,
 				E645F1362BE6CE4B0038075F /* KiralaUITests */,
-				E65F66522C0AA6DF0045AB6D /* Kirala.app */,
-				E65F66532C0AA6DF0045AB6D /* KiralaTests.xctest */,
-				E65F66542C0AA6DF0045AB6D /* KiralaUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -738,8 +745,8 @@
 				E67563752BE86AD000959F1A /* Localization */,
 				E689FE342BF26B06001884D6 /* Images */,
 				E689FE352BF26B6A001884D6 /* Colors */,
-				E689FE3C2BF273BA001884D6 /* Fonts */,
 				E632A56D2BFFC0F800727DFF /* Animation */,
+				E6D029312C0B80A2005E77BE /* LottieFiles */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1187,13 +1194,6 @@
 			path = Colors;
 			sourceTree = "<group>";
 		};
-		E689FE3C2BF273BA001884D6 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
 		E689FE532BF29851001884D6 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -1283,6 +1283,14 @@
 				E6BF172C2C08218700C6EA2D /* SortPopupView.swift */,
 			);
 			path = SortPopup;
+			sourceTree = "<group>";
+		};
+		E6D029312C0B80A2005E77BE /* LottieFiles */ = {
+			isa = PBXGroup;
+			children = (
+				E6D029342C0B80D7005E77BE /* login-success.json */,
+			);
+			path = LottieFiles;
 			sourceTree = "<group>";
 		};
 		E6D43E332C00C6EB00B7B01D /* Auth */ = {
@@ -1385,6 +1393,7 @@
 				E6D43E502C00E5EA00B7B01D /* Kingfisher */,
 				E6D43E522C00E5FE00B7B01D /* netfox */,
 				E66CDB762C05F82F00E94F1B /* JTAppleCalendar */,
+				E6D0292D2C0B7C8F005E77BE /* Lottie */,
 			);
 			productName = Kirala;
 			productReference = E65F66522C0AA6DF0045AB6D /* Kirala.app */;
@@ -1463,6 +1472,7 @@
 				E60B36FA2BE9730E0082E9C3 /* XCRemoteSwiftPackageReference "netfox" */,
 				E65A7D802BF98578006A2E15 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				E66CDB752C05F82F00E94F1B /* XCRemoteSwiftPackageReference "JTAppleCalendar" */,
+				E6D0292C2C0B7C8F005E77BE /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = E645F10A2BE6CE4A0038075F;
 			projectDirPath = "";
@@ -1482,6 +1492,7 @@
 			files = (
 				E645F1202BE6CE4B0038075F /* Assets.xcassets in Resources */,
 				E6E5E1EB2BF562EF00B12BD7 /* EmptyState.strings in Resources */,
+				E6D029352C0B80D7005E77BE /* login-success.json in Resources */,
 				E6350DBA2C015B8F0026D72F /* Auth.strings in Resources */,
 				E67563702BE86A4400959F1A /* Common.strings in Resources */,
 				E690FE092C091A21006FE877 /* Filter.strings in Resources */,
@@ -1549,8 +1560,10 @@
 				E6B6E0AA2C06414700884E94 /* Double+Extension.swift in Sources */,
 				E632A60D2BFFFEDE00727DFF /* ImageSliderViewPresenter.swift in Sources */,
 				E689FE3B2BF26C76001884D6 /* ColorPalette.swift in Sources */,
+				E6D029372C0B825A005E77BE /* LottieViewController.swift in Sources */,
 				E689FE572BF298B0001884D6 /* SplashBuilder.swift in Sources */,
 				E646EE732BE794D30024269E /* APIServiceProvider.swift in Sources */,
+				E6D029332C0B80AE005E77BE /* Lottie.swift in Sources */,
 				E64C03042BFC0F53007771C6 /* CategoriesContracts.swift in Sources */,
 				E64C03102BFC0FA7007771C6 /* DetailBuilder.swift in Sources */,
 				E603AD142C0281AB00AAC17B /* RatingView.swift in Sources */,
@@ -2120,6 +2133,14 @@
 				minimumVersion = 8.0.5;
 			};
 		};
+		E6D0292C2C0B7C8F005E77BE /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2127,6 +2148,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E66CDB752C05F82F00E94F1B /* XCRemoteSwiftPackageReference "JTAppleCalendar" */;
 			productName = JTAppleCalendar;
+		};
+		E6D0292D2C0B7C8F005E77BE /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E6D0292C2C0B7C8F005E77BE /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		E6D43E502C00E5EA00B7B01D /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

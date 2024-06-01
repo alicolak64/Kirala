@@ -25,7 +25,20 @@ final class AppRouter {
         checkOnboarding()
     }
     
+    private func getToken(url: URL) -> String? {
+        // URL'i işleyip yetkilendirme kodunu çekin
+        if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            if let token = components.queryItems?.first(where: { $0.name == "token" })?.value {
+                return token
+            }
+        }
+        
+        return nil
+        
+    }
+    
     func handleDeepLink(url: URL) -> Bool {
+        
         guard let scheme = url.scheme, scheme == "kiralaapp",
               let host = url.host else {
             return false
@@ -37,10 +50,15 @@ final class AppRouter {
         case "home":
             navigateToHome()
         case "profile":
-            navigateToProfile(userId: pathComponents.first)
+            navigateToProfile()
         case "product":
             if let productId = pathComponents.first {
                 navigateToProduct(productId: productId)
+            }
+        case "oauth2":
+            if let token = getToken(url: url) {
+                app.authService.saveAuthToken(token: token)
+                showLottieAnimation()
             }
         default:
             return false
@@ -55,7 +73,7 @@ final class AppRouter {
         window.makeKeyAndVisible()
     }
 
-    private func navigateToProfile(userId: String?) {
+    private func navigateToProfile() {
         let tabBarController = TabBarBuilder.build(with: .profile)
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
@@ -91,6 +109,14 @@ final class AppRouter {
         //        window.rootViewController = navigationController
         let tabBarController = TabBarBuilder.build()
         window.rootViewController = tabBarController
+    }
+    
+    private func showLottieAnimation() {
+        let lottieVC = LottieViewController(lottie: .loginSuccess) {
+            self.navigateToProfile()
+        }
+        lottieVC.modalPresentationStyle = .fullScreen
+        window.rootViewController?.present(lottieVC, animated: true, completion: nil)
     }
     
 }
