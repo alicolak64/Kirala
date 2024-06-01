@@ -9,10 +9,8 @@ import UIKit
 
 final class TabBarBuilder: TabBarBuilderProtocol {
     
-    // MARK: - Methods
-    
-    static func build() -> UITabBarController {
-        let viewModel = TabBarViewModel()
+    static func build(with item: TabBarItem = .home) -> UITabBarController {
+        let viewModel = TabBarViewModel(initalItem: item)
         let tabBarController = TabBarController(viewModel: viewModel)
         return tabBarController
     }

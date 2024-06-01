@@ -31,48 +31,54 @@ final class TabBarController: UITabBarController {
         viewModel.delegate = self
         viewModel.viewDidLoad()
     }
-    
 }
 
 // MARK: - TabBarViewProtocol
 
 extension TabBarController: TabBarViewProtocol {
     
+    /// Sets up the initial UI of the tab bar.
     func prepareUI() {
         tabBar.barTintColor = .white
-        
         tabBar.isTranslucent = false
         tabBar.tintColor = .black
         tabBar.unselectedItemTintColor = .gray
-        tabBar.backgroundColor = ColorBackground.secondary.dynamicColor
+        tabBar.backgroundColor = ColorBackground.primary.dynamicColor
                 
         let lineView = UIView(frame: CGRect(x: 0, y: 0, width: tabBar.frame.width, height: 0.5))
         lineView.backgroundColor = .lightGray
-        
         tabBar.addSubview(lineView)
-        
     }
     
+    /// Configures the view controllers for the tab bar.
+    /// - Parameter viewControllers: An array of UINavigationController instances.
     func configureViewControllers(viewControllers: [UINavigationController]) {
         self.viewControllers = viewControllers
-        // add space between image and title
+        
+        // Adjust the title position for tab bar items
         for item in tabBar.items ?? [] {
-            item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 4)
+            item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 2)
         }
     }
-    
-    func configureInitialTabBar(index: Int) {
-        selectedIndex = index
-        tabBar.tintColor = ColorPalette.appMain.dynamicColor
+        
+    /// Sets the initial selected tab.
+    /// - Parameter item: The tab bar item to set as the initial selected tab.
+    func configureInitialTabBar(with item: TabBarItem) {
+        selectedIndex = item.rawValue
+        tabBar.tintColor = ColorPalette.appPrimary.dynamicColor
     }
-    
 }
+
+// MARK: - UITabBarControllerDelegate
 
 extension TabBarController: UITabBarControllerDelegate {
     
+    /// Handles the tab bar item selection.
+    /// - Parameters:
+    ///   - tabBar: The tab bar where the selection occurred.
+    ///   - item: The selected tab bar item.
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        
-        tabBar.tintColor = ColorPalette.appMain.dynamicColor
+        tabBar.tintColor = ColorPalette.appPrimary.dynamicColor
         
         guard
             let barItemView = item.value(forKey: "view") as? UIView,
@@ -80,12 +86,11 @@ extension TabBarController: UITabBarControllerDelegate {
         else { return }
         
         barItemImageView.contentMode = .center
-        
         animate(barItemImageView)
-        
-        
     }
     
+    /// Animates the selected tab bar item's image view.
+    /// - Parameter imageView: The image view of the selected tab bar item.
     private func animate(_ imageView: UIImageView) {
         UIView.animate(withDuration: 0.1, animations: {
             imageView.transform = CGAffineTransform(scaleX: 1.25, y: 1.25)
@@ -95,6 +100,4 @@ extension TabBarController: UITabBarControllerDelegate {
             }, completion: nil)
         }
     }
-    
 }
-

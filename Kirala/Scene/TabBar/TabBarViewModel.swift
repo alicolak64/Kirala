@@ -9,65 +9,63 @@ import UIKit
 
 final class TabBarViewModel: TabBarViewModelProtocol {
     
+    // MARK: - Properties
+    
     weak var delegate: TabBarViewProtocol?
     
     private var items = [TabBarItemArguments]()
-    
     private var controllers = [UINavigationController]()
+    private var initalTabBarItem: TabBarItem
     
+    init(initalItem: TabBarItem = .home) {
+        self.initalTabBarItem = initalItem
+    }
+    
+    // MARK: - Methods
+    
+    /// Called when the view is loaded.
     func viewDidLoad() {
-        
         setTabBarItems()
         setCurrentTabBarItems()
         
         delegate?.prepareUI()
         delegate?.configureViewControllers(viewControllers: controllers)
-        delegate?.configureInitialTabBar(index: 0)
-        
+        delegate?.configureInitialTabBar(with: initalTabBarItem)
     }
     
-    func setTabBarItems() {
-        
-        TabBarItems.allCases.forEach { item in
-            
+    /// Sets the tab bar items with their respective properties.
+    private func setTabBarItems() {
+        TabBarItem.allCases.forEach { item in
             switch item {
             case .home:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "HOME"), image: Symbols.house_fill, badge: nil, tag: 0))
+                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "HOME"), image: Symbols.houseFill, badge: nil, tag: 0))
             case .myAds:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "MY_ADS"), image: Symbols.newspaper_fill, badge: nil, tag: 1))
+                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "MY_ADS"), image: Symbols.newspaperFill, badge: nil, tag: 1))
             case .myOrders:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "MY_ORDERS"), image: Symbols.shippingbox_fill, badge: nil, tag: 2))
+                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "MY_ORDERS"), image: Symbols.shippingboxFill, badge: nil, tag: 2))
             case .cart:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "CART"), image: Symbols.cart_fill, badge: 0, tag: 3))
+                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "CART"), image: Symbols.cartFill, badge: 0, tag: 3))
             case .profile:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "PROFILE"), image: Symbols.person_fill, badge: nil, tag: 4))
+                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "PROFILE"), image: Symbols.personFill, badge: nil, tag: 4))
             }
-            
         }
-        
     }
     
-    func setCurrentTabBarItems() {
-        
-        TabBarItems.allCases.forEach { item in
-            
+    /// Sets the current tab bar items with their respective navigation controllers.
+    private func setCurrentTabBarItems() {
+        controllers = TabBarItem.allCases.map { item in
             switch item {
             case .home:
-                controllers.append(HomeNavigationBuilder.build(arguments: items[0]))
+                return HomeTabBuilder.build(arguments: items[0])
             case .myAds:
-                controllers.append(MyAdsNavigationBuilder.build(arguments: items[1]))
+                return MyAdsNavigationBuilder.build(arguments: items[1])
             case .myOrders:
-                controllers.append(MyOrdersNavigationBuilder.build(arguments: items[2]))
+                return MyOrdersNavigationBuilder.build(arguments: items[2])
             case .cart:
-                controllers.append(CartNavigationBuilder.build(arguments: items[3]))
+                return CartNavigationBuilder.build(arguments: items[3])
             case .profile:
-                controllers.append(ProfileNavigationBuilder.build(arguments: items[4]))
-                
+                return ProfileNavigationBuilder.build(arguments: items[4])
             }
-            
         }
-        
     }
-    
-    
 }
