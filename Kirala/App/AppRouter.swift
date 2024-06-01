@@ -46,6 +46,8 @@ final class AppRouter {
         
         let pathComponents = url.pathComponents.filter { $0 != "/" }
         
+        print("pathComponents", pathComponents)
+        
         switch host {
         case "home":
             navigateToHome()

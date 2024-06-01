@@ -21,7 +21,7 @@ enum Lottie: Lottiable {
     var animationName: String {
         switch self {
         case .loginSuccess:
-            return "login_success"
+            return "login-success"
         }
     }
     
