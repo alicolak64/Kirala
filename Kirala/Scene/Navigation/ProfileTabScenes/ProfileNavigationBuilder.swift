@@ -28,9 +28,15 @@ class ProfileViewController: UIViewController {
         return view
     }()
     
+    private lazy var logoutButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Çıkış Yap", style: .plain, target: self, action: #selector(didTapLogoutButton))
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ColorBackground.primary.dynamicColor
+        
         view.addSubviews( [
             emptyCardView,
         ])
@@ -54,6 +60,12 @@ class ProfileViewController: UIViewController {
             emptyCardView.show(withAnimation: true)
             return
         }
+        navigationItem.rightBarButtonItem = logoutButton
+    }
+    
+    @objc private func didTapLogoutButton() {
+        app.authService.removeAuthToken()
+        app.router.startTabBar()
     }
     
 }
@@ -61,10 +73,11 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: EmptyStateViewDelegate {
     
     func didTapActionButton() {
-        let loginViewController = AuthBuilder.build(navigationController: navigationController)
-        let loginNavController = UINavigationController(rootViewController: loginViewController)
-        loginNavController.modalPresentationStyle = .fullScreen
-        navigationController?.present(loginNavController, animated: true, completion: nil)
+        let authNavController = UINavigationController()
+        let authViewController = AuthBuilder.build(rootNavigationController: navigationController, navigationController: authNavController)
+        authNavController.viewControllers = [authViewController]
+        authNavController.modalPresentationStyle = .fullScreen
+        navigationController?.present(authNavController, animated: true, completion: nil)
     }
     
 }

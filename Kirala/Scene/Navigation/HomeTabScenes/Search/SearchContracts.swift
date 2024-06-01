@@ -22,7 +22,7 @@ enum SearchRoute {
     case detail(DetailArguments)
     case searchEditing(String)
     case textSearch(String)
-    case login
+    case auth
     case sort(SortPopupArguments, SearchViewModel)
 }
 

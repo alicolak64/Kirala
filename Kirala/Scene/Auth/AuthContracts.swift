@@ -14,11 +14,12 @@ enum AuthCardState {
 }
 
 protocol AuthBuilderProtocol {
-    static func build(navigationController: UINavigationController?) -> UIViewController
+    static func build(rootNavigationController: UINavigationController?, navigationController: UINavigationController?) -> UIViewController
 }
 
 enum AuthRoute {
     case back
+    case safari(URL)
 }
 
 protocol AuthRouterProtocol {

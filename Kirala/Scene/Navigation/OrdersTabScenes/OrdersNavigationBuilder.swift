@@ -61,10 +61,11 @@ class OrdersViewController: UIViewController {
 extension OrdersViewController: EmptyStateViewDelegate {
     
     func didTapActionButton() {
-        let loginViewController = AuthBuilder.build(navigationController: navigationController)
-        let loginNavController = UINavigationController(rootViewController: loginViewController)
-        loginNavController.modalPresentationStyle = .fullScreen
-        navigationController?.present(loginNavController, animated: true, completion: nil)
+        let authNavController = UINavigationController()
+        let authViewController = AuthBuilder.build(rootNavigationController: navigationController, navigationController: authNavController)
+        authNavController.viewControllers = [authViewController]
+        authNavController.modalPresentationStyle = .fullScreen
+        navigationController?.present(authNavController, animated: true, completion: nil)
     }
     
 }

@@ -119,7 +119,7 @@ extension SearchViewModel: SearchViewModelProtocol {
                 message: Localization.alert.localizedString(for: "NO_LOGIN_FAVORITE_PRODUCT_MESSAGE"),
                 actionTitle: Localization.alert.localizedString(for: "NO_LOGIN_ACTION"),
                 completion: { [weak self] in
-                    self?.router.navigate(to: .login)
+                    self?.router.navigate(to: .auth)
                 }
                 
             )

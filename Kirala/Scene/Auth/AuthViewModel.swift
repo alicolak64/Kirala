@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 final class AuthViewModel {
     
     // MARK: - Dependency Properties
@@ -14,13 +15,17 @@ final class AuthViewModel {
     weak var delegate: AuthViewProtocol?
     
     private let router: AuthRouterProtocol
+    private let authService: AuthService
+    private let authenticationService: AuthenticationService
     
     private var cardState: AuthCardState = .login
     
     // MARK: - Initializers
     
-    init(router: AuthRouterProtocol) {
+    init(router: AuthRouterProtocol, authService: AuthService, authenticationService: AuthenticationService) {
         self.router = router
+        self.authService = authService
+        self.authenticationService = authenticationService
     }
     
 }
@@ -94,7 +99,8 @@ extension AuthViewModel: AuthViewModelProtocol {
     func didTapLoginWithGoogleButton() {
         switch cardState {
         case .login:
-            print("Login with Google")
+            guard let url = authenticationService.loginWithGoogle() else { return }
+            router.navigate(to: .safari(url))
         case .register:
             print("Register with Google")
         case .resetPassword:

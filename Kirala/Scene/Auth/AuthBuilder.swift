@@ -9,9 +9,9 @@ import UIKit
 
 final class AuthBuilder: AuthBuilderProtocol {
     
-    static func build(navigationController: UINavigationController?) -> UIViewController {
-        let router = AuthRouter(navigationController: navigationController)
-        let viewModel = AuthViewModel(router: router)
+    static func build(rootNavigationController: UINavigationController?, navigationController: UINavigationController?) -> UIViewController {
+        let router = AuthRouter(rootNavigationController: rootNavigationController, navigationController: navigationController)
+        let viewModel = AuthViewModel(router: router, authService: app.authService, authenticationService: app.authenticationService)
         let viewController = AuthViewController(viewModel: viewModel)
         return viewController
     }

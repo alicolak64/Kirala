@@ -40,11 +40,12 @@ final class SearchRouter: SearchRouterProtocol {
         case .searchEditing(let query):
             let searchViewController = SearchBuilder.build(navigationController: navigationController, searchOption: .searchEdtiting(query))
             navigationController?.pushViewController(searchViewController, animated: false)
-        case .login:
-            let loginViewController = AuthBuilder.build(navigationController: navigationController)
-            let loginNavController = UINavigationController(rootViewController: loginViewController)
-            loginNavController.modalPresentationStyle = .fullScreen
-            navigationController?.present(loginNavController, animated: true, completion: nil)
+        case .auth:
+            let authNavController = UINavigationController()
+            let authViewController = AuthBuilder.build(rootNavigationController: navigationController, navigationController: authNavController)
+            authNavController.viewControllers = [authViewController]
+            authNavController.modalPresentationStyle = .fullScreen
+            navigationController?.present(authNavController, animated: true, completion: nil)
         case .sort(let arguments, let viewModel):
             let sortViewController = SortPopupView()
             let presenter = SortPopupPresenter(view: sortViewController, arguments: arguments)

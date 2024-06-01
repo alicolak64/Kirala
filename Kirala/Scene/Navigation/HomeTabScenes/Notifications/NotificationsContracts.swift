@@ -13,7 +13,7 @@ protocol NotificationsBuilderProtocol {
 
 enum NotificationsRoute {
     case back
-    case login
+    case auth
 }
 
 protocol NotificationsRouterProtocol {

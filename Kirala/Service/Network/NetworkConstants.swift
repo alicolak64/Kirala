@@ -10,7 +10,7 @@ import Foundation
 enum NetworkConstants {
     static var baseUrl: String {
     #if DEBUG
-        return "https://localhost:8080"
+        return "http://192.168.1.61:8080"
     #else
         return "https://example.com/api"
     #endif
@@ -18,6 +18,7 @@ enum NetworkConstants {
     
     enum Endpoints {
         enum Auth {
+            static let loginWithGoogle = "oauth2/authorize/google"
             static let login = "/auth/login"
             static let register = "/auth/register"
             static let logout = "/auth/logout"

@@ -23,6 +23,10 @@ final class AppContainer {
     lazy var authService: AuthService = {
         AuthManager(keychainService: KeychainManager())
     }()
+    
+    lazy var authenticationService: AuthenticationService = {
+        AuthenticationManager()
+    }()
         
     // MARK: - Initializers
     

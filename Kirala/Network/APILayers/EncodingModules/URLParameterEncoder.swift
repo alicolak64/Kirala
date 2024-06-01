@@ -23,10 +23,9 @@ struct URLParameterEncoder: ParameterEncoder {
         guard let url = urlRequest.url else {
             throw NetworkError.missingURL
         }
-        
         if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), !parameters.isEmpty {
             urlComponents.queryItems = parameters.map {
-                URLQueryItem(name: $0.key, value: "\($0.value)".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))
+                URLQueryItem(name: $0.key, value: "\($0.value)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))
             }
             
             urlRequest.url = urlComponents.url

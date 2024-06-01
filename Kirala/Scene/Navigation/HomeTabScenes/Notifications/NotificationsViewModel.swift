@@ -60,7 +60,7 @@ extension NotificationsViewModel: NotificationsViewModelProtocol {
     }
     
     func didTapEmptyStateActionButton() {
-        router.navigate(to: .login)
+        router.navigate(to: .auth)
     }
     
 }

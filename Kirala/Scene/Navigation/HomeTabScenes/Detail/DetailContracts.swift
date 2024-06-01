@@ -15,7 +15,7 @@ enum DetailRoute {
     case back
     case search(SearchRouteOption)
     case cart
-    case login
+    case auth
 }
 
 protocol DetailRouterProtocol {

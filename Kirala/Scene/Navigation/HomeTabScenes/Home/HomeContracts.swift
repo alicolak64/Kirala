@@ -83,7 +83,7 @@ enum HomeRoute {
     case search(SearchRouteOption)
     case notifications
     case categories
-    case login
+    case auth
 }
 
 protocol HomeRouterProtocol {
