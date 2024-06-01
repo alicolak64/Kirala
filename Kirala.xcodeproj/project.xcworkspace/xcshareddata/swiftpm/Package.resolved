@@ -1,6 +1,24 @@
 {
-  "originHash" : "7374154e7686de69a9f88fbafb081b646b02140f8d82770f46fa750840581e0e",
+  "originHash" : "c922a13fb5a38e8f985866bb7cd2809beacc776bdc8f2d8dea72f6ffaf9343a3",
   "pins" : [
+    {
+      "identity" : "jtapplecalendar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/patchthecode/JTAppleCalendar",
+      "state" : {
+        "revision" : "718f0ab68ba0fcd2bc134f6e9d30edc1b9b038e1",
+        "version" : "8.0.5"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher",
+      "state" : {
+        "revision" : "5b92f029fab2cce44386d28588098b5be0824ef5",
+        "version" : "7.11.0"
+      }
+    },
     {
       "identity" : "netfox",
       "kind" : "remoteSourceControl",
