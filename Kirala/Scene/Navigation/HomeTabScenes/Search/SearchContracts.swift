@@ -24,6 +24,8 @@ enum SearchRoute {
     case textSearch(String)
     case auth
     case sort(SortPopupArguments, SearchViewModel)
+    case pushSearchable(SearchablePopupArguments, SearchViewModel)
+    case pushMinMax(MinMaxPopupArguments, SearchViewModel)
 }
 
 enum BackButtonViewLocation {
@@ -35,8 +37,8 @@ enum FilterRoute {
     case initial(FilterPopupArguments, CGFloat, SearchViewModel)
     case back
     case dismiss
-    case apply
-    case push(SearchablePopupArguments, SearchViewModel, FilterType)
+    case pushSearchable(SearchablePopupArguments, SearchViewModel)
+    case pushMinMax(MinMaxPopupArguments, SearchViewModel)
 }
 
 protocol SearchRouterProtocol {
@@ -76,6 +78,11 @@ protocol SearchViewModelProtocol {
     func didTapImageSliderView(at indexPath: IndexPath)
     func didTapSortButton()
     func didTapFilterButton()
+    
+    func numberOfFilters(in section: Int) -> Int
+    func cellForFilterItem(at indexPath: IndexPath) -> FilterViewModelArguments?
+    func didSelectFilterItem(at indexPath: IndexPath)
+    
 }
 
 protocol SearchViewProtocol: AnyObject {
@@ -90,6 +97,8 @@ protocol SearchViewProtocol: AnyObject {
     func prepareProductsCollectionView()
     func showProductsCollectionView()
     func showFilterView()
+    func addBadgeCountFilterView(count: Int)
+    func removeBadgeCountFilterView()
     func openSearchBar()
     func openSearchBar(with query: String)
     func setSearchBarPlaceHolder(with placeholder: String)
@@ -102,6 +111,8 @@ protocol SearchViewProtocol: AnyObject {
     func reloadRows(at indexPaths: [IndexPath])
     func reloadCollectionView()
     func reloadFavoriteState(indexPath: IndexPath, favoriteState: FavoriteState)
+    func closeExpandedCell(type: FilterType)
+    func reloadFilterCell(type: FilterType)
     
     func showActionSheet(title: String, message: String, actionTitle: String, completion: @escaping () -> Void)
 

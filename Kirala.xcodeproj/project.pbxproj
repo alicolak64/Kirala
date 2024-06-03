@@ -16,6 +16,10 @@
 		E605EC082BFCF55400316724 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E605EC072BFCF55400316724 /* ProductCell.swift */; };
 		E605EC0C2BFCF71000316724 /* ProductsHeaderCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E605EC0B2BFCF71000316724 /* ProductsHeaderCellPresenter.swift */; };
 		E605EC0E2BFCF71A00316724 /* ProductsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E605EC0D2BFCF71A00316724 /* ProductsHeaderCell.swift */; };
+		E62ADF0E2C0D637B00422933 /* FilterHeaderCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62ADF0D2C0D637B00422933 /* FilterHeaderCellPresenter.swift */; };
+		E62ADF102C0D638200422933 /* FilterHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62ADF0F2C0D638200422933 /* FilterHeaderCell.swift */; };
+		E62ADF122C0DFD7300422933 /* Expandable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62ADF112C0DFD7300422933 /* Expandable.swift */; };
+		E62ADF142C0DFDB000422933 /* ExpandState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62ADF132C0DFDB000422933 /* ExpandState.swift */; };
 		E630537E2C08773D007FE3A4 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630537D2C08773D007FE3A4 /* FilterViewModel.swift */; };
 		E63053802C087752007FE3A4 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630537F2C087752007FE3A4 /* FilterView.swift */; };
 		E632A5682BFFB2ED00727DFF /* SelectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E632A5672BFFB2ED00727DFF /* SelectionState.swift */; };
@@ -179,6 +183,8 @@
 		E690FE092C091A21006FE877 /* Filter.strings in Resources */ = {isa = PBXBuildFile; fileRef = E690FE072C091A21006FE877 /* Filter.strings */; };
 		E690FE102C0923AA006FE877 /* SearchablePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690FE0F2C0923AA006FE877 /* SearchablePopupView.swift */; };
 		E690FE122C092DAB006FE877 /* SearchablePopupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690FE112C092DAB006FE877 /* SearchablePopupPresenter.swift */; };
+		E6935D0A2C0CD11600BFD7EB /* MinMaxPopupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6935D092C0CD11600BFD7EB /* MinMaxPopupPresenter.swift */; };
+		E6935D0C2C0CD12100BFD7EB /* MinMaxPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6935D0B2C0CD12100BFD7EB /* MinMaxPopupView.swift */; };
 		E6A939BD2C08F0570015B6F3 /* FilterPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A939BC2C08F0570015B6F3 /* FilterPopupView.swift */; };
 		E6A939BF2C08F3FF0015B6F3 /* FilterPopupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A939BE2C08F3FF0015B6F3 /* FilterPopupPresenter.swift */; };
 		E6A939C22C08F4780015B6F3 /* FilterCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A939C12C08F4780015B6F3 /* FilterCellPresenter.swift */; };
@@ -244,6 +250,13 @@
 		E605EC072BFCF55400316724 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		E605EC0B2BFCF71000316724 /* ProductsHeaderCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsHeaderCellPresenter.swift; sourceTree = "<group>"; };
 		E605EC0D2BFCF71A00316724 /* ProductsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsHeaderCell.swift; sourceTree = "<group>"; };
+		E62ADF092C0D5CD400422933 /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
+		E62ADF0A2C0D5CD400422933 /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
+		E62ADF0B2C0D5CD400422933 /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
+		E62ADF0D2C0D637B00422933 /* FilterHeaderCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHeaderCellPresenter.swift; sourceTree = "<group>"; };
+		E62ADF0F2C0D638200422933 /* FilterHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHeaderCell.swift; sourceTree = "<group>"; };
+		E62ADF112C0DFD7300422933 /* Expandable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expandable.swift; sourceTree = "<group>"; };
+		E62ADF132C0DFDB000422933 /* ExpandState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandState.swift; sourceTree = "<group>"; };
 		E630537D2C08773D007FE3A4 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		E630537F2C087752007FE3A4 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		E632A5672BFFB2ED00727DFF /* SelectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionState.swift; sourceTree = "<group>"; };
@@ -363,9 +376,6 @@
 		E65A7D792BF98307006A2E15 /* SliderCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCounter.swift; sourceTree = "<group>"; };
 		E65A7D7C2BF983C2006A2E15 /* CampaignCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignCellPresenter.swift; sourceTree = "<group>"; };
 		E65A7D7E2BF983CA006A2E15 /* CampaignCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignCell.swift; sourceTree = "<group>"; };
-		E65F66522C0AA6DF0045AB6D /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
-		E65F66532C0AA6DF0045AB6D /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
-		E65F66542C0AA6DF0045AB6D /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
 		E66CDB6D2C05F7A800E94F1B /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		E66CDB6F2C05F7C400E94F1B /* CALayer+ApplyShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+ApplyShadow.swift"; sourceTree = "<group>"; };
 		E66CDB712C05F7EF00E94F1B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
@@ -415,6 +425,8 @@
 		E690FE0A2C091A26006FE877 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Filter.strings; sourceTree = "<group>"; };
 		E690FE0F2C0923AA006FE877 /* SearchablePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchablePopupView.swift; sourceTree = "<group>"; };
 		E690FE112C092DAB006FE877 /* SearchablePopupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchablePopupPresenter.swift; sourceTree = "<group>"; };
+		E6935D092C0CD11600BFD7EB /* MinMaxPopupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxPopupPresenter.swift; sourceTree = "<group>"; };
+		E6935D0B2C0CD12100BFD7EB /* MinMaxPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxPopupView.swift; sourceTree = "<group>"; };
 		E6A939BC2C08F0570015B6F3 /* FilterPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPopupView.swift; sourceTree = "<group>"; };
 		E6A939BE2C08F3FF0015B6F3 /* FilterPopupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPopupPresenter.swift; sourceTree = "<group>"; };
 		E6A939C12C08F4780015B6F3 /* FilterCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCellPresenter.swift; sourceTree = "<group>"; };
@@ -551,6 +563,15 @@
 			path = Header;
 			sourceTree = "<group>";
 		};
+		E62ADF0C2C0D636300422933 /* FilterHeader */ = {
+			isa = PBXGroup;
+			children = (
+				E62ADF0D2C0D637B00422933 /* FilterHeaderCellPresenter.swift */,
+				E62ADF0F2C0D638200422933 /* FilterHeaderCell.swift */,
+			);
+			path = FilterHeader;
+			sourceTree = "<group>";
+		};
 		E630537C2C087715007FE3A4 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,6 +586,7 @@
 			children = (
 				E632A5672BFFB2ED00727DFF /* SelectionState.swift */,
 				E632A5692BFFB6D400727DFF /* FavoriteState.swift */,
+				E62ADF132C0DFDB000422933 /* ExpandState.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -648,6 +670,7 @@
 			isa = PBXGroup;
 			children = (
 				E6A939C02C08F4600015B6F3 /* Filter */,
+				E62ADF0C2C0D636300422933 /* FilterHeader */,
 				E6BF17262C080F2D00C6EA2D /* Select */,
 				E603AD052C0252B300AAC17B /* SearchProduct */,
 				E605EC042BFCF4C300316724 /* Product */,
@@ -802,6 +825,7 @@
 				E645F1832BE6DF250038075F /* LoadingPerformable.swift */,
 				E652DD042BF7FA1400CD4866 /* Searchable.swift */,
 				E673C3C22BFBDC2B0041957A /* BackNavigatable.swift */,
+				E62ADF112C0DFD7300422933 /* Expandable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1215,6 +1239,15 @@
 			path = SearchablePopup;
 			sourceTree = "<group>";
 		};
+		E6935D082C0CD0F400BFD7EB /* MinMaxPopup */ = {
+			isa = PBXGroup;
+			children = (
+				E6935D092C0CD11600BFD7EB /* MinMaxPopupPresenter.swift */,
+				E6935D0B2C0CD12100BFD7EB /* MinMaxPopupView.swift */,
+			);
+			path = MinMaxPopup;
+			sourceTree = "<group>";
+		};
 		E6A939BB2C08EED40015B6F3 /* FilterPopup */ = {
 			isa = PBXGroup;
 			children = (
@@ -1356,6 +1389,7 @@
 				E6BF172B2C08214500C6EA2D /* SortPopup */,
 				E6A939BB2C08EED40015B6F3 /* FilterPopup */,
 				E690FE0B2C0922E8006FE877 /* SearchablePopup */,
+				E6935D082C0CD0F400BFD7EB /* MinMaxPopup */,
 				E6BF171D2C0809C600C6EA2D /* BottomPopupController */,
 				E66CDB782C05F83800E94F1B /* Calendar */,
 				E66CDB6C2C05F79500E94F1B /* PrettyCard */,
@@ -1396,7 +1430,7 @@
 				E6D0292D2C0B7C8F005E77BE /* Lottie */,
 			);
 			productName = Kirala;
-			productReference = E65F66522C0AA6DF0045AB6D /* Kirala.app */;
+			productReference = E62ADF092C0D5CD400422933 /* Kirala.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E645F1282BE6CE4B0038075F /* KiralaTests */ = {
@@ -1414,7 +1448,7 @@
 			);
 			name = KiralaTests;
 			productName = KiralaTests;
-			productReference = E65F66532C0AA6DF0045AB6D /* KiralaTests.xctest */;
+			productReference = E62ADF0A2C0D5CD400422933 /* KiralaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		E645F1322BE6CE4B0038075F /* KiralaUITests */ = {
@@ -1432,7 +1466,7 @@
 			);
 			name = KiralaUITests;
 			productName = KiralaUITests;
-			productReference = E65F66542C0AA6DF0045AB6D /* KiralaUITests.xctest */;
+			productReference = E62ADF0B2C0D5CD400422933 /* KiralaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -1543,10 +1577,13 @@
 				E66CDB8D2C05F86B00E94F1B /* FastisView.swift in Sources */,
 				E646EE6D2BE794D20024269E /* URLParameterEncoder.swift in Sources */,
 				E645F1702BE6D3AF0038075F /* UserDefaults+Extension.swift in Sources */,
+				E6935D0A2C0CD11600BFD7EB /* MinMaxPopupPresenter.swift in Sources */,
 				E6BF172D2C08218700C6EA2D /* SortPopupView.swift in Sources */,
 				E645F1782BE6D3BD0038075F /* AlertPresentable.swift in Sources */,
 				E603AD0B2C02549400AAC17B /* Review.swift in Sources */,
 				E646EE682BE794D20024269E /* UrlRequest+Extension.swift in Sources */,
+				E6935D0C2C0CD12100BFD7EB /* MinMaxPopupView.swift in Sources */,
+				E62ADF0E2C0D637B00422933 /* FilterHeaderCellPresenter.swift in Sources */,
 				E645F16E2BE6D3AF0038075F /* UIView+Extension.swift in Sources */,
 				E66CDB8E2C05F86B00E94F1B /* MonthHeader.swift in Sources */,
 				E635ECAF2BF8FBAA00AD36EC /* CategoriesHeaderViewPresenter.swift in Sources */,
@@ -1559,6 +1596,7 @@
 				E6D43E382C00CACD00B7B01D /* Keychain.swift in Sources */,
 				E6B6E0AA2C06414700884E94 /* Double+Extension.swift in Sources */,
 				E632A60D2BFFFEDE00727DFF /* ImageSliderViewPresenter.swift in Sources */,
+				E62ADF142C0DFDB000422933 /* ExpandState.swift in Sources */,
 				E689FE3B2BF26C76001884D6 /* ColorPalette.swift in Sources */,
 				E6D029372C0B825A005E77BE /* LottieViewController.swift in Sources */,
 				E689FE572BF298B0001884D6 /* SplashBuilder.swift in Sources */,
@@ -1620,6 +1658,7 @@
 				E66CDB8F2C05F86B00E94F1B /* ShortcutContainerView.swift in Sources */,
 				E6350DB22C013B070026D72F /* RegisterCard.swift in Sources */,
 				E6B63B182C0A1C350093AA8B /* Notification+Center.swift in Sources */,
+				E62ADF102C0D638200422933 /* FilterHeaderCell.swift in Sources */,
 				E6B294B22BF7530000BBC20F /* EmptyStateContracts.swift in Sources */,
 				E652DCF12BF7D9FA00CD4866 /* SearchContracts.swift in Sources */,
 				E689FE5D2BF298E1001884D6 /* SplashRouter.swift in Sources */,
@@ -1655,6 +1694,7 @@
 				E645F1752BE6D3AF0038075F /* ReusableView.swift in Sources */,
 				E645F1712BE6D3AF0038075F /* Colorable.swift in Sources */,
 				E66CDB6E2C05F7A800E94F1B /* Animation.swift in Sources */,
+				E62ADF122C0DFD7300422933 /* Expandable.swift in Sources */,
 				E645F17E2BE6D8220038075F /* Shareable.swift in Sources */,
 				E6A939C22C08F4780015B6F3 /* FilterCellPresenter.swift in Sources */,
 				E605EC062BFCF53600316724 /* ProductCellPresenter.swift in Sources */,

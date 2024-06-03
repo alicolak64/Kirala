@@ -32,6 +32,7 @@ final class SearchViewController: UIViewController, SwipePerformable, BackNaviga
         let viewModel = FilterViewModel()
         let view = FilterView(viewModel: viewModel)
         viewModel.delegate = self
+        viewModel.view = view
         view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -146,7 +147,7 @@ extension SearchViewController: SearchViewProtocol {
             
             filterView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             filterView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            filterView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            filterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             filterView.heightAnchor.constraint(equalToConstant: 50),
             
             
@@ -223,6 +224,15 @@ extension SearchViewController: SearchViewProtocol {
         }
     }
     
+    func addBadgeCountFilterView(count: Int) {
+        filterView.setBadgeCount(count)
+    }
+    
+    func removeBadgeCountFilterView() {
+        filterView.removeBadge()
+    }
+
+    
 }
 
 extension SearchViewController: UISearchBarDelegate, Searchable {
@@ -293,6 +303,26 @@ extension SearchViewController: FilterViewDelegate {
     
     func didTapFilterButton() {
         viewModel.didTapFilterButton()
+    }
+    
+    func numberOfItems(in section: Int) -> Int {
+        viewModel.numberOfFilters(in: section)
+    }
+    
+    func cellForItem(at indexPath: IndexPath) -> FilterViewModelArguments? {
+        viewModel.cellForFilterItem(at: indexPath)
+    }
+    
+    func didSelectItem(at indexPath: IndexPath) {
+        viewModel.didSelectFilterItem(at: indexPath)
+    }
+    
+    func closeExpandedCell(type: FilterType) {
+        filterView.closeExpandedCell(type: type)
+    }
+    
+    func reloadFilterCell(type: FilterType) {
+        filterView.reloadFilterCell(type: type)
     }
     
 }

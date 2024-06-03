@@ -66,6 +66,7 @@ final class SearchViewModel {
     private var sortOptions: [SortOption] = SortOption.makeSortOptions()
     private var filterOptions: [FilterOption] = FilterOption.makeFilterOptions()
     private var searchbalePopupOptions: [SearchablePopupType: [SearchablePopupItem]] = [:]
+    private var minMaxPopupOptions: [MinMaxPopupType: [MinMaxPopupItem]] = [:]
     
     // MARK: - Initializers
     
@@ -75,7 +76,9 @@ final class SearchViewModel {
         self.authService = authService
         self.filterRouter = filterRouter
         self.searchbalePopupOptions = Dictionary(uniqueKeysWithValues: SearchablePopupType.allCases.map { ($0, []) })
+        self.minMaxPopupOptions = Dictionary(uniqueKeysWithValues: MinMaxPopupType.allCases.map { ($0, []) })
         addInitialSearchableFilterOptions()
+        addInitialMinMaxPopupOptions()
     }
     
     private func addInitialSearchableFilterOptions() {
@@ -84,10 +87,15 @@ final class SearchViewModel {
         }
     }
     
+    private func addInitialMinMaxPopupOptions() {
+        MinMaxPopupType.allCases.forEach { type in
+            minMaxPopupOptions[type] = MinMaxPopupArguments.mockData(type: type).items
+        }
+    }
+    
 }
 
 extension SearchViewModel: SearchViewModelProtocol {
-    
     
     func numberOfSections() -> Int {
         return 1
@@ -250,16 +258,50 @@ extension SearchViewModel: SearchViewModelProtocol {
         filterRouter.navigate(to: .initial(FilterPopupArguments(title: Localization.filter.localizedString(for: "FILTER"), filterOptions: filterOptions), 550, self))
     }
     
+    func numberOfFilters(in section: Int) -> Int {
+        return filterOptions.count
+    }
+    
+    func cellForFilterItem(at indexPath: IndexPath) -> FilterViewModelArguments? {
+        guard indexPath.row < filterOptions.count else { return nil }
+        guard let option = filterOptions[safe: indexPath.row] else { return nil }
+        return FilterViewModelArguments(title: option.title, type: option.type, isAvaliableSelectedItems: !option.selectedItems.isEmpty)
+    }
+    
+    func didSelectFilterItem(at indexPath: IndexPath) {
+        guard indexPath.row < filterOptions.count else { return }
+        let type = filterOptions[indexPath.row].type
+        switch type {
+        case .category, .brand, .city, .renter:
+            router.navigate(to: .pushSearchable(SearchablePopupArguments(title: getSearchableItemTitle(with: type.convertSearchablePopupType()), type: type.convertSearchablePopupType(), items: searchbalePopupOptions[type.convertSearchablePopupType()] ?? []), self))
+        case .price, .rating, .rentalPeriod:
+            router.navigate(to: .pushMinMax(
+                MinMaxPopupArguments(
+                    title: getMinMaxItemTitle(with: type.convertMinMaxPopupType()),
+                    type: type.convertMinMaxPopupType(),
+                    items: minMaxPopupOptions[type.convertMinMaxPopupType()] ?? []
+                ),
+                self
+            ))
+        }
+    }
+    
 }
 
 extension SearchViewModel: SortPopupDelegate {
     
     func didSelectSortOption(_ sortType: SortType) {
+        let oldSortOptionType = sortOptions.first { $0.selectionState == .selected }?.sortType
         sortOptions = sortOptions.map { option in
             var updatedOption = option
-            updatedOption.selectionState = (option.sortType == sortType) ? .selected : .unselected
+            if option.sortType == sortType {
+                updatedOption.selectionState = .selected
+            } else if option.sortType == oldSortOptionType {
+                updatedOption.selectionState = .unselected
+            }
             return updatedOption
         }
+        
     }
     
 }
@@ -278,21 +320,38 @@ extension SearchViewModel: FilterPopupDelegate {
             return Localization.filter.localizedString(for: "RENTER")
         }
     }
+    private func getMinMaxItemTitle(with type: MinMaxPopupType) -> String {
+        switch type {
+        case .price:
+            return Localization.filter.localizedString(for: "PRICE")
+        case .rating:
+            return Localization.filter.localizedString(for: "RATING")
+        case .rentalPeriod:
+            return Localization.filter.localizedString(for: "RENTAL_PERIOD")
+        }
+    }
         
     func didSelectFilterOption(_ option: FilterType) {
         switch option {
         case .category, .brand, .city, .renter:
-            filterRouter.navigate(to: .push(
+            filterRouter.navigate(to: .pushSearchable(
                 SearchablePopupArguments(
                     title: getSearchableItemTitle(with: option.convertSearchablePopupType()),
                     type: option.convertSearchablePopupType(),
                     items: searchbalePopupOptions[option.convertSearchablePopupType()] ?? []),
-                self,
-                option
+                self
             ))
-        default:
-            break
+        case .price, .rating, .rentalPeriod:
+            filterRouter.navigate(to: .pushMinMax(
+                MinMaxPopupArguments(
+                    title: getMinMaxItemTitle(with: option.convertMinMaxPopupType()),
+                    type: option.convertMinMaxPopupType(),
+                    items: minMaxPopupOptions[option.convertMinMaxPopupType()] ?? []
+                ),
+                self
+            ))
         }
+        
     }
     
     func didTapClearFilterButton() {
@@ -312,9 +371,34 @@ extension SearchViewModel: FilterPopupDelegate {
                 return updatedItem
             }
         }
+        
         SearchablePopupType.allCases.forEach { type in
             notifySearchableFilterOptionsDidChange(type: type, items: [])
         }
+        
+        MinMaxPopupType.allCases.forEach { type in
+            let selectedItemsCount = minMaxPopupOptions[type]?.filter { $0.selectionState == .selected }.count ?? 0
+            if selectedItemsCount == 0 { return }
+            filterOptions = filterOptions.map { option in
+                var updatedOption = option
+                if option.type == type.convertFilterType() {
+                    updatedOption.selectedItems = []
+                }
+                return updatedOption
+            }
+            minMaxPopupOptions[type] = minMaxPopupOptions[type]?.map { item in
+                var updatedItem = item
+                updatedItem.selectionState = .unselected
+                return updatedItem
+            }
+            minMaxPopupOptions[type]?.removeAll(where : {$0.minMax.isCustom == true})
+        }
+        
+        MinMaxPopupType.allCases.forEach { type in
+            notifyMinMaxPopupOptionsDidChange(type: type, items: [])
+        }
+        
+        delegate?.removeBadgeCountFilterView()
             
     }
     
@@ -332,11 +416,26 @@ extension SearchViewModel: SearchablePopupDelegate {
     
     func viewWillDisappear(with selectedItems: [SearchablePopupItem], type: SearchablePopupType) {
         changeSearchableFilterOptions(with: selectedItems, type: type)
+        changeBadgeCount()
+        delegate?.closeExpandedCell(type: type.convertFilterType())
+        delegate?.reloadFilterCell(type: type.convertFilterType())
     }
     
     
     func didTapApplyButton(with selectedItems: [SearchablePopupItem], type: SearchablePopupType) {
         filterRouter.navigate(to: .back)
+    }
+    
+    private func changeBadgeCount() {
+        let badgeCount = filterOptions.reduce(0) { result, option in
+            result + (option.type == .price || option.type == .rating || option.type == .rentalPeriod ? (option.selectedItems.isEmpty ? 0 : 1) : option.selectedItems.count)
+        }
+
+        if badgeCount == 0 {
+            delegate?.removeBadgeCountFilterView()
+        } else {
+            delegate?.addBadgeCountFilterView(count: badgeCount)
+        }
     }
     
     private func changeSearchableFilterOptions(with items: [SearchablePopupItem], type: SearchablePopupType) {
@@ -354,6 +453,71 @@ extension SearchViewModel: SearchablePopupDelegate {
     
     private func notifySearchableFilterOptionsDidChange(type: SearchablePopupType, items: [String]) {
         NotificationCenter.default.post(name: .searchableFilterOptionsDidChange, object: nil, userInfo: ["type": type.convertFilterType(), "items": items])
+    }
+        
+}
+
+extension SearchViewModel: MinMaxPopupDelegate {
+    
+    func didTapApplyButton(with items: [MinMaxPopupItem], type: MinMaxPopupType) {
+        filterRouter.navigate(to: .back)
+    }
+    
+    func viewWillDisappear(with items: [MinMaxPopupItem], type: MinMaxPopupType) {
+        changeMinMaxPopupOptions(with: items, type: type)
+        changeBadgeCount()
+        delegate?.closeExpandedCell(type: type.convertFilterType())
+        delegate?.reloadFilterCell(type: type.convertFilterType())
+    }
+
+    
+    private func changeMinMaxPopupOptions(with items: [MinMaxPopupItem], type: MinMaxPopupType) {
+        
+        if let selectedItem = items.first(where: { $0.selectionState == .selected }) {
+            if let min = selectedItem.minMax.min, let max = selectedItem.minMax.max {
+                if min > max {
+                    return
+                }
+            }
+        }
+        
+        let selectedItem = items.first(where: { $0.selectionState == .selected })
+        
+        minMaxPopupOptions[type] = items
+        
+        guard let selectedItem = selectedItem else {
+            filterOptions[type.convertFilterType().rawValue].selectedItems = []
+            notifyMinMaxPopupOptionsDidChange(type: type, items: filterOptions[type.convertFilterType().rawValue].selectedItems)
+            return
+        }
+        
+        let item = selectedItem.minMax
+        
+        switch type {
+        case .price, .rentalPeriod:
+            if item.isCustom {
+                if item.min != nil && item.max == nil {
+                    filterOptions[type.convertFilterType().rawValue].selectedItems = [ Localization.filter.localizedString(for: "MIN"), item.min?.formatIntAndString ?? ""]
+                } else if item.min == nil && item.max != nil {
+                    filterOptions[type.convertFilterType().rawValue].selectedItems = [ Localization.filter.localizedString(for: "MAX"), item.max?.formatIntAndString ?? ""]
+                } else {
+                    filterOptions[type.convertFilterType().rawValue].selectedItems = [item.min?.formatIntAndString ?? "", "-" ,  item.max?.formatIntAndString ?? ""]
+                }
+            } else {
+                filterOptions[type.convertFilterType().rawValue].selectedItems = [item.min?.formatIntAndString ?? "", "-" ,  item.max?.formatIntAndString ?? ""]
+            }
+        case .rating:
+            guard let minStar = item.min else { return }
+            filterOptions[type.convertFilterType().rawValue].selectedItems = [minStar.formatIntAndString, Localization.filter.localizedString(for: "STAR_AND_ABOVE")]
+        }
+        
+        
+        
+        notifyMinMaxPopupOptionsDidChange(type: type, items: filterOptions[type.convertFilterType().rawValue].selectedItems)
+    }
+    
+    private func notifyMinMaxPopupOptionsDidChange(type: MinMaxPopupType, items: [String]) {
+        NotificationCenter.default.post(name: .minMaxFilterOptionsDidChange, object: nil, userInfo: ["type": type.convertFilterType(), "items": items])
     }
     
 }

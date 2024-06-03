@@ -52,6 +52,18 @@ final class SearchRouter: SearchRouterProtocol {
             sortViewController.presenter = presenter
             presenter.delegate = viewModel
             navigationController?.present(sortViewController, animated: true)
+        case .pushSearchable(let arguments, let viewModel):
+            let searchablePopupViewController = SearchablePopupView()
+            let presenter = SearchablePopupPresenter(view: searchablePopupViewController, arguments: arguments)
+            searchablePopupViewController.presenter = presenter
+            presenter.delegate = viewModel
+            navigationController?.present(searchablePopupViewController, animated: true)
+        case .pushMinMax(let arguments, let viewModel):
+            let minMaxPopupViewController = MinMaxPopupView()
+            let presenter = MinMaxPopupPresenter(view: minMaxPopupViewController, arguments: arguments)
+            minMaxPopupViewController.presenter = presenter
+            presenter.delegate = viewModel
+            navigationController?.present(minMaxPopupViewController, animated: true)
         }
         
     }
@@ -84,23 +96,23 @@ final class FilterRouter: FilterRouterProtocol {
         case .dismiss:
             rootNavigationController?.dismiss(animated: true, completion: nil)
         case .back:
-            navigationController?.popViewController(animated: true)
-            if navigationController?.viewControllers.count == 1 {
-                navigationController?.updatePopupHeight(to: initalHeight)
+            if navigationController?.viewControllers.count == 0 {
+                rootNavigationController?.dismiss(animated: true, completion: nil)
+            } else {
+                navigationController?.popViewController(animated: true)
             }
-        case .push(let arguments, let viewModel, let type):
-            switch type {
-            case .category, .brand, .renter, .city:
-                let searchablePopupViewController = SearchablePopupView()
-                let presenter = SearchablePopupPresenter(view: searchablePopupViewController, arguments: arguments)
-                searchablePopupViewController.presenter = presenter
-                presenter.delegate = viewModel
-                navigationController?.pushViewController(searchablePopupViewController, animated: true)
-            default:
-                break
-            }
-        default:
-            break
+        case .pushSearchable(let arguments, let viewModel):
+            let searchablePopupViewController = SearchablePopupView()
+            let presenter = SearchablePopupPresenter(view: searchablePopupViewController, arguments: arguments)
+            searchablePopupViewController.presenter = presenter
+            presenter.delegate = viewModel
+            navigationController?.pushViewController(searchablePopupViewController, animated: true)
+        case .pushMinMax(let arguments, let viewModel):
+            let minMaxPopupViewController = MinMaxPopupView()
+            let presenter = MinMaxPopupPresenter(view: minMaxPopupViewController, arguments: arguments)
+            minMaxPopupViewController.presenter = presenter
+            presenter.delegate = viewModel
+            navigationController?.pushViewController(minMaxPopupViewController, animated: true)
         }
     }
 }
