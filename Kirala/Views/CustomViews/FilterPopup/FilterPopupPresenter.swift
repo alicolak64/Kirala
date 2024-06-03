@@ -30,6 +30,19 @@ enum FilterType: Int, CaseIterable {
             fatalError("SearchablePopupType not found for \(self)")
         }
     }
+    
+    func convertMinMaxPopupType() -> MinMaxPopupType {
+        switch self {
+        case .price:
+            return .price
+        case .rating:
+            return .rating
+        case .rentalPeriod:
+            return .rentalPeriod
+        default:
+            fatalError("SearchablePopupType not found for \(self)")
+        }
+    }
 }
 
 struct FilterOption {
@@ -81,6 +94,7 @@ protocol FilterPopupPresenterProtocol {
     func didTapDismissButton()
     func didTapClearButton()
     func didTapListProductsButton()
+    func isSearchableFilterOption(indexPath: IndexPath) -> Bool
 }
 
 protocol FilterPopupViewProtocol: AnyObject {
@@ -113,10 +127,11 @@ final class FilterPopupPresenter {
     
     private func addObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(searchableFilterOptionsDidChange(_:)), name: .searchableFilterOptionsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(minMaxFilterOptionsDidChange(_:)), name: .minMaxFilterOptionsDidChange, object: nil)
     }
  
     private func removeObserver() {
-        NotificationCenter.default.removeObserver(self, name: .searchableFilterOptionsDidChange, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .minMaxFilterOptionsDidChange, object: nil)
     }
     
     @objc private func searchableFilterOptionsDidChange(_ notification: Notification) {
@@ -130,6 +145,18 @@ final class FilterPopupPresenter {
             view?.reloadRows(at: [IndexPath(row: type.rawValue, section: 0)])
         }
         
+    }
+    
+    @objc private func minMaxFilterOptionsDidChange(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let type = userInfo["type"] as? FilterType,
+              let items = userInfo["items"] as? [String] else {
+            return
+        }
+        selectedItems[type] = [items.joined(separator: " ")]
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak view] in
+            view?.reloadRows(at: [IndexPath(row: type.rawValue, section: 0)])
+        }
     }
 
 }
@@ -174,6 +201,11 @@ extension FilterPopupPresenter: FilterPopupPresenterProtocol {
     
     func didTapListProductsButton() {
         delegate?.didTapDismissButton()
+    }
+    
+    func isSearchableFilterOption(indexPath: IndexPath) -> Bool {
+        let option = arguments.filterOptions[indexPath.row]
+        return option.type == .category || option.type == .brand || option.type == .city || option.type == .renter
     }
     
 }

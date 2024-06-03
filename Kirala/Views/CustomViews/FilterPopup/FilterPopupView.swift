@@ -37,8 +37,9 @@ final class FilterPopupView: BottomPopupViewController {
     }()
         
     private lazy var clearNavigationButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: Localization.filter.localizedString(for: "CLEAR"), style: .plain, target: self, action: #selector(didTapClearButton))
+        let button = UIBarButtonItem(title: Localization.filter.localizedString(for: "CLEAR").uppercased(), style: .plain, target: self, action: #selector(didTapClearButton))
         button.tintColor = ColorPalette.appPrimary.dynamicColor
+        button.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 14, weight: .semibold)], for: .normal)
         return button
     }()
                 
@@ -164,6 +165,9 @@ extension FilterPopupView: UITableViewDelegate, UITableViewDataSource {
         let cell: FilterCell = tableView.dequeueReusableCell(for: indexPath)
         let presenter = FilterCellPresenter(view: cell, arguments: arguments)
         cell.presenter = presenter
+        if self.presenter.isSearchableFilterOption(indexPath: indexPath) {
+            presenter.showSelectedItemsCount()
+        }
         return cell
     }
     
