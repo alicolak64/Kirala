@@ -12,6 +12,7 @@ enum ColorPalette: Colorable {
     
     case appPrimary
     case appSecondary
+    case appTertiary
     case border
     case lightBorder
     case white
@@ -25,6 +26,8 @@ enum ColorPalette: Colorable {
             return "#EB3B59"
         case .appSecondary:
             return "#F46E82"
+        case .appTertiary:
+            return "#FCE2E0"
         case .border:
             return "#C0C0C0"
         case .lightBorder:
@@ -45,6 +48,8 @@ enum ColorPalette: Colorable {
             return "#FF5B77"
         case .appSecondary:
             return "#FF7D97"
+        case .appTertiary:
+            return "#FCE2E0"
         case .border:
             return "#8A8A8A"
         case .lightBorder:
