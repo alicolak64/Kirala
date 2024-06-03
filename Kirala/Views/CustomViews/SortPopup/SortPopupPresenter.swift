@@ -40,7 +40,8 @@ extension BottomPopupAttributes {
     }
 }
 
-struct SortOption {
+struct SortOption: Selectable {
+    
     let title: String
     let sortType: SortType
     var selectionState: SelectionState
