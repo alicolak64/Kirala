@@ -40,6 +40,8 @@ enum Symbols: Symbolable {
     case sliderHorizontal3
     case chevronRight
     case xmark
+    case chevronDown
+    case chevronUp
     
     var symbolName: String {
         switch self {
@@ -105,6 +107,10 @@ enum Symbols: Symbolable {
             return "chevron.right"
         case .xmark:
             return "xmark"
+        case .chevronDown:
+            return "chevron.down"
+        case .chevronUp:
+            return "chevron.up"
         }
     }
     
