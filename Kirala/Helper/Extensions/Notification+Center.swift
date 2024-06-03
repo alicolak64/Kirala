@@ -9,4 +9,5 @@ import Foundation
 
 extension Notification.Name {
     static let searchableFilterOptionsDidChange = Notification.Name("searchableFilterOptionsDidChange")
+    static let minMaxFilterOptionsDidChange = Notification.Name("minMaxFilterOptionsDidChange")
 }
