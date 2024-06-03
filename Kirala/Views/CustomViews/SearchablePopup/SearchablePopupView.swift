@@ -26,8 +26,9 @@ final class SearchablePopupView: BottomPopupViewController, BackNavigatable {
     }()
     
     private lazy var clearNavigationButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: Localization.filter.localizedString(for: "CLEAR"), style: .plain, target: self, action: #selector(didTapClearButton))
+        let button = UIBarButtonItem(title: Localization.filter.localizedString(for: "CLEAR".uppercased()), style: .plain, target: self, action: #selector(didTapClearButton))
         button.tintColor = ColorPalette.appPrimary.dynamicColor
+        button.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 14, weight: .semibold)], for: .normal)
         return button
     }()
     
@@ -65,6 +66,8 @@ final class SearchablePopupView: BottomPopupViewController, BackNavigatable {
         button.addTarget(self, action: #selector(didTapApplyButton), for: .touchUpInside)
         return button
     }()
+    
+    override var popupHeight: CGFloat {  550.0 }
     
     // MARK: - Lifecycle
     
@@ -207,6 +210,7 @@ extension SearchablePopupView: UITableViewDelegate, UITableViewDataSource {
         let cell: SelectCell = tableView.dequeueReusableCell(for: indexPath)
         let presenter = SelectCellPresenter(view: cell, arguments: arguments, type: .multiple)
         cell.presenter = presenter
+        presenter.showTopSeparator()
         return cell
     }
     
