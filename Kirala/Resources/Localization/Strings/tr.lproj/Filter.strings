@@ -25,3 +25,7 @@
 "SELECT_ALL" = "Tümünü Seç";
 "APPLY" = "Uygula";
 "LIST_PRODUCTS" = "Ürünleri Listele";
+"STAR_AND_ABOVE" = "Yıldız ve Üzeri";
+"MIN" = "En az";
+"MAX" = "En çok";
+

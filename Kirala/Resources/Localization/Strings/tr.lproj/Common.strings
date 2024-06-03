@@ -26,4 +26,7 @@
 "PRODUCT" = "ürün";
 "ALL" = "Tüm Ürünler";
 "SEARCH" = "Ara";
+"OK" = "Tamam";
+"ERROR" = "Hata";
+"MIN_MAX_ERROR" = "Minimum değer maksimum değerden küçük olamaz";
 

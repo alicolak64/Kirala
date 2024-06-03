@@ -26,3 +26,6 @@
 "SEARCH" = "Search";
 "APPLY" = "Apply";
 "LIST_PRODUCTS" = "List Products";
+"STAR_AND_ABOVE" = "Star and Above";
+"MIN" = "Min";
+"MAX" = "Max";

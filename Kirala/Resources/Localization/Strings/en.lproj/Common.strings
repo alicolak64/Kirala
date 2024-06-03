@@ -25,6 +25,9 @@
 "PER_DAY" = "per day";
 "PRODUCT" = "products";
 "ALL" = "See All";
+"OK" = "OK";
+"ERROR" = "Error";
+"MIN_MAX_ERROR" = "Minimum value must be less than maximum value";
 
 
 
