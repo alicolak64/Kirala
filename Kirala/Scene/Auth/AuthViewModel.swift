@@ -102,7 +102,8 @@ extension AuthViewModel: AuthViewModelProtocol {
             guard let url = authenticationService.loginWithGoogle() else { return }
             router.navigate(to: .safari(url))
         case .register:
-            print("Register with Google")
+            guard let url = authenticationService.loginWithGoogle() else { return }
+            router.navigate(to: .safari(url))
         case .resetPassword:
             break
         }
