@@ -17,6 +17,7 @@ struct FilterCellArguments {
 protocol FilterCellPresenterProtocol {
     /// Loads the data and configures the view.
     func load()
+    func showSelectedItemsCount()
 }
 
 
@@ -24,6 +25,7 @@ protocol FilterCellPresenterProtocol {
 protocol FilterCellViewProtocol: AnyObject {
     var presenter: FilterCellPresenterProtocol! { get set }
     func setNameLabel(_ name: String)
+    func setSelectedItemsCountLabel(_ count: Int)
     func setSelectedItemsLabel(_ selectedItemsText: String)
 }
 
@@ -56,5 +58,9 @@ extension FilterCellPresenter: FilterCellPresenterProtocol {
         if !arguments.selectedItems.isEmpty {
             view?.setSelectedItemsLabel(arguments.selectedItems.joined(separator: ", "))
         }
+    }
+    
+    func showSelectedItemsCount(){
+        view?.setSelectedItemsCountLabel(arguments.selectedItems.count)
     }
 }

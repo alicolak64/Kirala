@@ -26,6 +26,15 @@ final class FilterCell: UITableViewCell, ReusableView {
         return label
     }()
     
+    private lazy var selectedItemCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = ColorPalette.appPrimary.dynamicColor
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        return label
+    }()
+    
     private lazy var selectedItemsLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 11)
@@ -68,6 +77,8 @@ final class FilterCell: UITableViewCell, ReusableView {
         nameLabel.text = nil
         selectedItemsLabel.text = nil
         selectedItemsLabel.isHidden = true
+        selectedItemCountLabel.text = nil
+        selectedItemCountLabel.isHidden = true
         updateConstraintsForSelectedItemsLabel(isVisible: false)
     }
     
@@ -75,7 +86,7 @@ final class FilterCell: UITableViewCell, ReusableView {
         
         contentView.backgroundColor = ColorBackground.primary.dynamicColor
         
-        contentView.addSubviews([nameLabel, selectedItemsLabel, arrowImageView, topSeparator])
+        contentView.addSubviews([nameLabel, selectedItemCountLabel, selectedItemsLabel, arrowImageView, topSeparator])
                 
         nameLabelCenterYConstraint = nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         nameLabelTopConstraint = nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8)
@@ -89,6 +100,9 @@ final class FilterCell: UITableViewCell, ReusableView {
             
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             nameLabelCenterYConstraint,
+            
+            selectedItemCountLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 2),
+            selectedItemCountLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
             
             arrowImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             arrowImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
@@ -115,10 +129,16 @@ final class FilterCell: UITableViewCell, ReusableView {
 }
 
 extension FilterCell: FilterCellViewProtocol {
+    
     func setSelectedItemsLabel(_ selectedItemsText: String) {
         selectedItemsLabel.text = selectedItemsText
         selectedItemsLabel.isHidden = selectedItemsText == ""
         updateConstraintsForSelectedItemsLabel(isVisible: selectedItemsText != "")
+    }
+    
+    func setSelectedItemsCountLabel(_ count: Int) {
+        selectedItemCountLabel.text = "(\(count))"
+        selectedItemCountLabel.isHidden = count == 0
     }
     
     func setNameLabel(_ name: String) {
