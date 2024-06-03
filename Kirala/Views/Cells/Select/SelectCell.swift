@@ -90,12 +90,14 @@ extension SelectCell: SelectCellViewProtocol {
     
     func prepareSingleSelectStyle() {
         radioButton.style = .circle
-        topSeparator.isHidden = true
         radioButton.setSymbolSize(15)
     }
     
     func prepareMultipleSelectStyle() {
         radioButton.style = .checkmark
+    }
+    
+    func showTopSeparator() {
         topSeparator.isHidden = false
     }
     

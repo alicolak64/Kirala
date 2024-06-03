@@ -23,6 +23,7 @@ enum SelectCellType {
 protocol SelectCellPresenterProtocol {
     /// Loads the data and configures the view.
     func load()
+    func showTopSeparator()
 }
 
 /// Protocol defining the methods for the Select Cell view.
@@ -33,6 +34,7 @@ protocol SelectCellViewProtocol: AnyObject {
     func prepareMultipleSelectStyle()
     func setNonSelectedImage()
     func setSelectedImage()
+    func showTopSeparator()
 }
 
 /// Presenter class for the Select Cell.
@@ -60,6 +62,7 @@ final class SelectCellPresenter {
 // MARK: - SelectCellPresenterProtocol
 
 extension SelectCellPresenter: SelectCellPresenterProtocol {
+    
     /// Loads the data and configures the view.
     func load() {
         view?.setNameLabel(arguments.name)
@@ -76,5 +79,9 @@ extension SelectCellPresenter: SelectCellPresenterProtocol {
         case .unselected:
             view?.setNonSelectedImage()
         }
+    }
+    
+    func showTopSeparator() {
+        view?.showTopSeparator()
     }
 }
