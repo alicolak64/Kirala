@@ -136,7 +136,7 @@ extension AuthViewModel: AuthViewModelProtocol {
                 print("Login success")
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.delegate?.showWarningCard(with: error.errorDescription ?? "Error", animated: true)
+                    self.delegate?.showWarningCard(with: error.serverResponse?.returnMessage ?? "Error", animated: true)
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     self.delegate?.hideWarningCard(animated: true)
