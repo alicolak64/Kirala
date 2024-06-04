@@ -29,3 +29,4 @@
 "STAR_AND_ABOVE" = "Star and Above";
 "MIN" = "Min";
 "MAX" = "Max";
+"MIN_MAX_ERROR" = "Minimum value must be less than maximum value";

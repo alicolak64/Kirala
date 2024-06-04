@@ -8,21 +8,22 @@
 import Foundation
 
 protocol AuthenticationService {
-    func login(username: String, password: String, completion: @escaping (Result<NoData, ErrorResponse>) -> Void)
+    func login(email: String, password: String, completion: @escaping (Result<NoData, ErrorResponse>) -> Void)
     func loginWithGoogle() -> URL?
-    func register(username: String, password: String, completion: @escaping (Result<NoData, ErrorResponse>) -> Void)
+    func register(email: String, password: String, completion: @escaping (Result<NoData, ErrorResponse>) -> Void)
     func logout(completion: @escaping (Result<NoData, ErrorResponse>) -> Void)
-    func resetPassword(username: String, completion: @escaping (Result<NoData, ErrorResponse>) -> Void)
+    func resetPassword(email: String, completion: @escaping (Result<NoData, ErrorResponse>) -> Void)
 }
 
 final class AuthenticationManager: AuthenticationService {
     
-    func login(username: String, password: String, completion: @escaping (Result<NoData, ErrorResponse>) -> Void) {
-//        let serviceProvider = ApiServiceProvider<NoData>(
-//            baseUrl: NetworkConstants.baseUrl,
-//            path: NetworkConstants.Endpoints.Auth.login
-//        )
-        return
+    func login(email: String, password: String, completion: @escaping (Result<NoData, ErrorResponse>) -> Void) {
+        
+        let request = AuthRequest(email: email, password: password)
+        
+        let provider = ApiServiceProvider<AuthRequest>(method: .post, baseUrl: NetworkConstants.baseUrl, path: NetworkConstants.Endpoints.Auth.login, data: request)
+                
+        try? APIManager.shared.executeRequest(urlRequest: provider.returnUrlRequest(), completion: completion)
     }
     
     func loginWithGoogle() -> URL? {
@@ -31,7 +32,7 @@ final class AuthenticationManager: AuthenticationService {
         return try? provider.returnUrlRequest().url
     }
     
-    func register(username: String, password: String, completion: @escaping (Result<NoData, ErrorResponse>) -> Void) {
+    func register(email: String, password: String, completion: @escaping (Result<NoData, ErrorResponse>) -> Void) {
         return
     }
     
@@ -39,7 +40,7 @@ final class AuthenticationManager: AuthenticationService {
         return
     }
     
-    func resetPassword(username: String, completion: @escaping (Result<NoData, ErrorResponse>) -> Void) {
+    func resetPassword(email: String, completion: @escaping (Result<NoData, ErrorResponse>) -> Void) {
         return
     }
     

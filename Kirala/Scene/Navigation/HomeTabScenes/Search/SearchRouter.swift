@@ -96,7 +96,7 @@ final class FilterRouter: FilterRouterProtocol {
         case .dismiss:
             rootNavigationController?.dismiss(animated: true, completion: nil)
         case .back:
-            if navigationController?.viewControllers.count == 0 {
+            if navigationController?.viewControllers.count == 0 || navigationController?.viewControllers.count == 1 {
                 rootNavigationController?.dismiss(animated: true, completion: nil)
             } else {
                 navigationController?.popViewController(animated: true)

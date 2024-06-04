@@ -85,6 +85,8 @@ final class SearchViewModel {
         SearchablePopupType.allCases.forEach { type in
             searchbalePopupOptions[type] = SearchablePopupArguments.mockData(type: type).items
         }
+        let categories = Category.mockCategories.map { SearchablePopupItem(name: $0.name, selectionState: .unselected) }
+        searchbalePopupOptions[.category] = SearchablePopupArguments(title: Localization.filter.localizedString(for: "CATEGORY"), type: .category, items: categories).items
     }
     
     private func addInitialMinMaxPopupOptions() {
@@ -195,6 +197,11 @@ extension SearchViewModel: SearchViewModelProtocol {
             delegate?.setSearchBarPlaceHolder(with: query + " | " + searchCount.description + " " + Localization.common.localizedString(for: "PRODUCT"))
         case .categorySearch(let arguments):
             searchQuery = arguments.name
+            let items = [SearchablePopupItem(name: arguments.name, selectionState: .selected)]
+            changeSearchableFilterOptions(with: items, type: .category)
+            changeBadgeCount()
+            delegate?.closeExpandedCell(type: .category)
+            delegate?.reloadFilterCell(type: .category)
             delegate?.setSearchBarPlaceHolder(with: arguments.name + " | " + searchCount.description + " " + Localization.common.localizedString(for: "PRODUCT"))
         case .searchEdtiting(let query):
             delegate?.openSearchBar(with: query)
@@ -399,6 +406,10 @@ extension SearchViewModel: FilterPopupDelegate {
         }
         
         delegate?.removeBadgeCountFilterView()
+        
+        FilterType.allCases.forEach { type in
+            delegate?.reloadFilterCell(type: type)
+        }
             
     }
     

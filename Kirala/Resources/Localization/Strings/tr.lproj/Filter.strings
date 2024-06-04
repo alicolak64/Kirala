@@ -28,4 +28,4 @@
 "STAR_AND_ABOVE" = "Yıldız ve Üzeri";
 "MIN" = "En az";
 "MAX" = "En çok";
-
+"MIN_MAX_ERROR" = "Minimum değer maksimum değerden küçük olamaz";

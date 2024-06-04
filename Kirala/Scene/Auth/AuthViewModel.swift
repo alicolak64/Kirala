@@ -130,7 +130,19 @@ extension AuthViewModel: AuthViewModelProtocol {
             return
         }
         
-        print("Login with \(email) and \(password)")
+        authenticationService.login(email: email, password: password) { result in
+            switch result {
+            case .success:
+                print("Login success")
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.delegate?.showWarningCard(with: "Login failed", animated: true)
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.delegate?.hideWarningCard(animated: true)
+                }
+            }
+        }
         
     }
     
