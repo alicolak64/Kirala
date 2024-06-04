@@ -72,7 +72,7 @@ class APIManager: APIManagerInterface {
         defer {
             apiCallListener?.onPostExecute()
         }
-        
+
         if let error = error {
             debugPrint("task handling error: \(error)")
             let errorResponse = ErrorResponse(
@@ -83,7 +83,17 @@ class APIManager: APIManagerInterface {
             completion(.failure(errorResponse))
             return
         }
-        
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            let errorResponse = ErrorResponse(
+                serverResponse: ServerResponse(
+                    returnMessage: "Invalid response from the server",
+                    returnCode: -1),
+                apiConnectionErrorType: .serverError(-1))
+            completion(.failure(errorResponse))
+            return
+        }
+
         guard let data = data else {
             let errorResponse = ErrorResponse(
                 serverResponse: ServerResponse(
@@ -94,6 +104,17 @@ class APIManager: APIManagerInterface {
             return
         }
         
+        guard (200...299).contains(httpResponse.statusCode) else {
+            let serverError = handleErrorResponse(data: data)
+            let errorResponse = ErrorResponse(
+                serverResponse: ServerResponse(
+                    returnMessage: serverError.returnMessage,
+                    returnCode: serverError.returnCode),
+                apiConnectionErrorType: .serverError(httpResponse.statusCode))
+            completion(.failure(errorResponse))
+            return
+        }
+
         do {
             jsonDecoder.dateDecodingStrategy = .iso8601
             let dataDecoded = try jsonDecoder.decode(R.self, from: data)
@@ -108,6 +129,7 @@ class APIManager: APIManagerInterface {
             completion(.failure(errorResponse))
         }
     }
+
     
     private func fetchData(for urlRequest: URLRequest) async throws -> (Data, URLResponse) {
         return try await session.data(for: urlRequest)
@@ -138,4 +160,16 @@ class APIManager: APIManagerInterface {
             apiConnectionErrorType: .serverError(statusCode))
         return errorResponse
     }
+    
+    private func handleErrorResponse(data: Data) -> ServerResponse {
+        do {
+            let errorResponse = try jsonDecoder.decode(ServerResponse.self, from: data)
+            debugPrint("error response: \(errorResponse)")
+            return errorResponse
+        } catch let error {
+            debugPrint("error decoding error response: \(error)")
+            return ServerResponse(returnMessage: "Unknown server error", returnCode: -1)
+        }
+    }
+    
 }
