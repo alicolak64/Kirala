@@ -1,32 +1,30 @@
-/* 
+/*
   Filter.strings
   Kirala
 
   Created by Ali Çolak on 30.05.2024.
-  
 */
 
-"CLEAR" = "Clear";
-"SORT" = "Sort";
-"FILTER" = "Filter";
-"CATEGORY" = "Category";
-"BRAND" = "Brand";
-"PRICE" = "Price";
-"RATING" = "Rating";
-"RENTER" = "Renter";
-"RENTAL_PERIOD" = "Rental Period";
-"CITY" = "City";
-"LOW_TO_HIGH" = "Low to High";
-"HIGH_TO_LOW" = "High to Low";
-"BESTSELLER" = "Bestseller";
-"NEWEST" = "Newest";
-"MOST_RATED" = "Most Rated";
-"RENTAL_PERIOD" = "Rental Period";
-"SELECT_ALL" = "Select All";
-"SEARCH" = "Search";
-"APPLY" = "Apply";
-"LIST_PRODUCTS" = "List Products";
-"STAR_AND_ABOVE" = "Star and Above";
-"MIN" = "Min";
-"MAX" = "Max";
-"MIN_MAX_ERROR" = "Minimum value must be less than maximum value";
+"Clear" = "Clear";
+"Sort" = "Sort";
+"Filter" = "Filter";
+"Category" = "Category";
+"Brand" = "Brand";
+"Price" = "Price";
+"Rating" = "Rating";
+"Renter" = "Renter";
+"RentalPeriod" = "Rental Period";
+"City" = "City";
+"LowToHigh" = "Low to High";
+"HighToLow" = "High to Low";
+"Bestseller" = "Bestseller";
+"Newest" = "Newest";
+"MostRated" = "Most Rated";
+"SelectAll" = "Select All";
+"Search" = "Search";
+"Apply" = "Apply";
+"ListProducts" = "List Products";
+"StarAndAbove" = "Star and Above";
+"Min" = "Min";
+"Max" = "Max";
+"MinMaxError" = "Minimum value must be less than maximum value";

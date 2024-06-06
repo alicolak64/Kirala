@@ -1,65 +1,66 @@
-/* 
+/*
   EmptyState.strings
   Kirala
 
   Created by Ali Çolak on 16.05.2024.
-  
 */
 
+"NoDataTitle" = "No Data";
+"NoDataDesc" = "There is no data available for this section.";
+"NoDataButton" = "Refresh";
 
-"NO_DATA_TITLE" = "No Data";
-"NO_DATA_DESC" = "There is no data available for this section.";
-"NO_DATA_BUTTON" = "Refresh";
+"NoInternetTitle" = "No Internet Connection";
+"NoInternetDesc" = "Please check your internet connection and try again.";
+"NoInternetButton" = "Try again";
 
-"NO_INTERNET_TITLE" = "No Internet Connection";
-"NO_INTERNET_DESC" = "Please check your internet connection and try again.";
-"NO_INTERNET_BUTTON" = "Try again";
+"NoSearchResultTitle" = "No Search Results";
+"NoSearchResultDesc" = "There are no search results for your query.";
+"NoSearchResultButton" = "Try again";
 
-"NO_SEARCH_RESULT_TITLE" = "No Search Results";
-"NO_SEARCH_RESULT_DESC" = "There are no search results for your query.";
-"NO_SEARCH_RESULT_BUTTON" = "Try again";
+"NoFavoriteTitle" = "No Favorite";
+"NoFavoriteDesc" = "There are no favorite items available.";
+"NoFavoriteButton" = "Add favorite";
 
-"NO_FAVORITE_TITLE" = "No Favorite";
-"NO_FAVORITE_DESC" = "There are no favorite items available.";
-"NO_FAVORITE_BUTTON" = "Add favorite";
+"EmptyCartTitle" = "Empty Cart";
+"EmptyCartDesc" = "There are no items in your cart.";
+"EmptyCartButton" = "Add item";
 
-"EMPTY_CART_TITLE" = "Empty Cart";
-"EMPTY_CART_DESC" = "There are no items in your cart.";
-"EMPTY_CART_BUTTON" = "Add item";
+"NoNotificationTitle" = "No Notification";
+"NoNotificationDesc" = "There are no notifications available.";
+"NoNotificationButton" = "Refresh";
 
-"NO_NOTIFICATION_TITLE" = "No Notification";
-"NO_NOTIFICATION_DESC" = "There are no notifications available.";
-"NO_NOTIFICATION_BUTTON" = "Refresh";
+"NoOrderTitle" = "No Order";
+"NoOrderDesc" = "There are no orders available.";
+"NoOrderButton" = "Refresh";
 
-"NO_ORDER_TITLE" = "No Order";
-"NO_ORDER_DESC" = "There are no orders available.";
-"NO_ORDER_BUTTON" = "Refresh";
+"UnknownErrorTitle" = "Unknown Error";
+"UnknownErrorDesc" = "An unknown error occurred. Please try again later.";
+"UnknownErrorButton" = "Try again";
 
-"UNKNOWN_ERROR_TITLE" = "Unknown Error";
-"UNKNOWN_ERROR_DESC" = "An unknown error occurred. Please try again later.";
-"UNKNOWN_ERROR_BUTTON" = "Try again";
+"NoLoginFavoriteTitle" = "My Favorites";
+"NoLoginFavoriteDesc" = "Please log in to view your favorites.";
+"NoLoginFavoriteButton" = "Log In";
 
-"N0_LOGIN_FAVORITE_TITLE" = "My Favorites";
-"NO_LOGIN_FAVORITE_DESC" = "Please log in to view your favorites.";
-"NO_LOGIN_FAVORITE_BUTTON" = "Log In";
+"NoLoginCartTitle" = "My Cart";
+"NoLoginCartDesc" = "Please log in to view your cart.";
+"NoLoginCartButton" = "Log In";
 
-"NO_LOGIN_CART_TITLE" = "My Cart";
-"NO_LOGIN_CART_DESC" = "Please log in to view your cart.";
-"NO_LOGIN_CART_BUTTON" = "Log In";
+"NoLoginOrderTitle" = "My Orders";
+"NoLoginOrderDesc" = "Please log in to view your orders.";
+"NoLoginOrderButton" = "Log In";
 
-"NO_LOGIN_ORDER_TITLE" = "My Orders";
-"NO_LOGIN_ORDER_DESC" = "Please log in to view your orders.";
-"NO_LOGIN_ORDER_BUTTON" = "Log In";
+"NoLoginNotificationTitle" = "My Notifications";
+"NoLoginNotificationDesc" = "Please log in to view your notifications.";
+"NoLoginNotificationButton" = "Log In";
 
-"NO_LOGIN_NOTIFICATION_TITLE" = "My Notifications";
-"NO_LOGIN_NOTIFICATION_DESC" = "Please log in to view your notifications.";
-"NO_LOGIN_NOTIFICATION_BUTTON" = "Log In";
+"NoLoginProfileTitle" = "My Profile";
+"NoLoginProfileDesc" = "Please log in to view your profile.";
+"NoLoginProfileButton" = "Log In";
 
-"NO_LOGIN_PROFILE_TITLE" = "My Profile";
-"NO_LOGIN_PROFILE_DESC" = "Please log in to view your profile.";
-"NO_LOGIN_PROFILE_BUTTON" = "Log In";
+"NoLoginAdsTitle" = "My Ads";
+"NoLoginAdsDesc" = "Please log in to view your ads.";
+"NoLoginAdsButton" = "Log In";
 
-"NO_LOGIN_ADS_TITLE" = "My Ads";
-"NO_LOGIN_ADS_DESC" = "Please log in to view your ads.";
-"NO_LOGIN_ADS_BUTTON" = "Log In";
-
+"InvalidOrExpireTokenTitle" = "Invalid or Expired Token";
+"InvalidOrExpireTokenDesc" = "Your session has expired. Please try again.";
+"InvalidOrExpireTokenButton" = "Back to Login";

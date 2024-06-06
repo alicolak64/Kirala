@@ -1,66 +1,66 @@
-/* 
+/*
   EmptyState.strings
   Kirala
 
   Created by Ali Çolak on 16.05.2024.
-  
 */
 
-"NO_DATA_TITLE" = "Veri Yok";
-"NO_DATA_DESC" = "Bu bölüm için kullanılabilir veri yok.";
-"NO_DATA_BUTTON" = "Yenile";
+"NoDataTitle" = "Veri Yok";
+"NoDataDesc" = "Bu bölüm için kullanılabilir veri yok.";
+"NoDataButton" = "Yenile";
 
-"NO_INTERNET_TITLE" = "İnternet Bağlantısı Yok";
-"NO_INTERNET_DESC" = "Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.";
-"NO_INTERNET_BUTTON" = "Tekrar Dene";
+"NoInternetTitle" = "İnternet Bağlantısı Yok";
+"NoInternetDesc" = "Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.";
+"NoInternetButton" = "Tekrar Dene";
 
-"NO_SEARCH_RESULT_TITLE" = "Arama Sonucu Bulunamadı";
-"NO_SEARCH_RESULT_DESC" = "Arama sorgunuz için sonuç bulunamadı.";
-"NO_SEARCH_RESULT_BUTTON" = "Tekrar Dene";
+"NoSearchResultTitle" = "Arama Sonucu Bulunamadı";
+"NoSearchResultDesc" = "Arama sorgunuz için sonuç bulunamadı.";
+"NoSearchResultButton" = "Tekrar Dene";
 
-"NO_FAVORITE_TITLE" = "Favori Yok";
-"NO_FAVORITE_DESC" = "Favori öğe bulunmamaktadır.";
-"NO_FAVORITE_BUTTON" = "Favori Ekle";
+"NoFavoriteTitle" = "Favori Yok";
+"NoFavoriteDesc" = "Favori öğe bulunmamaktadır.";
+"NoFavoriteButton" = "Favori Ekle";
 
-"EMPTY_CART_TITLE" = "Sepet Boş";
-"EMPTY_CART_DESC" = "Sepetinizde öğe bulunmamaktadır.";
-"EMPTY_CART_BUTTON" = "Öğe Ekle";
+"EmptyCartTitle" = "Sepet Boş";
+"EmptyCartDesc" = "Sepetinizde öğe bulunmamaktadır.";
+"EmptyCartButton" = "Öğe Ekle";
 
-"NO_NOTIFICATION_TITLE" = "Bildirim Yok";
-"NO_NOTIFICATION_DESC" = "Kullanılabilir bildirim yok.";
-"NO_NOTIFICATION_BUTTON" = "Yenile";
+"NoNotificationTitle" = "Bildirim Yok";
+"NoNotificationDesc" = "Kullanılabilir bildirim yok.";
+"NoNotificationButton" = "Yenile";
 
-"NO_ORDER_TITLE" = "Sipariş Yok";
-"NO_ORDER_DESC" = "Kullanılabilir sipariş yok.";
-"NO_ORDER_BUTTON" = "Yenile";
+"NoOrderTitle" = "Sipariş Yok";
+"NoOrderDesc" = "Kullanılabilir sipariş yok.";
+"NoOrderButton" = "Yenile";
 
-"UNKNOWN_ERROR_TITLE" = "Bilinmeyen Hata";
-"UNKNOWN_ERROR_DESC" = "Bilinmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyin.";
-"UNKNOWN_ERROR_BUTTON" = "Tekrar Dene";
+"UnknownErrorTitle" = "Bilinmeyen Hata";
+"UnknownErrorDesc" = "Bilinmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyin.";
+"UnknownErrorButton" = "Tekrar Dene";
 
-"N0_LOGIN_FAVORITE_TITLE" = "Favorilerim";
-"NO_LOGIN_FAVORITE_DESC" = "Favorilerinizi görüntüleyebilmek için lütfen giriş yapın.";
-"NO_LOGIN_FAVORITE_BUTTON" = "Giriş Yap";
+"NoLoginFavoriteTitle" = "Favorilerim";
+"NoLoginFavoriteDesc" = "Favorilerinizi görüntüleyebilmek için lütfen giriş yapın.";
+"NoLoginFavoriteButton" = "Giriş Yap";
 
-"NO_LOGIN_CART_TITLE" = "Sepetim";
-"NO_LOGIN_CART_DESC" = "Sepetinizi görüntüleyebilmek için lütfen giriş yapın.";
-"NO_LOGIN_CART_BUTTON" = "Giriş Yap";
+"NoLoginCartTitle" = "Sepetim";
+"NoLoginCartDesc" = "Sepetinizi görüntüleyebilmek için lütfen giriş yapın.";
+"NoLoginCartButton" = "Giriş Yap";
 
-"NO_LOGIN_ORDER_TITLE" = "Siparişlerim";
-"NO_LOGIN_ORDER_DESC" = "Siparişlerinizi görüntüleyebilmek için lütfen giriş yapın.";
-"NO_LOGIN_ORDER_BUTTON" = "Giriş Yap";
+"NoLoginOrderTitle" = "Siparişlerim";
+"NoLoginOrderDesc" = "Siparişlerinizi görüntüleyebilmek için lütfen giriş yapın.";
+"NoLoginOrderButton" = "Giriş Yap";
 
-"NO_LOGIN_NOTIFICATION_TITLE" = "Bildirimlerim";
-"NO_LOGIN_NOTIFICATION_DESC" = "Bildirimlerinizi görüntüleyebilmek için lütfen giriş yapın.";
-"NO_LOGIN_NOTIFICATION_BUTTON" = "Giriş Yap";
+"NoLoginNotificationTitle" = "Bildirimlerim";
+"NoLoginNotificationDesc" = "Bildirimlerinizi görüntüleyebilmek için lütfen giriş yapın.";
+"NoLoginNotificationButton" = "Giriş Yap";
 
-"NO_LOGIN_PROFILE_TITLE" = "Profilim";
-"NO_LOGIN_PROFILE_DESC" = "Profilinizi görüntüleyebilmek için lütfen giriş yapın.";
-"NO_LOGIN_PROFILE_BUTTON" = "Giriş Yap";
+"NoLoginProfileTitle" = "Profilim";
+"NoLoginProfileDesc" = "Profilinizi görüntüleyebilmek için lütfen giriş yapın.";
+"NoLoginProfileButton" = "Giriş Yap";
 
-"NO_LOGIN_ADS_TITLE" = "İlanlarım";
-"NO_LOGIN_ADS_DESC" = "İlanlarınızı görüntüleyebilmek için lütfen giriş yapın.";
-"NO_LOGIN_ADS_BUTTON" = "Giriş Yap";
+"NoLoginAdsTitle" = "İlanlarım";
+"NoLoginAdsDesc" = "İlanlarınızı görüntüleyebilmek için lütfen giriş yapın.";
+"NoLoginAdsButton" = "Giriş Yap";
 
-
-
+"InvalidOrExpireTokenTitle" = "Geçersiz veya Süresi Dolmuş Token";
+"InvalidOrExpireTokenDesc" = "Token süresi dolmuş veya geçersiz. Lütfen daha sonra tekrar deneyin.";
+"InvalidOrExpireTokenButton" = "Girişe geri dön";

@@ -1,13 +1,12 @@
-/* 
+/*
   TabBar.strings
   Kirala
 
   Created by Ali Çolak on 6.05.2024.
-  
 */
 
-"HOME" = "Home";
-"MY_ADS" = "My Ads";
-"MY_ORDERS" = "My Orders";
-"CART" = "Cart";
-"PROFILE" = "Profile";
+"home" = "Home";
+"myAds" = "My Ads";
+"myOrders" = "My Orders";
+"cart" = "Cart";
+"profile" = "Profile";

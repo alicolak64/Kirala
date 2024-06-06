@@ -3,29 +3,27 @@
   Kirala
 
   Created by Ali Çolak on 6.05.2024.
-  
 */
 
-"SEARCH_BAR_PLACEHOLDER" = "Ürün veya kategori ara";
-"CANCEL" = "Vazgeç";
-"NOTIFICATIONS" = "Bildirimlerim";
-"NEW_ADDEDS" = "Yeni eklenenler";
-"BEST_SELLERS" = "En çok satanlar";
-"MOST_RATED" = "En çok değerlendirilenler";
-"SEE_ALL" = "Tümünü gör";
-"CATEGORIES" = "Kategoriler";
-"DONE" = "Tamam";
-"FROM" = "Başlangıç";
-"TO" = "Bitiş";
-"RENT" = "Kirala";
-"CHOOSE_DATE" = "Tarih seç";
-"CHOOSE_RANGE_RENT" = "Kiralama aralığı seç";
-"DAY" = "gün";
-"TOTAL" = "toplam";
-"PER_DAY" = "gün";
-"PRODUCT" = "ürün";
-"ALL" = "Tüm Ürünler";
-"SEARCH" = "Ara";
-"OK" = "Tamam";
-"ERROR" = "Hata";
-
+"SearchBarPlaceholder" = "Ürün veya kategori ara";
+"Cancel" = "Vazgeç";
+"Notifications" = "Bildirimlerim";
+"NewAddeds" = "Yeni eklenenler";
+"BestSellers" = "En çok satanlar";
+"MostRated" = "En çok değerlendirilenler";
+"SeeAll" = "Tümünü gör";
+"Categories" = "Kategoriler";
+"Done" = "Tamam";
+"From" = "Başlangıç";
+"To" = "Bitiş";
+"Rent" = "Kirala";
+"ChooseDate" = "Tarih seç";
+"ChooseRangeRent" = "Kiralama aralığı seç";
+"Day" = "gün";
+"Total" = "toplam";
+"PerDay" = "gün";
+"Product" = "ürün";
+"All" = "Tüm Ürünler";
+"Ok" = "Tamam";
+"Error" = "Hata";
+"PleaseWait" = "Lütfen bekleyiniz...";

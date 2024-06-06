@@ -1,41 +1,37 @@
-/* 
+/*
   Auth.strings
   Kirala
 
   Created by Ali Çolak on 25.05.2024.
-  
 */
 
-"EMAIL_PLACEHOLDER" = "E-Mail";
-"PASSWORD_PLACEHOLDER" = "Password";
-"FORGOT_PASSWORD" = "Forgot Password";
-"LOGIN_WITH_APPLE" = "Login with Apple";
-"LOGIN_WITH_GOOGLE" = "Login with Google";
-"REGISTER_WITH_APPLE" = "Register with Apple";
-"REGISTER_WITH_GOOGLE" = "Register with Google";
-"REGISTER" = "Register";
-"RESET_PASSWORD" = "Reset Password";
-"RESET_PASSWORD_TIP" = "Enter your e-mail address where you want to reset your password.";
-"NO_ACCOUNT" = "Don't have an account?";
-"ALREADY_HAVE_ACCOUNT" = "Already have an account?";
-"LOGIN" = "Login";
-"OTHER_LOGIN_OPTIONS" = "Other Login Options";
-"OTHER_REGISTER_OPTIONS" = "Other Register Options";
-"PASSWORD_TIP" = "Password must be at least 7 characters and at most 64 characters and contain letters and numbers.";
-
-"EMAIL_VALIDATION" = "Please enter a valid e-mail address.";
-"PASSWORD_VALIDATION" = "Please enter a valid password.";
-
-"ACCEPT_MEMBERSHIP_TERMS" = "By clicking Sign Up, I accept the Membership Terms.";
-"CONSENT_FOR_OFFERS" = "I give explicit consent for the processing and sharing of my personal data for the purpose of providing advantageous offers.";
-"AGREE_TO_RECEIVE_MESSAGES" = "I agree to receive electronic messages.";
-"ACKNOWLEDGE_PRIVACY_POLICY" = "I have read and understood the clarification text regarding the processing of my personal data.";
-
-"RESET_PASSWORD_TIP_TITLE" = "If you don't receive the password reset email;";
-"RESET_PASSWORD_TIP_1" = "• It may take up to 10 minutes for the password reset email to arrive.";
-"RESET_PASSWORD_TIP_2" = "• Check your spam and other email folders.";
-"RESET_PASSWORD_TIP_3" = "• Ensure the accuracy of the email address you entered.";
-
-
-
-
+"EmailPlaceholder" = "E-Mail";
+"PasswordPlaceholder" = "Password";
+"NamePlaceholder" = "Name";
+"ForgotPassword" = "Forgot Password";
+"LoginWithApple" = "Login with Apple";
+"LoginWithGoogle" = "Login with Google";
+"RegisterWithApple" = "Register with Apple";
+"RegisterWithGoogle" = "Register with Google";
+"Register" = "Register";
+"ResetPassword" = "Reset Password";
+"ForgotPasswordTip" = "Enter your e-mail address where you want to reset your password.";
+"ResetPasswordTip" = "Enter your new password.";
+"NoAccount" = "Don't have an account?";
+"AlreadyHaveAccount" = "Already have an account?";
+"NameValidation" = "Please enter a valid name.";
+"Login" = "Login";
+"OtherLoginOptions" = "Other Login Options";
+"OtherRegisterOptions" = "Other Register Options";
+"PasswordTip" = "Password must be at least 7 characters and at most 64 characters and contain letters and numbers.";
+"EmailValidation" = "Please enter a valid e-mail address.";
+"PasswordValidation" = "Please enter a valid password.";
+"PasswordMatchValidation" = "Passwords do not match.";
+"AcceptMembershipTerms" = "By clicking Sign Up, I accept the Membership Terms.";
+"ConsentForOffers" = "I give explicit consent for the processing and sharing of my personal data for the purpose of providing advantageous offers.";
+"AgreeToReceiveMessages" = "I agree to receive electronic messages.";
+"AcknowledgePrivacyPolicy" = "I have read and understood the clarification text regarding the processing of my personal data.";
+"ForgotPasswordTipTitle" = "If you don't receive the password reset email;";
+"ForgotPasswordTip1" = "• It may take up to 10 minutes for the password reset email to arrive.";
+"ForgotPasswordTip2" = "• Check your spam and other email folders.";
+"ForgotPasswordTip3" = "• Ensure the accuracy of the email address you entered.";

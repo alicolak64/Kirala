@@ -1,16 +1,19 @@
-/* 
+/*
   Alerts.strings
   Kirala
 
   Created by Ali Çolak on 24.05.2024.
-  
 */
 
-/* English to Turkish Localization */
-"NO_LOGIN_TITLE" = "Giriş Yapılmadı";
-
-"NO_LOGIN_ACTION" = "Giriş Yap";
-"CANCEL_ACTION" = "Geri";
-
-"NO_LOGIN_FAVORITE_PRODUCT_MESSAGE" = "Bir ürünü favorilere eklemek için giriş yapmanız gerekiyor.";
-
+"NoLoginTitle" = "Giriş Yapılmadı";
+"NoLoginAction" = "Giriş Yap";
+"CancelAction" = "Geri";
+"NoLoginFavoriteProductMessage" = "Bir ürünü favorilere eklemek için giriş yapmanız gerekiyor.";
+"ForgotPasswordSuccess" = "Şifre sıfırlama için email gönderildi";
+"ForgotPasswordSuccessMessage" = "Şifre sıfırlama işlemini yapmak için e-posta adresinize gönderilen linke tıklayınız.";
+"ResetPasswordSuccess" = "Şifre sıfırlama başarılı";
+"ResetPasswordSuccessMessage" = "Şifreniz başarılı bir şekilde sıfırlandı. Yeni şifreniz ile giriş yapabilirsiniz.";
+"RegisterSuccess" = "Kayıt Başarılı";
+"RegisterSuccessMessage" = "Hesabınızı doğrulamak ve kayıt işlemini tamamlamak için e-postanızı kontrol ediniz.";
+"SomethingWentWrong" = "Bir hata oluştu";
+"SomethingWentWrongMessage" = "Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.";

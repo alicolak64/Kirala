@@ -1,31 +1,30 @@
-/* 
+/*
   Filter.strings
   Kirala
 
   Created by Ali Çolak on 30.05.2024.
-  
 */
 
-"CLEAR" = "Temizle";
-"SORT" = "Sırala";
-"FILTER" = "Filtrele";
-"CATEGORY" = "Kategori";
-"BRAND" = "Marka";
-"PRICE" = "Fiyat";
-"RATING" = "Puan";
-"RENTER" = "Kiralamacı";
-"RENTAL_PERIOD" = "Kiralama Süresi";
-"CITY" = "Şehir";
-"LOW_TO_HIGH" = "En Düşük Fiyat";
-"HIGH_TO_LOW" = "En Yüksek Fiyat";
-"BESTSELLER" = "En Çok Satanlar";
-"NEWEST" = "En Yeniler";
-"MOST_RATED" = "En Çok Değerlendirilenler";
-"RENTAL_PERIOD" = "Kiralama Süresi";
-"SELECT_ALL" = "Tümünü Seç";
-"APPLY" = "Uygula";
-"LIST_PRODUCTS" = "Ürünleri Listele";
-"STAR_AND_ABOVE" = "Yıldız ve Üzeri";
-"MIN" = "En az";
-"MAX" = "En çok";
-"MIN_MAX_ERROR" = "Minimum değer maksimum değerden küçük olamaz";
+"Clear" = "Temizle";
+"Sort" = "Sırala";
+"Filter" = "Filtrele";
+"Category" = "Kategori";
+"Brand" = "Marka";
+"Price" = "Fiyat";
+"Rating" = "Puan";
+"Renter" = "Kiralamacı";
+"RentalPeriod" = "Kiralama Süresi";
+"City" = "Şehir";
+"LowToHigh" = "En Düşük Fiyat";
+"HighToLow" = "En Yüksek Fiyat";
+"Bestseller" = "En Çok Satanlar";
+"Newest" = "En Yeniler";
+"MostRated" = "En Çok Değerlendirilenler";
+"SelectAll" = "Tümünü Seç";
+"Search" = "Ara";
+"Apply" = "Uygula";
+"ListProducts" = "Ürünleri Listele";
+"StarAndAbove" = "Yıldız ve Üzeri";
+"Min" = "En az";
+"Max" = "En çok";
+"MinMaxError" = "Minimum değer maksimum değerden küçük olamaz";

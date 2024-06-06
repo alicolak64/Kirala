@@ -1,15 +1,19 @@
-/* 
+/*
   Alerts.strings
   Kirala
 
   Created by Ali Çolak on 24.05.2024.
-  
 */
 
-"NO_LOGIN_TITLE" = "Not Logged In";
-"NO_LOGIN_ACTION" = "Login";
-
-"CANCEL_ACTION" = "Cancel";
-
-
-"NO_LOGIN_FAVORITE_PRODUCT_MESSAGE" = "You need to login to favorite a product.";
+"NoLoginTitle" = "Not Logged In";
+"NoLoginAction" = "Login";
+"CancelAction" = "Cancel";
+"NoLoginFavoriteProductMessage" = "You need to login to favorite a product.";
+"ForgotPasswordSuccess" = "Email Sent for Password Reset";
+"ForgotPasswordSuccessMessage" = "Click the link sent to your email address to reset your password.";
+"ResetPasswordSuccess" = "Password Reset Successful";
+"ResetPasswordSuccessMessage" = "You can now login with your new password.";
+"RegisterSuccess" = "Registration Successful";
+"RegisterSuccessMessage" = "Please check your email to verify your account and complete the registration process.";
+"SomethingWentWrong" = "Something Went Wrong";
+"SomethingWentWrongMessage" = "Sorry, something went wrong. Please try again later.";
