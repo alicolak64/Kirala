@@ -9,32 +9,12 @@ import UIKit
 
 /// A view that displays a loading indicator.
 final class LoadingView: UIView, LoadingViewProtocol {
-    
-    // MARK: - Properties
-    
-    /// The current state of the loading view.
-    private var state: LoadingState = .loading {
-        didSet {
-            updateLoadingState()
-        }
-    }
-    
-    // MARK: - UI Components
-    
-    /// The activity indicator to show loading state.
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .large)
-        indicator.color = ColorBackground.primary.color
-        indicator.hidesWhenStopped = true
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        return indicator
-    }()
-    
+
     // MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
+        setupHud()
     }
     
     required init?(coder: NSCoder) {
@@ -44,41 +24,40 @@ final class LoadingView: UIView, LoadingViewProtocol {
     // MARK: - Layout
     
     /// Sets up the layout of the loading view.
-    private func setupLayout() {
-        addSubview(activityIndicator)
-        setupConstraints()
-    }
-    
-    /// Sets up the constraints for the loading view.
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
+    private func setupHud() {
+        ProgressHUD.colorAnimation = ColorPalette.appPrimary.dynamicColor
+        ProgressHUD.animationType = .semiRingRotation
+        
+        ProgressHUD.colorHUD = ColorBackground.primary.dynamicColor
+        
     }
     
     // MARK: - Methods
     
-    /// Updates the loading state of the view.
-    private func updateLoadingState() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            switch self.state {
-            case .loading:
-                self.activityIndicator.startAnimating()
-            case .loaded:
-                self.activityIndicator.stopAnimating()
-            }
+    private func showHud() {
+        ProgressHUD.animate(interaction: false)
+    }
+    
+    private func hideHud(loadResult: LoadingResult) {
+        switch loadResult {
+        case .success:
+            ProgressHUD.succeed(interaction: false)
+        case .failure:
+            ProgressHUD.failed(interaction: false)
+        case .none:
+            ProgressHUD.dismiss()
         }
     }
     
     // MARK: - LoadingViewProtocol
     
     func showLoading() {
-        state = .loading
+        showHud()
+    }
+
+    
+    func hideLoading(loadResult: LoadingResult = .none) {
+        hideHud(loadResult: loadResult)
     }
     
-    func hideLoading() {
-        state = .loaded
-    }
 }

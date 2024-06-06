@@ -7,6 +7,13 @@
 
 import Foundation
 
+
+enum LoadingResult {
+    case success
+    case failure
+    case none
+}
+
 /// Protocol defining the methods for showing and hiding a loading view.
 protocol LoadingViewProtocol {
     // MARK: - Methods
@@ -14,17 +21,5 @@ protocol LoadingViewProtocol {
     /// Shows the loading indicator.
     func showLoading()
     
-    /// Hides the loading indicator.
-    func hideLoading()
-}
-
-/// Enum representing the loading state.
-enum LoadingState {
-    // MARK: - Cases
-    
-    /// Indicates that loading is in progress.
-    case loading
-    
-    /// Indicates that loading has completed.
-    case loaded
+    func hideLoading(loadResult: LoadingResult)
 }
