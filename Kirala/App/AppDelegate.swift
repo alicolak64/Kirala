@@ -48,7 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Handle incoming URLs for iOS 13 and later
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        print(url)
         return app.router.handleDeepLink(url: url)
     }
     
