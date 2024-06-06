@@ -24,7 +24,7 @@ extension ActionSheetable where Self: UIViewController {
     func showActionSheet(title: String, message: String, actionTitle: String, completion: @escaping () -> Void) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: Localization.alert.localizedString(for: "CANCEL_ACTION"), style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: Strings.Alert.cancelAction.localized, style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         
         let action = UIAlertAction(title: actionTitle, style: .default) { _ in
