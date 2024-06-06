@@ -20,41 +20,30 @@ enum LocalizationTable: String {
 /// A struct to manage localization from different tables.
 struct Localization {
     
-    // MARK: - Static Properties
-    
-    static let common = Localization(table: .common)
-    static let tabBar = Localization(table: .tabBar)
-    static let emptyState = Localization(table: .emptyState)
-    static let alert = Localization(table: .alert)
-    static let auth = Localization(table: .auth)
-    static let filter = Localization(table: .filter)
-    
-    // MARK: - Instance Properties
-    
-    private let table: LocalizationTable
+    static let shared = Localization()
     
     // MARK: - Initializers
     
-    private init(table: LocalizationTable) {
-        self.table = table
-    }
+    private init() {}
     
     // MARK: - Public Methods
     
-    /// Returns a localized string for a given key.
-    /// - Parameter key: The key for the localized string.
-    /// - Returns: The localized string.
-    func localizedString(for key: String) -> String {
-        return NSLocalizedString(key, tableName: table.rawValue, bundle: Bundle.main, value: "", comment: "")
-    }
-    
-    /// Returns a localized string with formatted arguments.
+    /// Returns a localized string for a given key and table.
     /// - Parameters:
     ///   - key: The key for the localized string.
-    ///   - arguments: The arguments to be formatted into the localized string.
-    /// - Returns: The formatted localized string.
-    func localizedString(for key: String, arguments: CVarArg...) -> String {
-        return String(format: localizedString(for: key), arguments: arguments)
+    ///   - table: The localization table.
+    /// - Returns: The localized string.
+    func localizedString(for key: String, table: LocalizationTable) -> String {
+        return NSLocalizedString(key, tableName: table.rawValue, bundle: .main, value: "", comment: "")
     }
     
+    /// Returns a localized string with formatted arguments for a given key and table.
+    /// - Parameters:
+    ///   - key: The key for the localized string.
+    ///   - table: The localization table.
+    ///   - arguments: The arguments to be formatted into the localized string.
+    /// - Returns: The formatted localized string.
+    func localizedString(for key: String, table: LocalizationTable, arguments: CVarArg...) -> String {
+        return String(format: localizedString(for: key, table: table), arguments: arguments)
+    }
 }
