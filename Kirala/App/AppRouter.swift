@@ -25,16 +25,32 @@ final class AppRouter {
         checkOnboarding()
     }
     
-    private func getToken(url: URL) -> String? {
+    private func getAuthToken(url: URL) -> (String, String)? {
         // URL'i işleyip yetkilendirme kodunu çekin
+        if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            if let token = components.queryItems?.first(where: { $0.name == "accessToken" })?.value, let tokenType = components.queryItems?.first(where: { $0.name == "tokenType" })?.value {
+                return (token, tokenType)
+            }
+        }
+        return nil
+    }
+    
+    private func getResetPasswordToken(url: URL) -> String? {
         if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
             if let token = components.queryItems?.first(where: { $0.name == "token" })?.value {
                 return token
             }
         }
-        
         return nil
-        
+    }
+    
+    private func getError(url: URL) -> String? {
+        if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            if let error = components.queryItems?.first(where: { $0.name == "error" })?.value {
+                return error
+            }
+        }
+        return nil
     }
     
     func handleDeepLink(url: URL) -> Bool {
@@ -46,7 +62,7 @@ final class AppRouter {
         
         let pathComponents = url.pathComponents.filter { $0 != "/" }
         
-        print("pathComponents", pathComponents)
+        print("url", url)
         
         switch host {
         case "home":
@@ -58,9 +74,47 @@ final class AppRouter {
                 navigateToProduct(productId: productId)
             }
         case "oauth2":
-            if let token = getToken(url: url) {
+            if let (token, tokenType) = getAuthToken(url: url) {
                 app.authService.saveAuthToken(token: token)
+                app.authService.saveAuthTokenType(tokenType: tokenType)
                 navigateToProfileWithLoginSuccess()
+            }
+        case "login":
+            let tabBarController = TabBarBuilder.build()
+            let authNavController = UINavigationController()
+            let authViewController = AuthBuilder.build(rootViewController: tabBarController, navigationController: authNavController)
+            authNavController.viewControllers = [authViewController]
+            authNavController.modalPresentationStyle = .fullScreen
+            window.rootViewController = tabBarController
+            window.makeKeyAndVisible()
+            tabBarController.present(authNavController, animated: false, completion: nil)
+        case "reset-password":
+            if let token = getResetPasswordToken(url: url) {
+                app.authService.saveResetPasswordToken(token: token)
+                DispatchQueue.main.async { [weak self] in
+                    let tabBarController = TabBarBuilder.build()
+                    let authNavController = UINavigationController()
+                    let authViewController = AuthBuilder.build(rootViewController: tabBarController, navigationController: authNavController)
+                    authNavController.viewControllers = [authViewController]
+                    authNavController.modalPresentationStyle = .fullScreen
+                    self?.window.rootViewController = tabBarController
+                    self?.window.makeKeyAndVisible()
+                    tabBarController.present(authNavController, animated: false, completion: nil)
+                }
+            }
+        case "reset-password-error":
+            if let error = getError(url: url) {
+                app.authService.saveError(error: error)
+                DispatchQueue.main.async { [weak self] in
+                    let tabBarController = TabBarBuilder.build()
+                    let authNavController = UINavigationController()
+                    let authViewController = AuthBuilder.build(rootViewController: tabBarController, navigationController: authNavController)
+                    authNavController.viewControllers = [authViewController]
+                    authNavController.modalPresentationStyle = .fullScreen
+                    self?.window.rootViewController = tabBarController
+                    self?.window.makeKeyAndVisible()
+                    tabBarController.present(authNavController, animated: false, completion: nil)
+                }
             }
         default:
             return false
@@ -95,7 +149,7 @@ final class AppRouter {
         lottieVC.modalPresentationStyle = .fullScreen
         temporaryViewController.present(lottieVC, animated: true)
     }
-
+    
     
     private func navigateToProduct(productId: String) {
         print("Product ID: \(productId)")
