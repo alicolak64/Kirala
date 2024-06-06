@@ -2,19 +2,19 @@
 //  ResetPasswordCard.swift
 //  Kirala
 //
-//  Created by Ali Çolak on 25.05.2024.
+//  Created by Ali Çolak on 5.06.2024.
 //
 
 import UIKit
 
 protocol ResetPasswordCardDelegate: AnyObject {
-    func didTapResetPasswordButton(email: String)
+    func didTapResetPasswordButton(password: String, confirmPassword: String)
 }
 
 protocol ResetPasswordCardProtocol {
     var delegate: ResetPasswordCardDelegate? { get set }
-    func showWarningMessageEmail()
-    func hideWarningMessageEmail()
+    func showWarningMessagePassword()
+    func hideWarningMessagePassword()
 }
 
 final class ResetPasswordCard: UIView, ResetPasswordCardProtocol {
@@ -26,7 +26,7 @@ final class ResetPasswordCard: UIView, ResetPasswordCardProtocol {
     
     private lazy var resetPasswordTipLabel: UILabel = {
         let label = UILabel()
-        label.text = Localization.auth.localizedString(for: "RESET_PASSWORD_TIP")
+        label.text = Strings.Auth.resetPasswordTip.localized
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.numberOfLines = 0
         label.textColor = ColorText.primary.dynamicColor
@@ -34,15 +34,31 @@ final class ResetPasswordCard: UIView, ResetPasswordCardProtocol {
         return label
     }()
     
-    private lazy var emailContainer: EmailContainer = {
-        let view = EmailContainer()
+    private lazy var passwordContainer: PasswordContainer = {
+        let view = PasswordContainer()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
+    private lazy var confirmPasswordContainer: PasswordContainer = {
+        let view = PasswordContainer()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var passwordTipLabel: UILabel = {
+        let label = UILabel()
+        label.text = Strings.Auth.passwordTip.localized
+        label.textColor = ColorPalette.gray.dynamicColor
+        label.font = UIFont.systemFont(ofSize: 10, weight: .regular)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        return label
+    }()
+    
     private lazy var resetPasswordButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Localization.auth.localizedString(for: "RESET_PASSWORD"), for: .normal)
+        button.setTitle(Strings.Auth.resetPassword.localized, for: .normal)
         button.backgroundColor = ColorPalette.appPrimary.dynamicColor
         button.addTarget(self, action: #selector(didTapResetPasswordButton), for: .touchUpInside)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
@@ -70,7 +86,9 @@ final class ResetPasswordCard: UIView, ResetPasswordCardProtocol {
         
         addSubviews([
             resetPasswordTipLabel,
-            emailContainer,
+            passwordContainer,
+            confirmPasswordContainer,
+            passwordTipLabel,
             resetPasswordButton
         ])
         setupConstraints()
@@ -83,15 +101,24 @@ final class ResetPasswordCard: UIView, ResetPasswordCardProtocol {
             resetPasswordTipLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             resetPasswordTipLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            emailContainer.topAnchor.constraint(equalTo: resetPasswordTipLabel.bottomAnchor, constant: 16),
-            emailContainer.leadingAnchor.constraint(equalTo: resetPasswordTipLabel.leadingAnchor),
-            emailContainer.trailingAnchor.constraint(equalTo: resetPasswordTipLabel.trailingAnchor),
-            emailContainer.heightAnchor.constraint(equalToConstant: 40),
+            passwordContainer.topAnchor.constraint(equalTo: resetPasswordTipLabel.bottomAnchor, constant: 16),
+            passwordContainer.leadingAnchor.constraint(equalTo: resetPasswordTipLabel.leadingAnchor),
+            passwordContainer.trailingAnchor.constraint(equalTo: resetPasswordTipLabel.trailingAnchor),
+            passwordContainer.heightAnchor.constraint(equalToConstant: 40),
+            
+            confirmPasswordContainer.topAnchor.constraint(equalTo: passwordContainer.bottomAnchor, constant: 16),
+            confirmPasswordContainer.leadingAnchor.constraint(equalTo: passwordContainer.leadingAnchor),
+            confirmPasswordContainer.trailingAnchor.constraint(equalTo: passwordContainer.trailingAnchor),
+            confirmPasswordContainer.heightAnchor.constraint(equalTo: passwordContainer.heightAnchor),
+            
+            passwordTipLabel.topAnchor.constraint(equalTo: confirmPasswordContainer.bottomAnchor, constant: 8),
+            passwordTipLabel.leadingAnchor.constraint(equalTo: confirmPasswordContainer.leadingAnchor),
+            passwordTipLabel.trailingAnchor.constraint(equalTo: confirmPasswordContainer.trailingAnchor),
 
-            resetPasswordButton.topAnchor.constraint(equalTo: emailContainer.bottomAnchor, constant: 16),
-            resetPasswordButton.leadingAnchor.constraint(equalTo: emailContainer.leadingAnchor),
-            resetPasswordButton.trailingAnchor.constraint(equalTo: emailContainer.trailingAnchor),
-            resetPasswordButton.heightAnchor.constraint(equalTo: emailContainer.heightAnchor),
+            resetPasswordButton.topAnchor.constraint(equalTo: passwordTipLabel.bottomAnchor, constant: 16),
+            resetPasswordButton.leadingAnchor.constraint(equalTo: passwordTipLabel.leadingAnchor),
+            resetPasswordButton.trailingAnchor.constraint(equalTo: passwordTipLabel.trailingAnchor),
+            resetPasswordButton.heightAnchor.constraint(equalTo: passwordContainer.heightAnchor),
             
         ])
     }
@@ -99,15 +126,17 @@ final class ResetPasswordCard: UIView, ResetPasswordCardProtocol {
     // MARK: - Actions
     
     @objc private func didTapResetPasswordButton() {
-        delegate?.didTapResetPasswordButton(email: emailContainer.getEmail() ?? "")
+        delegate?.didTapResetPasswordButton(password: passwordContainer.getPassword() ?? "", confirmPassword: confirmPasswordContainer.getPassword() ?? "")
     }
         
-    func showWarningMessageEmail() {
-        emailContainer.showWarning()
+    func showWarningMessagePassword() {
+        passwordContainer.showWarning()
+        confirmPasswordContainer.showWarning()
     }
     
-    func hideWarningMessageEmail() {
-        emailContainer.hideWarning()
+    func hideWarningMessagePassword() {
+        passwordContainer.hideWarning()
+        confirmPasswordContainer.hideWarning()
     }
     
 }
