@@ -31,6 +31,13 @@ extension String {
         return hasLetter && hasDigit
     }
     
+    var isValidName: Bool {
+        guard self.count >= 2 else { return false }
+        let nameRegEx = "^[a-zA-ZğüşöçıĞÜŞİÖÇ ]{2,}$"
+        let nameTest = NSPredicate(format: "SELF MATCHES %@", nameRegEx)
+        return nameTest.evaluate(with: self)
+    }
+    
     /// Checks if the string is a valid URL.
     var isValidUrl: Bool {
         return URL(string: self) != nil
