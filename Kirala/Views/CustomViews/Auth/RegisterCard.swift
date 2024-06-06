@@ -9,13 +9,15 @@ import UIKit
 
 protocol RegisterCardDelegate: AnyObject {
     func didTapLoginButton()
-    func didTapRegisterButton(email: String, password: String)
+    func didTapRegisterButton(name: String, email: String, password: String)
     func didTapLoginWithAppleButton()
     func didTapLoginWithGoogleButton()
 }
 
 protocol RegisterCardProtocol {
     var delegate: RegisterCardDelegate? { get set }
+    func showWarningMessageName()
+    func hideWarningMessageName()
     func showWarningMessageEmail()
     func hideWarningMessageEmail()
     func showWarningMessagePassword()
@@ -40,9 +42,15 @@ final class RegisterCard: UIView, RegisterCardProtocol {
         return view
     }()
     
+    private lazy var nameContainer: NameContainer = {
+        let view = NameContainer()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var passwordTipLabel: UILabel = {
         let label = UILabel()
-        label.text = Localization.auth.localizedString(for: "PASSWORD_TIP")
+        label.text = Strings.Auth.passwordTip.localized
         label.textColor = ColorPalette.gray.dynamicColor
         label.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -52,7 +60,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
     
     private lazy var acceptTermsLabel: UILabel = {
         let label = UILabel()
-        label.text = Localization.auth.localizedString(for: "ACCEPT_MEMBERSHIP_TERMS")
+        label.text = Strings.Auth.acceptMembershipTerms.localized
         label.textColor = ColorPalette.gray.dynamicColor
         label.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +74,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
         radioButton.configure(with: .checkmark)
         radioButton.setUncheckedImage()
         let termLabel = UILabel()
-        termLabel.text = Localization.auth.localizedString(for: "CONSENT_FOR_OFFERS")
+        termLabel.text = Strings.Auth.consentForOffers.localized
         termLabel.textColor = ColorPalette.gray.dynamicColor
         termLabel.numberOfLines = 0
         termLabel.lineBreakMode = .byWordWrapping
@@ -97,7 +105,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
         radioButton.configure(with: .checkmark)
         radioButton.setUncheckedImage()
         let termLabel = UILabel()
-        termLabel.text = Localization.auth.localizedString(for: "AGREE_TO_RECEIVE_MESSAGES")
+        termLabel.text = Strings.Auth.agreeToReceiveMessages.localized
         termLabel.textColor = ColorPalette.gray.dynamicColor
         termLabel.numberOfLines = 0
         termLabel.lineBreakMode = .byWordWrapping
@@ -127,7 +135,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
         radioButton.configure(with: .checkmark)
         radioButton.setUncheckedImage()
         let termLabel = UILabel()
-        termLabel.text = Localization.auth.localizedString(for: "ACKNOWLEDGE_PRIVACY_POLICY")
+        termLabel.text = Strings.Auth.acknowledgePrivacyPolicy.localized
         termLabel.textColor = ColorPalette.gray.dynamicColor
         termLabel.numberOfLines = 0
         termLabel.lineBreakMode = .byWordWrapping
@@ -154,7 +162,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
 
     private lazy var registerButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Localization.auth.localizedString(for: "REGISTER"), for: .normal)
+        button.setTitle(Strings.Auth.register.localized, for: .normal)
         button.backgroundColor = ColorPalette.appPrimary.dynamicColor
         button.addTarget(self, action: #selector(didTapRegisterButton), for: .touchUpInside)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
@@ -165,7 +173,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
     
     private lazy var otherLoginOptionsLabel: UILabel = {
         let label = UILabel()
-        label.text = Localization.auth.localizedString(for: "OTHER_REGISTER_OPTIONS")
+        label.text = Strings.Auth.otherRegisterOptions.localized
         label.textColor = ColorPalette.gray.dynamicColor
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -187,7 +195,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
         
         button.configuration = config
         
-        button.setTitle(Localization.auth.localizedString(for: "REGISTER_WITH_APPLE"), for: .normal)
+        button.setTitle(Strings.Auth.registerWithApple.localized, for: .normal)
         button.setImage(Symbols.appleLogo.symbol(), for: .normal)
         button.tintColor = ColorPalette.white.dynamicColor
         button.backgroundColor = ColorPalette.black.dynamicColor
@@ -212,7 +220,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
         
         button.configuration = config
         
-        button.setTitle(Localization.auth.localizedString(for: "REGISTER_WITH_GOOGLE"), for: .normal)
+        button.setTitle(Strings.Auth.registerWithGoogle.localized, for: .normal)
         button.setImage(Images.google.image.resizeImage(to: CGSize(width: 20, height: 20)), for: .normal)
         button.tintColor = ColorText.quaternary.dynamicColor
         button.backgroundColor = ColorPalette.white.dynamicColor
@@ -231,7 +239,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
     
     private lazy var loginLabel: UILabel = {
         let label = UILabel()
-        label.text = Localization.auth.localizedString(for: "ALREADY_HAVE_ACCOUNT")
+        label.text = Strings.Auth.alreadyHaveAccount.localized
         label.textColor = ColorPalette.gray.dynamicColor
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -240,7 +248,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
     
     private lazy var loginButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Localization.auth.localizedString(for: "LOGIN"), for: .normal)
+        button.setTitle(Strings.Auth.login.localized, for: .normal)
         button.setTitleColor(ColorPalette.appPrimary.dynamicColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         button.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
@@ -271,6 +279,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
         addSubviews([
             emailContainer,
             passwordContainer,
+            nameContainer,
             passwordTipLabel,
             acceptTermsLabel,
             term1View,
@@ -283,15 +292,22 @@ final class RegisterCard: UIView, RegisterCardProtocol {
             loginContainer,
         ])
         setupConstraints()
+        
     }
     
     /// Sets up the constraints for the loading view.
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            emailContainer.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            emailContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            emailContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            emailContainer.heightAnchor.constraint(equalToConstant: 40),
+            
+            nameContainer.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            nameContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            nameContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            nameContainer.heightAnchor.constraint(equalToConstant: UIDevice.deviceHeight * 0.045),
+            
+            emailContainer.topAnchor.constraint(equalTo: nameContainer.bottomAnchor, constant: 16),
+            emailContainer.leadingAnchor.constraint(equalTo: nameContainer.leadingAnchor),
+            emailContainer.trailingAnchor.constraint(equalTo: nameContainer.trailingAnchor),
+            emailContainer.heightAnchor.constraint(equalTo: nameContainer.heightAnchor),
             
             passwordContainer.topAnchor.constraint(equalTo: emailContainer.bottomAnchor, constant: 16),
             passwordContainer.leadingAnchor.constraint(equalTo: emailContainer.leadingAnchor),
@@ -309,7 +325,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
             term1View.topAnchor.constraint(equalTo: acceptTermsLabel.bottomAnchor, constant: 8),
             term1View.leadingAnchor.constraint(equalTo: acceptTermsLabel.leadingAnchor),
             term1View.trailingAnchor.constraint(equalTo: acceptTermsLabel.trailingAnchor),
-            term1View.heightAnchor.constraint(equalToConstant: 30),
+            term1View.heightAnchor.constraint(equalToConstant: UIDevice.deviceHeight * 0.035),
             
             term2View.topAnchor.constraint(equalTo: term1View.bottomAnchor, constant: 8),
             term2View.leadingAnchor.constraint(equalTo: term1View.leadingAnchor),
@@ -362,7 +378,7 @@ final class RegisterCard: UIView, RegisterCardProtocol {
     }
     
     @objc private func didTapRegisterButton() {
-        delegate?.didTapRegisterButton(email: emailContainer.getEmail() ?? "", password: passwordContainer.getPassword() ?? "")
+        delegate?.didTapRegisterButton(name: nameContainer.getName() ?? "", email: emailContainer.getEmail() ?? "", password: passwordContainer.getPassword() ?? "")
     }
     
     @objc private func didTapLoginWithAppleButton() {
@@ -371,6 +387,14 @@ final class RegisterCard: UIView, RegisterCardProtocol {
     
     @objc private func didTapLoginWithGoogleButton() {
         delegate?.didTapLoginWithGoogleButton()
+    }
+    
+    func showWarningMessageName() {
+        nameContainer.showWarning()
+    }
+    
+    func hideWarningMessageName() {
+        nameContainer.hideWarning()
     }
     
     func showWarningMessageEmail() {
