@@ -53,19 +53,19 @@ struct FilterOption {
         return FilterType.allCases.map { type in
             switch type {
             case .category:
-                return FilterOption(title: Localization.filter.localizedString(for: "CATEGORY"), type: type, selectedItems: [])
+                return FilterOption(title: Strings.Filter.category.localized, type: type, selectedItems: [])
             case .brand:
-                return FilterOption(title: Localization.filter.localizedString(for: "BRAND"), type: type, selectedItems: [])
+                return FilterOption(title: Strings.Filter.brand.localized, type: type, selectedItems: [])
             case .price:
-                return FilterOption(title: Localization.filter.localizedString(for: "PRICE"), type: type, selectedItems: [])
+                return FilterOption(title: Strings.Filter.price.localized, type: type, selectedItems: [])
             case .rating:
-                return FilterOption(title: Localization.filter.localizedString(for: "RATING"), type: type, selectedItems: [])
+                return FilterOption(title: Strings.Filter.rating.localized, type: type, selectedItems: [])
             case .renter:
-                return FilterOption(title: Localization.filter.localizedString(for: "RENTER"), type: type, selectedItems: [])
+                return FilterOption(title: Strings.Filter.renter.localized, type: type, selectedItems: [])
             case .rentalPeriod:
-                return FilterOption(title: Localization.filter.localizedString(for: "RENTAL_PERIOD"), type: type, selectedItems: [])
+                return FilterOption(title: Strings.Filter.rentalPeriod.localized, type: type, selectedItems: [])
             case .city:
-                return FilterOption(title: Localization.filter.localizedString(for: "CITY"), type: type, selectedItems: [])
+                return FilterOption(title: Strings.Filter.city.localized, type: type, selectedItems: [])
             }
         }
     }
@@ -136,21 +136,20 @@ final class FilterPopupPresenter {
     
     @objc private func searchableFilterOptionsDidChange(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
-              let type = userInfo["type"] as? FilterType,
-              let items = userInfo["items"] as? [String] else {
+              let type = userInfo[NotificationCenterOutputs.type.rawValue] as? FilterType,
+              let items = userInfo[NotificationCenterOutputs.items.rawValue] as? [String] else {
             return
         }
         selectedItems[type] = items.map { $0 }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak view] in
             view?.reloadRows(at: [IndexPath(row: type.rawValue, section: 0)])
         }
-        
     }
     
     @objc private func minMaxFilterOptionsDidChange(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
-              let type = userInfo["type"] as? FilterType,
-              let items = userInfo["items"] as? [String] else {
+              let type = userInfo[NotificationCenterOutputs.type.rawValue] as? FilterType,
+              let items = userInfo[NotificationCenterOutputs.items.rawValue] as? [String] else {
             return
         }
         selectedItems[type] = [items.joined(separator: " ")]

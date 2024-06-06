@@ -26,7 +26,12 @@ final class SearchablePopupView: BottomPopupViewController, BackNavigatable {
     }()
     
     private lazy var clearNavigationButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: Localization.filter.localizedString(for: "CLEAR".uppercased()), style: .plain, target: self, action: #selector(didTapClearButton))
+        let button = UIBarButtonItem(
+            title: Strings.Filter.clear.localized.uppercased(),
+            style: .plain,
+            target: self,
+            action: #selector(didTapClearButton)
+        )
         button.tintColor = ColorPalette.appPrimary.dynamicColor
         button.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 14, weight: .semibold)], for: .normal)
         return button
@@ -57,7 +62,7 @@ final class SearchablePopupView: BottomPopupViewController, BackNavigatable {
         
     private lazy var applyButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Localization.filter.localizedString(for: "APPLY"), for: .normal)
+        button.setTitle(Strings.Filter.apply.localized, for: .normal)
         button.tintColor = ColorText.primary.dynamicColor
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         button.backgroundColor = ColorPalette.appPrimary.dynamicColor

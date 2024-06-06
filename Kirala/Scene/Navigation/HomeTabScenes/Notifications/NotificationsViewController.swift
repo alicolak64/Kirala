@@ -72,7 +72,7 @@ extension NotificationsViewController: NotificationsViewProtocol {
         navigationItem.hidesBackButton = true
         addBackButton()
         addBottomBorder()
-        navigationItem.title = Localization.common.localizedString(for: "NOTIFICATIONS")
+        navigationItem.title = Strings.Common.notifications.localized
     }
     
     func prepareUI() {

@@ -35,10 +35,10 @@ struct SearchablePopupArguments {
         switch type {
         case .category:
             let categories = (1...20).map { SearchablePopupItem(name: "Category \($0)", selectionState: .unselected)}
-            return SearchablePopupArguments(title: Localization.filter.localizedString(for: "CATEGORY"), type: .category, items: categories)
+            return SearchablePopupArguments(title: Strings.Filter.category.localized, type: .category, items: categories)
         case .brand:
             let brands = (1...20).map { SearchablePopupItem(name: "Brand \($0)", selectionState: .unselected)}
-            return SearchablePopupArguments(title: Localization.filter.localizedString(for: "BRAND"), type: .brand, items: brands)
+            return SearchablePopupArguments(title: Strings.Filter.brand.localized, type: .brand, items: brands)
         case .city:
             let cities = [
                 "Istanbul", "Ankara", "Izmir", "Bursa", "Adana", "Gaziantep", "Konya",
@@ -47,10 +47,10 @@ struct SearchablePopupArguments {
                 "Manisa", "Kocaeli", "Hatay", "Tekirdag", "Aydin", "Isparta", "Canakkale"
             ]
             let items = cities.map { SearchablePopupItem(name: $0, selectionState: .unselected)}
-            return SearchablePopupArguments(title: Localization.filter.localizedString(for: "City"), type: .city, items: items)
+            return SearchablePopupArguments(title: Strings.Filter.city.localized, type: .city, items: items)
         case .renter:
             let renters = (1...20).map { SearchablePopupItem(name: "Renter \($0)", selectionState: .unselected)}
-            return SearchablePopupArguments(title: Localization.filter.localizedString(for: "RENTER"), type: .renter, items: renters)
+            return SearchablePopupArguments(title: Strings.Filter.renter.localized, type: .renter, items: renters)
         }
     }
 
@@ -119,7 +119,8 @@ final class SearchablePopupPresenter {
     }
     
     private func updateClearButtonState() {
-        view?.setRightActionButtonTitle(isClearButton ? Localization.filter.localizedString(for: "CLEAR").uppercased() : Localization.filter.localizedString(for: "SELECT_ALL").uppercased())
+        view?.setRightActionButtonTitle(isClearButton ? Strings.Filter.clear.localized.uppercased() : Strings.Filter.selectAll.localized.uppercased()
+        )
     }
     
     private func getItems() -> [SearchablePopupItem] {
@@ -150,7 +151,7 @@ extension SearchablePopupPresenter: SearchablePopupPresenterProtocol {
     
     func load() {
         view?.setTitle(arguments.title)
-        view?.setSearchBarPlaceholder(Localization.filter.localizedString(for: "SEARCH"))
+        view?.setSearchBarPlaceholder(Strings.Filter.search.localized)
         updateClearButtonState()
         view?.reloadTableView()
     }

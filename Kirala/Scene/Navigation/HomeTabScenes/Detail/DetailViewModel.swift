@@ -27,28 +27,28 @@ final class DetailViewModel {
             if let rangeValue = self.currentValue as? FastisRange {
                 let dateString = rangeValue.getString()
                 let numberOfDays = rangeValue.getNumberOfDays() + 1
-                let numberOfDaysString = numberOfDays.description + " " + Localization.common.localizedString(for: "DAY")
+                let numberOfDaysString = numberOfDays.description + " " + Strings.Common.day.localized
                 let combinedDateString = dateString + " / " + numberOfDaysString
                 delegate?.setDateLabel(with: combinedDateString)
                 
                 let price = Double(detailProduct.price)
                 let totalPrice = price * Double(numberOfDays)
-                let totalPriceString = totalPrice.toCurrencyString() + " " + Localization.common.localizedString(for: "TOTAL")
-                let pricePerDayString = price.toCurrencyString() + " " + Localization.common.localizedString(for: "PER_DAY")
+                let totalPriceString = totalPrice.toCurrencyString() + " " + Strings.Common.total.localized
+                let pricePerDayString = price.toCurrencyString() + " " + Strings.Common.perDay.localized
                 
                 let priceLabelText = totalPriceString + " / " + pricePerDayString
                 
                 delegate?.setPriceLabelWithTotal(
                     with: priceLabelText,
                     totalPrice: totalPrice.toCurrencyString(),
-                    total: Localization.common.localizedString(for: "TOTAL"),
-                    perDay: Localization.common.localizedString(for: "PER_DAY"),
+                    total: Strings.Common.total.localized,
+                    perDay: Strings.Common.perDay.localized,
                     price: price.toCurrencyString()
                 )
             } else if let date = self.currentValue as? Date {
                 print(date)
             } else {
-                delegate?.setDateLabel(with: Localization.common.localizedString(for: "CHOOSE_RANGE_RENT"))
+                delegate?.setDateLabel(with: Strings.Common.chooseRangeRent.localized)
             }
         }
     }
@@ -99,8 +99,8 @@ extension DetailViewModel: DetailViewModelProtocol {
         delegate?.prepareImageSlider(imageURLs: detailProduct.imageUrls, loopingEnabled: SearchProduct.imageUrls.count > 1)
         
         delegate?.setPriceLabel(
-            with: detailProduct.price.toCurrencyString() + " " + Localization.common.localizedString(for: "PER_DAY"),
-            perDay: Localization.common.localizedString(for: "PER_DAY"),
+            with: detailProduct.price.toCurrencyString() + " " + Strings.Common.perDay.localized,
+            perDay: Strings.Common.perDay.localized,
             price: detailProduct.price.toCurrencyString()
         )
         
@@ -171,13 +171,12 @@ extension DetailViewModel: DetailViewModelProtocol {
         guard authService.isLoggedIn else {
             
             delegate?.showActionSheet(
-                title: Localization.alert.localizedString(for: "NO_LOGIN_TITLE"),
-                message: Localization.alert.localizedString(for: "NO_LOGIN_FAVORITE_PRODUCT_MESSAGE"),
-                actionTitle: Localization.alert.localizedString(for: "NO_LOGIN_ACTION"),
+                title: Strings.Alert.noLoginTitle.localized,
+                message: Strings.Alert.noLoginFavoriteProductMessage.localized,
+                actionTitle: Strings.Alert.noLoginAction.localized,
                 completion: { [weak self] in
                     self?.router.navigate(to: .auth)
                 }
-                
             )
             
             return

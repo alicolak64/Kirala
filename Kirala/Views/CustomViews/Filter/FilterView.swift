@@ -18,7 +18,7 @@ final class FilterView: UIView, FilterViewProtocol {
         config.imagePlacement = .leading
         config.imagePadding = 8
         
-        config.attributedTitle = AttributedString(Localization.filter.localizedString(for: "SORT"), attributes: AttributeContainer([.font: UIFont.systemFont(ofSize: 14, weight: .regular), .foregroundColor: ColorText.primary.dynamicColor]))
+        config.attributedTitle = AttributedString(Strings.Filter.sort.localized, attributes: AttributeContainer([.font: UIFont.systemFont(ofSize: 14, weight: .regular), .foregroundColor: ColorText.primary.dynamicColor]))
         config.image = Symbols.arrowUpArrowDown.symbol(size: 10)
         
         button.configuration = config
@@ -38,7 +38,7 @@ final class FilterView: UIView, FilterViewProtocol {
         config.imagePlacement = .leading
         config.imagePadding = 8
         
-        config.attributedTitle = AttributedString(Localization.filter.localizedString(for: "FILTER"), attributes: AttributeContainer([.font: UIFont.systemFont(ofSize: 14, weight: .regular), .foregroundColor: ColorText.primary.dynamicColor]))
+        config.attributedTitle = AttributedString(Strings.Filter.filter.localized, attributes: AttributeContainer([.font: UIFont.systemFont(ofSize: 14, weight: .regular), .foregroundColor: ColorText.primary.dynamicColor]))
         config.image = Symbols.sliderHorizontal3.symbol(size: 12)
         
         button.configuration = config
@@ -251,14 +251,14 @@ final class FilterView: UIView, FilterViewProtocol {
     private func setSortButtonToFullTitle() {
         UIView.transition(with: sortButton, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
             guard let self = self else { return }
-            self.setSortButtonTitle(Localization.filter.localizedString(for: "SORT"))
+            self.setSortButtonTitle(Strings.Filter.sort.localized)
         }, completion: nil)
     }
 
     private func setFilterButtonToFullTitle() {
         UIView.transition(with: filterButton, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
             guard let self = self else { return }
-            self.setFilterButtonTitle(Localization.filter.localizedString(for: "FILTER"))
+            self.setFilterButtonTitle(Strings.Filter.sort.localized)
         }, completion: nil)
     }
 

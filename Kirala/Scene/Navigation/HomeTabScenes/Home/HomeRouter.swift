@@ -38,7 +38,7 @@ final class HomeRouter: HomeRouterProtocol {
             navigationController?.pushViewController(categoriesViewController, animated: true)
         case .auth:
             let authNavController = UINavigationController()
-            let authViewController = AuthBuilder.build(rootNavigationController: navigationController, navigationController: authNavController)
+            let authViewController = AuthBuilder.build(rootViewController: navigationController, navigationController: authNavController)
             authNavController.viewControllers = [authViewController]
             authNavController.modalPresentationStyle = .fullScreen
             navigationController?.present(authNavController, animated: true, completion: nil)

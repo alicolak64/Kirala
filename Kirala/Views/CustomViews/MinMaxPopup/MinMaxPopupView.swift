@@ -26,7 +26,7 @@ final class MinMaxPopupView: BottomPopupViewController, BackNavigatable, Alertab
     }()
     
     private lazy var clearNavigationButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: Localization.filter.localizedString(for: "CLEAR").uppercased(), style: .plain, target: self, action: #selector(didTapClearButton))
+        let button = UIBarButtonItem(title: Strings.Filter.clear.localized.uppercased(), style: .plain, target: self, action: #selector(didTapClearButton))
         button.tintColor = ColorPalette.appPrimary.dynamicColor
         button.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 14, weight: .semibold)], for: .normal)
         return button
@@ -41,7 +41,7 @@ final class MinMaxPopupView: BottomPopupViewController, BackNavigatable, Alertab
     
     private lazy var minTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = Localization.filter.localizedString(for: "MIN")
+        textField.placeholder = Strings.Filter.min.localized
         textField.keyboardType = .decimalPad
         textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -64,7 +64,7 @@ final class MinMaxPopupView: BottomPopupViewController, BackNavigatable, Alertab
     
     private lazy var maxTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = Localization.filter.localizedString(for: "MAX")
+        textField.placeholder = Strings.Filter.max.localized
         textField.keyboardType = .decimalPad
         textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -90,7 +90,7 @@ final class MinMaxPopupView: BottomPopupViewController, BackNavigatable, Alertab
         
     private lazy var applyButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Localization.filter.localizedString(for: "APPLY"), for: .normal)
+        button.setTitle(Strings.Filter.apply.localized, for: .normal)
         button.tintColor = ColorText.primary.dynamicColor
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         button.backgroundColor = ColorPalette.appPrimary.dynamicColor
@@ -243,8 +243,8 @@ extension MinMaxPopupView: MinMaxPopupViewProtocol {
         tableView.reloadRows(at: indexPaths, with: .automatic)
     }
     
-    func showAlert(title: String, message: String) {
-        showAlert(title: title, message: message, actions: [UIAlertAction(title: Localization.common.localizedString(for: "OK"), style: .default, handler: nil)])
+    func showAlert(alertMessage: AlertMessage) {
+        showAlert(title: alertMessage.title, message: alertMessage.message, actions: [UIAlertAction(title: alertMessage.actionTitle, style: .default, handler: nil)])
     }
     
 }

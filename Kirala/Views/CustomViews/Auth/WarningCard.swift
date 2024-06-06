@@ -17,7 +17,7 @@ final class WarningCard: UIView, WarningCardProtocol {
     private lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = Localization.auth.localizedString(for: "RESET_PASSWORD_TIP_TITLE")
+        label.text = Strings.Auth.forgotPasswordTipTitle.localized
         label.font = UIFont.boldSystemFont(ofSize: 11)
         label.textColor = ColorText.warning.color
         return label
@@ -47,6 +47,13 @@ final class WarningCard: UIView, WarningCardProtocol {
     }
     
     func showWarningMessage(message: String, animated: Bool) {
+        
+        let with = message.nsString.width(usingFont: messageLabel.font)
+        
+        if with > frame.width {
+            let assumedFont = messageLabel.font.withSize(messageLabel.font.pointSize - 1)
+            messageLabel.font = assumedFont
+        }
         
         if animated {
             alpha = 0

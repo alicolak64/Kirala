@@ -291,19 +291,34 @@ extension HomeViewModel: HomeViewModelProtocol {
     }
     
     func headerForSectionCategories() -> CategoriesHeaderArguments? {
-        CategoriesHeaderArguments(name: Localization.common.localizedString(for: "CATEGORIES"), symbol: Symbols.magnifyingglass)
+        CategoriesHeaderArguments(
+            name: Strings.Common.categories.localized,
+            symbol: Symbols.magnifyingglass
+        )
     }
     
     func headerForSectionNewAdded() -> ProductsHeaderArguments? {
-        ProductsHeaderArguments(headerType: .newAdded, title: Localization.common.localizedString(for: "NEW_ADDEDS"), actionTitle: Localization.common.localizedString(for: "SEE_ALL"))
+        ProductsHeaderArguments(
+            headerType: .newAdded,
+            title: Strings.Common.newAddeds.localized,
+            actionTitle: Strings.Common.seeAll.localized
+        )
     }
     
     func headerForSectionBestSellers() -> ProductsHeaderArguments? {
-        ProductsHeaderArguments(headerType: .bestSellers, title: Localization.common.localizedString(for: "BEST_SELLERS"), actionTitle: Localization.common.localizedString(for: "SEE_ALL"))
+        ProductsHeaderArguments(
+            headerType: .bestSellers,
+            title: Strings.Common.bestSellers.localized,
+            actionTitle: Strings.Common.seeAll.localized
+        )
     }
     
     func headerForSectionMostRated() -> ProductsHeaderArguments? {
-        ProductsHeaderArguments(headerType: .mostRated, title: Localization.common.localizedString(for: "MOST_RATED"), actionTitle: Localization.common.localizedString(for: "SEE_ALL"))
+        ProductsHeaderArguments(
+            headerType: .bestSellers,
+            title: Strings.Common.mostRated.localized,
+            actionTitle: Strings.Common.seeAll.localized
+        )
     }
     
     func didTapFavoriteButton(at indexPath: IndexPath) {
@@ -311,9 +326,9 @@ extension HomeViewModel: HomeViewModelProtocol {
         guard authService.isLoggedIn else {
             
             delegate?.showActionSheet(
-                title: Localization.alert.localizedString(for: "NO_LOGIN_TITLE"),
-                message: Localization.alert.localizedString(for: "NO_LOGIN_FAVORITE_PRODUCT_MESSAGE"),
-                actionTitle: Localization.alert.localizedString(for: "NO_LOGIN_ACTION"),
+                title: Strings.Alert.noLoginTitle.localized,
+                message: Strings.Alert.noLoginFavoriteProductMessage.localized,
+                actionTitle: Strings.Alert.noLoginAction.localized,
                 completion: { [weak self] in
                     self?.router.navigate(to: .auth)
                 }

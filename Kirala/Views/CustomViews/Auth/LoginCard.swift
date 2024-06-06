@@ -43,7 +43,7 @@ final class LoginCard: UIView, LoginCardProtocol {
     
     private lazy var forgotPasswordButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Localization.auth.localizedString(for: "FORGOT_PASSWORD"), for: .normal)
+        button.setTitle(Strings.Auth.forgotPassword.localized, for: .normal)
         button.setTitleColor(ColorPalette.appSecondary.dynamicColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         button.addTarget(self, action: #selector(didTapForgotPasswordButton), for: .touchUpInside)
@@ -53,7 +53,7 @@ final class LoginCard: UIView, LoginCardProtocol {
     
     private lazy var loginButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Localization.auth.localizedString(for: "LOGIN"), for: .normal)
+        button.setTitle(Strings.Auth.login.localized, for: .normal)
         button.backgroundColor = ColorPalette.appPrimary.dynamicColor
         button.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
@@ -64,7 +64,7 @@ final class LoginCard: UIView, LoginCardProtocol {
     
     private lazy var otherLoginOptionsLabel: UILabel = {
         let label = UILabel()
-        label.text = Localization.auth.localizedString(for: "OTHER_LOGIN_OPTIONS")
+        label.text = Strings.Auth.otherLoginOptions.localized
         label.textColor = ColorPalette.gray.dynamicColor
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -86,7 +86,7 @@ final class LoginCard: UIView, LoginCardProtocol {
         
         button.configuration = config
         
-        button.setTitle(Localization.auth.localizedString(for: "LOGIN_WITH_APPLE"), for: .normal)
+        button.setTitle(Strings.Auth.loginWithApple.localized, for: .normal)
         button.setImage(Symbols.appleLogo.symbol(), for: .normal)
         button.tintColor = ColorPalette.white.dynamicColor
         button.backgroundColor = ColorPalette.black.dynamicColor
@@ -111,7 +111,7 @@ final class LoginCard: UIView, LoginCardProtocol {
         
         button.configuration = config
         
-        button.setTitle(Localization.auth.localizedString(for: "LOGIN_WITH_GOOGLE"), for: .normal)
+        button.setTitle(Strings.Auth.loginWithGoogle.localized, for: .normal)
         button.setImage(Images.google.image.resizeImage(to: CGSize(width: 20, height: 20)), for: .normal)
         button.tintColor = ColorText.quaternary.dynamicColor
         button.backgroundColor = ColorPalette.white.dynamicColor
@@ -130,7 +130,7 @@ final class LoginCard: UIView, LoginCardProtocol {
     
     private lazy var registerLabel: UILabel = {
         let label = UILabel()
-        label.text = Localization.auth.localizedString(for: "NO_ACCOUNT")
+        label.text = Strings.Auth.noAccount.localized
         label.textColor = ColorPalette.gray.dynamicColor
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -139,7 +139,7 @@ final class LoginCard: UIView, LoginCardProtocol {
     
     private lazy var registerButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Localization.auth.localizedString(for: "REGISTER"), for: .normal)
+        button.setTitle(Strings.Auth.register.localized, for: .normal)
         button.setTitleColor(ColorPalette.appPrimary.dynamicColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         button.addTarget(self, action: #selector(didTapRegisterButton), for: .touchUpInside)

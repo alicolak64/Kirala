@@ -33,9 +33,11 @@ final class EmailContainer: UIView, EmailContainerProtocol {
         let view = AutoCompleteTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.autoCompleteType = .email
-        view.attributedPlaceholder = NSAttributedString(string: Localization.auth.localizedString(for: "EMAIL_PLACEHOLDER"), attributes: [
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .regular)
-        ])
+        view.attributedPlaceholder = NSAttributedString(
+            string: Strings.Auth.emailPlaceholder.localized,
+            attributes: [
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .regular)
+            ])
         return view
     }()
     

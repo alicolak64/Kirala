@@ -30,7 +30,7 @@ final class ProductsHeaderCell: UICollectionReusableView, ReusableView {
     
     private lazy var allButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Localization.common.localizedString(for: "ALL"), for: .normal)
+        button.setTitle(Strings.Common.all.localized, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
         button.setTitleColor(ColorPalette.appPrimary.dynamicColor, for: .normal)
         button.addTarget(self, action: #selector(didTapAllProducts), for: .touchUpInside)

@@ -23,7 +23,7 @@ final class SearchViewController: UIViewController, SwipePerformable, BackNaviga
     }()
     
     private lazy var cancelNavigationButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: Localization.common.localizedString(for: "CANCEL"), style: .plain, target: self, action: #selector(didTapCancelButton))
+        let button = UIBarButtonItem(title: Strings.Common.cancel.localized, style: .plain, target: self, action: #selector(didTapCancelButton))
         button.tintColor = ColorPalette.appPrimary.dynamicColor
         return button
     }()

@@ -100,7 +100,7 @@ final class DetailViewController: UIViewController, SwipePerformable, BackNaviga
         label.textColor = ColorPalette.appPrimary.dynamicColor
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 10, weight: .semibold)
-        label.text = Localization.tabBar.localizedString(for: "CART")
+        label.text = Strings.TabBar.cart.localized
         return label
     }()
     
@@ -132,7 +132,7 @@ final class DetailViewController: UIViewController, SwipePerformable, BackNaviga
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = ColorText.secondary.dynamicColor
-        label.text = Localization.common.localizedString(for: "CHOOSE_DATE")
+        label.text = Strings.Common.chooseDate.localized
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         return label
     }()
@@ -140,7 +140,7 @@ final class DetailViewController: UIViewController, SwipePerformable, BackNaviga
     private lazy var rentButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(Localization.common.localizedString(for: "RENT"), for: .normal)
+        button.setTitle(Strings.Common.rent.localized, for: .normal)
         button.setTitleColor(ColorText.white.dynamicColor, for: .normal)
         button.backgroundColor = ColorPalette.appPrimary.dynamicColor
         button.addRoundedBorder(width: 0.5, color: ColorPalette.border.dynamicColor)
@@ -347,7 +347,7 @@ extension DetailViewController: DetailViewProtocol {
         shortcuts: [FastisShortcut<FastisRange>],
         closedRanges: [FastisRange]
     ) {
-        calendar.title = Localization.common.localizedString(for: "CHOOSE_RANGE_RENT")
+        calendar.title = Strings.Common.chooseRangeRent.localized
         calendar.shortcuts = shortcuts
         calendar.minimumDate = minDate
         calendar.maximumDate = maxDate

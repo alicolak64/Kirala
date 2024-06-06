@@ -21,6 +21,7 @@ enum EmptyState {
     case noLoginOrder
     case noLoginAds
     case noLoginProfile
+    case invalidOrExpireToken
     case unknown
     
     /// Returns the data associated with each empty state.
@@ -50,6 +51,8 @@ enum EmptyState {
             return NoLoginAdsState()
         case .noLoginProfile:
             return NoLoginProfileState()
+        case .invalidOrExpireToken:
+            return InvalidOrExpireTokenState()
         case .unknown:
             return UnknownState()
         }
@@ -70,9 +73,9 @@ protocol EmptyStateProtocol {
 /// Default implementations for the `EmptyStateProtocol`.
 extension EmptyStateProtocol {
     var image: UIImage? { return Symbols.exclamationmarkTriangleFill.symbol() }
-    var title: String { return Localization.emptyState.localizedString(for: "UNKNOWN_ERROR_TITLE") }
-    var description: String { return Localization.emptyState.localizedString(for: "UNKNOWN_ERROR_DESC") }
-    var buttonTitle: String { return Localization.emptyState.localizedString(for: "UNKNOWN_ERROR_BUTTON") }
+    var title: String { return Strings.EmptyState.unknownErrorTitle.localized }
+    var description: String { return Strings.EmptyState.unknownErrorDesc.localized }
+    var buttonTitle: String { return Strings.EmptyState.unknownErrorButton.localized }
     var imageTintColor: UIColor { return ColorPalette.appPrimary.color }
     var buttonBackgroundColor: UIColor { return ColorPalette.appPrimary.color }
     var buttonTitleColor: UIColor { return ColorText.white.color }
@@ -80,92 +83,98 @@ extension EmptyStateProtocol {
 
 struct NoDataState: EmptyStateProtocol {
     var image: UIImage? = Symbols.listBulletBelowRectangle.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "NO_DATA_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "NO_DATA_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "NO_DATA_BUTTON")
+    var title: String = Strings.EmptyState.noDataTitle.localized
+    var description: String = Strings.EmptyState.noDataDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noDataButton.localized
 }
 
 struct NoInternetState: EmptyStateProtocol {
     var image: UIImage? = Symbols.wifiSlash.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "NO_INTERNET_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "NO_INTERNET_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "NO_INTERNET_BUTTON")
+    var title: String = Strings.EmptyState.noInternetTitle.localized
+    var description: String = Strings.EmptyState.noInternetDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noInternetButton.localized
 }
 
 struct NoSearchResultState: EmptyStateProtocol {
     var image: UIImage? = Symbols.magnifyingglassCircleFill.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "NO_SEARCH_RESULT_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "NO_SEARCH_RESULT_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "NO_SEARCH_RESULT_BUTTON")
+    var title: String = Strings.EmptyState.noSearchResultTitle.localized
+    var description: String = Strings.EmptyState.noSearchResultDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noSearchResultButton.localized
 }
 
 struct NoFavoritesState: EmptyStateProtocol {
     var image: UIImage? = Symbols.starSlashFill.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "NO_FAVORITE_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "NO_FAVORITE_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "NO_FAVORITE_BUTTON")
+    var title: String = Strings.EmptyState.noFavoriteTitle.localized
+    var description: String = Strings.EmptyState.noFavoriteDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noFavoriteButton.localized
 }
 
 struct EmptyCartState: EmptyStateProtocol {
     var image: UIImage? = Symbols.cartBadgeMinus.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "EMPTY_CART_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "EMPTY_CART_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "EMPTY_CART_BUTTON")
+    var title: String = Strings.EmptyState.emptyCartTitle.localized
+    var description: String = Strings.EmptyState.emptyCartDesc.localized
+    var buttonTitle: String = Strings.EmptyState.emptyCartButton.localized
 }
 
 struct NoNotificationState: EmptyStateProtocol {
     var image: UIImage? = Symbols.bellSlashFill.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "NO_NOTIFICATION_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "NO_NOTIFICATION_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "NO_NOTIFICATION_BUTTON")
+    var title: String = Strings.EmptyState.noNotificationTitle.localized
+    var description: String = Strings.EmptyState.noNotificationDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noNotificationButton.localized
 }
 
 struct NoOrderState: EmptyStateProtocol {
     var image: UIImage? = Symbols.rectanglePortraitOnRectanglePortraitSlashFill.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "NO_ORDER_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "NO_ORDER_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "NO_ORDER_BUTTON")
+    var title: String = Strings.EmptyState.noOrderTitle.localized
+    var description: String = Strings.EmptyState.noOrderDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noOrderButton.localized
 }
 
 struct NoLoginCartState: EmptyStateProtocol {
     var image: UIImage? = Symbols.cartFill.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "NO_LOGIN_CART_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "NO_LOGIN_CART_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "NO_LOGIN_CART_BUTTON")
+    var title: String = Strings.EmptyState.noLoginCartTitle.localized
+    var description: String = Strings.EmptyState.noLoginCartDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noLoginCartButton.localized
 }
 
 struct NoLoginOrderState: EmptyStateProtocol {
     var image: UIImage? = Symbols.rectanglePortraitOnRectanglePortraitSlashFill.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "NO_LOGIN_ORDER_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "NO_LOGIN_ORDER_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "NO_LOGIN_ORDER_BUTTON")
+    var title: String = Strings.EmptyState.noLoginOrderTitle.localized
+    var description: String = Strings.EmptyState.noLoginOrderDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noLoginOrderButton.localized
 }
 
 struct NoLoginNotificationState: EmptyStateProtocol {
     var image: UIImage? = Symbols.bell.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "NO_LOGIN_NOTIFICATION_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "NO_LOGIN_NOTIFICATION_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "NO_LOGIN_NOTIFICATION_BUTTON")
+    var title: String = Strings.EmptyState.noLoginNotificationTitle.localized
+    var description: String = Strings.EmptyState.noLoginNotificationDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noLoginNotificationButton.localized
 }
 
 struct NoLoginProfileState: EmptyStateProtocol {
     var image: UIImage? = Symbols.personFill.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "NO_LOGIN_PROFILE_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "NO_LOGIN_PROFILE_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "NO_LOGIN_PROFILE_BUTTON")
+    var title: String = Strings.EmptyState.noLoginProfileTitle.localized
+    var description: String = Strings.EmptyState.noLoginProfileDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noLoginProfileButton.localized
 }
 
 struct NoLoginAdsState: EmptyStateProtocol {
     var image: UIImage? = Symbols.rectanglePortraitOnRectanglePortraitSlashFill.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "NO_LOGIN_ADS_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "NO_LOGIN_ADS_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "NO_LOGIN_ADS_BUTTON")
+    var title: String = Strings.EmptyState.noLoginAdsTitle.localized
+    var description: String = Strings.EmptyState.noLoginAdsDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noLoginAdsButton.localized
 }
 
+struct InvalidOrExpireTokenState: EmptyStateProtocol {
+    var image: UIImage? = Symbols.exclamationmarkTriangleFill.symbol()
+    var title: String = Strings.EmptyState.invalidOrExpireTokenTitle.localized
+    var description: String = Strings.EmptyState.invalidOrExpireTokenDesc.localized
+    var buttonTitle: String = Strings.EmptyState.invalidOrExpireTokenButton.localized
+}
 
 struct UnknownState: EmptyStateProtocol {
     var image: UIImage? = Symbols.exclamationmarkTriangleFill.symbol()
-    var title: String = Localization.emptyState.localizedString(for: "UNKNOWN_ERROR_TITLE")
-    var description: String = Localization.emptyState.localizedString(for: "UNKNOWN_ERROR_DESC")
-    var buttonTitle: String = Localization.emptyState.localizedString(for: "UNKNOWN_ERROR_BUTTON")
+    var title: String = Strings.EmptyState.unknownErrorTitle.localized
+    var description: String = Strings.EmptyState.unknownErrorDesc.localized
+    var buttonTitle: String = Strings.EmptyState.unknownErrorButton.localized
 }

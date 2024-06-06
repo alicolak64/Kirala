@@ -47,10 +47,13 @@ final class PasswordContainer: UIView, PasswordContainerProtocol {
     private lazy var passwordTextField: AutoCompleteTextField = {
         let view = AutoCompleteTextField()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.attributedPlaceholder = NSAttributedString(string: Localization.auth.localizedString(for: "PASSWORD_PLACEHOLDER"), attributes: [
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .regular)
-        ])
-        view.autoCompleteType = .email
+        view.attributedPlaceholder = NSAttributedString(
+            string: Strings.Auth.passwordPlaceholder.localized,
+            attributes: [
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .regular)
+            ]
+        )
+        view.autoCompleteType = .none
         view.isSecureTextEntry = true
         return view
     }()

@@ -73,7 +73,7 @@ extension ProductCellPresenter: ProductCellPresenterProtocol {
         view?.setName(with: arguments.brand + " " + arguments.name, brand: arguments.brand, name: arguments.name)
         view?.setImageURL(arguments.imageURL.imageUrl)
         view?.setPrice(arguments.price)
-        view?.setPerDayString(Localization.common.localizedString(for: "PER_DAY"))
+        view?.setPerDayString(Strings.Common.perDay.localized)
         switch arguments.favoriteState {
         case .favorited:
             view?.setFavoritedIcon(animated: false)

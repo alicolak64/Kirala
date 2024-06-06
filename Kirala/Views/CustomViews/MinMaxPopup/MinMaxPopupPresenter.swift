@@ -40,14 +40,26 @@ struct MinMaxPopupArguments {
         switch type {
         case .price:
             let prices = (0...5).map { MinMaxPopupItem(minMax: MinMax(min: Double($0 * 500), max: Double($0 * 500 + 100), isCustom: false), selectionState: .unselected) }
-            return MinMaxPopupArguments(title: Localization.filter.localizedString(for: "PRICE"), type: .price, items: prices)
+            return MinMaxPopupArguments(
+                title: Strings.Filter.price.localized,
+                type: .price,
+                items: prices
+            )
         case .rating:
             var ratings = (1...4).map { MinMaxPopupItem(minMax: MinMax(min: Double($0), max: Double($0 + 1), isCustom: false) , selectionState: .unselected) }
             ratings.append(MinMaxPopupItem(minMax: MinMax(min: 4.5, max: 5.0, isCustom: false) , selectionState: .unselected))
-            return MinMaxPopupArguments(title: Localization.filter.localizedString(for: "RATING"), type: .rating, items: ratings)
+            return MinMaxPopupArguments(
+                title: Strings.Filter.rating.localized,
+                type: .rating,
+                items: ratings
+            )
         case .rentalPeriod:
             let periods = (0...5).map { MinMaxPopupItem(minMax: MinMax(min: Double($0 * 5), max: Double($0 * 5 + 5), isCustom: false), selectionState: .unselected) }
-            return MinMaxPopupArguments(title: Localization.filter.localizedString(for: "RENTAL_PERIOD"), type: .rentalPeriod, items: periods)
+            return MinMaxPopupArguments(
+                title: Strings.Filter.rentalPeriod.localized,
+                type: .rentalPeriod,
+                items: periods
+            )
         }
     }
 
@@ -100,7 +112,7 @@ protocol MinMaxPopupViewProtocol: AnyObject {
     func setClearButtonActive(_ isActive: Bool)
     func reloadTableView()
     func reloadRows(at indexPaths: [IndexPath])
-    func showAlert(title: String, message: String)
+    func showAlert(alertMessage: AlertMessage)
 }
 
 final class MinMaxPopupPresenter {
@@ -243,7 +255,13 @@ extension MinMaxPopupPresenter: MinMaxPopupPresenterProtocol {
         if let selectedItem = items.first(where: { $0.selectionState == .selected }) {
             if let min = selectedItem.minMax.min, let max = selectedItem.minMax.max {
                 if min > max {
-                    view?.showAlert(title: Localization.common.localizedString(for: "ERROR"), message: Localization.filter.localizedString(for: "MIN_MAX_ERROR"))
+                    view?.showAlert(
+                        alertMessage: AlertMessage(
+                            title: Strings.Common.error.localized,
+                            message: Strings.Filter.minMaxError.localized,
+                            actionTitle: Strings.Common.ok.localized
+                        )
+                    )
                     return
                 }
             }
@@ -265,11 +283,11 @@ extension MinMaxPopupPresenter: MinMaxPopupPresenterProtocol {
         case .price:
             return SelectCellArguments(name: "\(item.minMax.min?.formatIntAndString ?? "") - \(item.minMax.max?.formatIntAndString ?? "") TL", selectionState: item.selectionState)
         case .rating:
-            let starAndAbove = Localization.filter.localizedString(for: "STAR_AND_ABOVE")
+            let starAndAbove = Strings.Filter.starAndAbove.localized
             guard let starValue = item.minMax.min?.formatIntAndString else { return nil }
             return SelectCellArguments(name: "\(starValue) \(starAndAbove)", selectionState: item.selectionState)
         case .rentalPeriod:
-            return SelectCellArguments(name: "\(item.minMax.min?.formatIntAndString ?? "") - \(item.minMax.max?.formatIntAndString ?? "") \(Localization.common.localizedString(for: "DAY"))", selectionState: item.selectionState)
+            return SelectCellArguments(name: "\(item.minMax.min?.formatIntAndString ?? "") - \(item.minMax.max?.formatIntAndString ?? "") \(Strings.Common.day.localized)", selectionState: item.selectionState)
         }
     }
     
@@ -279,7 +297,7 @@ extension MinMaxPopupPresenter: MinMaxPopupPresenterProtocol {
     
     func didSelectRow(at indexPath: IndexPath) {
         toggleItemSelection(at: indexPath)
-        if let customSelectedItem = items.first(where: { $0.minMax.isCustom }) {
+        if items.first(where: { $0.minMax.isCustom }) != nil {
             items.removeAll { $0.minMax.isCustom }
         }
         guard let selectedItem = getNonCustomItems().first(where: { $0.selectionState == .selected }) else {

@@ -38,15 +38,50 @@ final class TabBarViewModel: TabBarViewModelProtocol {
         TabBarItem.allCases.forEach { item in
             switch item {
             case .home:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "HOME"), image: Symbols.houseFill, badge: nil, tag: 0))
+                items.append(
+                    TabBarItemArguments(
+                        title: Strings.TabBar.home.localized,
+                        image: Symbols.houseFill,
+                        badge: nil,
+                        tag: 0
+                    )
+                )
             case .myAds:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "MY_ADS"), image: Symbols.newspaperFill, badge: nil, tag: 1))
+                items.append(
+                    TabBarItemArguments(
+                        title: Strings.TabBar.myAds.localized,
+                        image: Symbols.newspaperFill,
+                        badge: nil,
+                        tag: 1
+                    )
+                )
             case .myOrders:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "MY_ORDERS"), image: Symbols.shippingboxFill, badge: nil, tag: 2))
+                items.append(
+                    TabBarItemArguments(
+                        title: Strings.TabBar.myOrders.localized,
+                        image: Symbols.shippingboxFill,
+                        badge: nil,
+                        tag: 2
+                    )
+                )
             case .cart:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "CART"), image: Symbols.cartFill, badge: 0, tag: 3))
+                items.append(
+                    TabBarItemArguments(
+                        title: Strings.TabBar.cart.localized,
+                        image: Symbols.cartFill,
+                        badge: 0,
+                        tag: 3
+                    )
+                )
             case .profile:
-                items.append(TabBarItemArguments(title: Localization.tabBar.localizedString(for: "PROFILE"), image: Symbols.personFill, badge: nil, tag: 4))
+                items.append(
+                    TabBarItemArguments(
+                        title: Strings.TabBar.profile.localized,
+                        image: Symbols.personFill,
+                        badge: nil,
+                        tag: 4
+                    )
+                )
             }
         }
     }

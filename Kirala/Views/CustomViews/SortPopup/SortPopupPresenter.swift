@@ -51,17 +51,42 @@ struct SortOption: Selectable {
         SortType.allCases.map { type in
             switch type {
             case .lowToHigh:
-                return SortOption(title: Localization.filter.localizedString(for: "LOW_TO_HIGH"), sortType: type, selectionState: .selected)
+                return SortOption(
+                    title: Strings.Filter.lowToHigh.localized,
+                    sortType: type,
+                    selectionState: .selected
+                )
             case .highToLow:
-                return SortOption(title: Localization.filter.localizedString(for: "HIGH_TO_LOW"), sortType: type, selectionState: .unselected)
+                return SortOption(
+                    title: Strings.Filter.highToLow.localized,
+                    sortType: type,
+                    selectionState: .unselected
+                )
             case .bestseller:
-                return SortOption(title: Localization.filter.localizedString(for: "BESTSELLER"), sortType: type, selectionState: .unselected)
+                return SortOption(
+                    title: Strings.Filter.bestseller.localized,
+                    sortType: type,
+                    selectionState: .unselected
+                )
             case .newest:
-                return SortOption(title: Localization.filter.localizedString(for: "NEWEST"), sortType: type, selectionState: .unselected)
+                return SortOption(
+                    title: Strings.Filter.newest.localized,
+                    sortType: type,
+                    selectionState: .unselected
+                )
             case .mostRated:
-                return SortOption(title: Localization.filter.localizedString(for: "MOST_RATED"), sortType: type, selectionState: .unselected)
+                return SortOption(
+                    title: Strings.Filter.mostRated.localized,
+                    sortType: type,
+                    selectionState: .unselected
+                )
             case .rentalPeriod:
-                return SortOption(title: Localization.filter.localizedString(for: "RENTAL_PERIOD"), sortType: type, selectionState: .unselected)}
+                return SortOption(
+                    title: Strings.Filter.rentalPeriod.localized,
+                    sortType: type,
+                    selectionState: .unselected
+                )
+            }
         }
         
     }
