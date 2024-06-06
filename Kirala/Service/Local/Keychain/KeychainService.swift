@@ -9,6 +9,9 @@ import Foundation
 
 enum KeychainKey: String {
     case authToken
+    case authTokenType
+    case resetPasswordToken
+    case error
 }
 
 protocol KeychainService {
