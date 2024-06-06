@@ -86,7 +86,11 @@ final class SearchViewModel {
             searchbalePopupOptions[type] = SearchablePopupArguments.mockData(type: type).items
         }
         let categories = Category.mockCategories.map { SearchablePopupItem(name: $0.name, selectionState: .unselected) }
-        searchbalePopupOptions[.category] = SearchablePopupArguments(title: Localization.filter.localizedString(for: "CATEGORY"), type: .category, items: categories).items
+        searchbalePopupOptions[.category] = SearchablePopupArguments(
+            title: Strings.Filter.category.localized,
+            type: .category,
+            items: categories
+        ).items
     }
     
     private func addInitialMinMaxPopupOptions() {
@@ -125,13 +129,12 @@ extension SearchViewModel: SearchViewModelProtocol {
         guard authService.isLoggedIn else {
             
             delegate?.showActionSheet(
-                title: Localization.alert.localizedString(for: "NO_LOGIN_TITLE"),
-                message: Localization.alert.localizedString(for: "NO_LOGIN_FAVORITE_PRODUCT_MESSAGE"),
-                actionTitle: Localization.alert.localizedString(for: "NO_LOGIN_ACTION"),
+                title: Strings.Alert.noLoginTitle.localized,
+                message: Strings.Alert.noLoginFavoriteProductMessage.localized,
+                actionTitle: Strings.Alert.noLoginAction.localized,
                 completion: { [weak self] in
                     self?.router.navigate(to: .auth)
                 }
-                
             )
             
             return
@@ -155,11 +158,17 @@ extension SearchViewModel: SearchViewModelProtocol {
         case .headerSearch(let headerType):
             switch headerType {
             case .newAdded:
-                delegate?.prepareNavigationBarHeaderSearch(with: Localization.common.localizedString(for: "NEW_ADDEDS"))
+                delegate?.prepareNavigationBarHeaderSearch(
+                    with: Strings.Common.newAddeds.localized
+                )
             case .bestSellers:
-                delegate?.prepareNavigationBarHeaderSearch(with: Localization.common.localizedString(for: "BEST_SELLERS"))
+                delegate?.prepareNavigationBarHeaderSearch(
+                    with: Strings.Common.bestSellers.localized
+                )
             case .mostRated:
-                delegate?.prepareNavigationBarHeaderSearch(with: Localization.common.localizedString(for: "MOST_RATED"))
+                delegate?.prepareNavigationBarHeaderSearch(
+                    with: Strings.Common.mostRated.localized
+                )
             }
         default:
             delegate?.prepareNavigationBar()
@@ -194,7 +203,7 @@ extension SearchViewModel: SearchViewModelProtocol {
             delegate?.addTapGesture()
         case .textSearch(let query):
             searchQuery = query
-            delegate?.setSearchBarPlaceHolder(with: query + " | " + searchCount.description + " " + Localization.common.localizedString(for: "PRODUCT"))
+            delegate?.setSearchBarPlaceHolder(with: query + " | " + searchCount.description + " " + Strings.Common.product.localized)
         case .categorySearch(let arguments):
             searchQuery = arguments.name
             let items = [SearchablePopupItem(name: arguments.name, selectionState: .selected)]
@@ -202,7 +211,7 @@ extension SearchViewModel: SearchViewModelProtocol {
             changeBadgeCount()
             delegate?.closeExpandedCell(type: .category)
             delegate?.reloadFilterCell(type: .category)
-            delegate?.setSearchBarPlaceHolder(with: arguments.name + " | " + searchCount.description + " " + Localization.common.localizedString(for: "PRODUCT"))
+            delegate?.setSearchBarPlaceHolder(with: arguments.name + " | " + searchCount.description + " " + Strings.Common.product.localized)
         case .searchEdtiting(let query):
             delegate?.openSearchBar(with: query)
             delegate?.addTapGesture()
@@ -258,11 +267,17 @@ extension SearchViewModel: SearchViewModelProtocol {
     }
     
     func didTapSortButton() {
-        router.navigate(to: .sort(SortPopupArguments(title: Localization.filter.localizedString(for: "SORT"), sortOptions: sortOptions), self))
+        router.navigate(to: .sort(
+            SortPopupArguments(
+                title: Strings.Filter.sort.localized,
+                sortOptions: sortOptions
+            ),
+            self
+        ))
     }
     
     func didTapFilterButton() {
-        filterRouter.navigate(to: .initial(FilterPopupArguments(title: Localization.filter.localizedString(for: "FILTER"), filterOptions: filterOptions), 550, self))
+        filterRouter.navigate(to: .initial(FilterPopupArguments(title: Strings.Filter.sort.localized, filterOptions: filterOptions), 550, self))
     }
     
     func numberOfFilters(in section: Int) -> Int {
@@ -318,23 +333,23 @@ extension SearchViewModel: FilterPopupDelegate {
     private func getSearchableItemTitle(with type: SearchablePopupType) -> String {
         switch type {
         case .category:
-            return Localization.filter.localizedString(for: "CATEGORY")
+            return  Strings.Filter.category.localized
         case .brand:
-            return Localization.filter.localizedString(for: "BRAND")
+            return Strings.Filter.brand.localized
         case .city:
-            return Localization.filter.localizedString(for: "CITY")
+            return Strings.Filter.city.localized
         case .renter:
-            return Localization.filter.localizedString(for: "RENTER")
+            return Strings.Filter.renter.localized
         }
     }
     private func getMinMaxItemTitle(with type: MinMaxPopupType) -> String {
         switch type {
         case .price:
-            return Localization.filter.localizedString(for: "PRICE")
+            return Strings.Filter.price.localized
         case .rating:
-            return Localization.filter.localizedString(for: "RATING")
+            return Strings.Filter.rating.localized
         case .rentalPeriod:
-            return Localization.filter.localizedString(for: "RENTAL_PERIOD")
+            return Strings.Filter.rentalPeriod.localized
         }
     }
         
@@ -402,7 +417,7 @@ extension SearchViewModel: FilterPopupDelegate {
         }
         
         MinMaxPopupType.allCases.forEach { type in
-            notifyMinMaxPopupOptionsDidChange(type: type, items: [])
+            notifyMinMaxFilterOptionsDidChange(type: type, items: [])
         }
         
         delegate?.removeBadgeCountFilterView()
@@ -463,7 +478,14 @@ extension SearchViewModel: SearchablePopupDelegate {
     }
     
     private func notifySearchableFilterOptionsDidChange(type: SearchablePopupType, items: [String]) {
-        NotificationCenter.default.post(name: .searchableFilterOptionsDidChange, object: nil, userInfo: ["type": type.convertFilterType(), "items": items])
+        NotificationCenter.default.post(
+            name: .searchableFilterOptionsDidChange,
+            object: nil,
+            userInfo: [
+                NotificationCenterOutputs.type.rawValue: type.convertFilterType(),
+                NotificationCenterOutputs.items.rawValue: items
+            ]
+        )
     }
         
 }
@@ -498,7 +520,7 @@ extension SearchViewModel: MinMaxPopupDelegate {
         
         guard let selectedItem = selectedItem else {
             filterOptions[type.convertFilterType().rawValue].selectedItems = []
-            notifyMinMaxPopupOptionsDidChange(type: type, items: filterOptions[type.convertFilterType().rawValue].selectedItems)
+            notifyMinMaxFilterOptionsDidChange(type: type, items: filterOptions[type.convertFilterType().rawValue].selectedItems)
             return
         }
         
@@ -508,9 +530,13 @@ extension SearchViewModel: MinMaxPopupDelegate {
         case .price, .rentalPeriod:
             if item.isCustom {
                 if item.min != nil && item.max == nil {
-                    filterOptions[type.convertFilterType().rawValue].selectedItems = [ Localization.filter.localizedString(for: "MIN"), item.min?.formatIntAndString ?? ""]
+                    filterOptions[type.convertFilterType().rawValue].selectedItems = [ 
+                        Strings.Filter.min.localized,
+                        item.min?.formatIntAndString ?? ""]
                 } else if item.min == nil && item.max != nil {
-                    filterOptions[type.convertFilterType().rawValue].selectedItems = [ Localization.filter.localizedString(for: "MAX"), item.max?.formatIntAndString ?? ""]
+                    filterOptions[type.convertFilterType().rawValue].selectedItems = [ 
+                        Strings.Filter.max.localized,
+                        item.max?.formatIntAndString ?? ""]
                 } else {
                     filterOptions[type.convertFilterType().rawValue].selectedItems = [item.min?.formatIntAndString ?? "", "-" ,  item.max?.formatIntAndString ?? ""]
                 }
@@ -519,16 +545,23 @@ extension SearchViewModel: MinMaxPopupDelegate {
             }
         case .rating:
             guard let minStar = item.min else { return }
-            filterOptions[type.convertFilterType().rawValue].selectedItems = [minStar.formatIntAndString, Localization.filter.localizedString(for: "STAR_AND_ABOVE")]
+            filterOptions[type.convertFilterType().rawValue].selectedItems = [minStar.formatIntAndString, Strings.Filter.starAndAbove.localized]
         }
         
         
         
-        notifyMinMaxPopupOptionsDidChange(type: type, items: filterOptions[type.convertFilterType().rawValue].selectedItems)
+        notifyMinMaxFilterOptionsDidChange(type: type, items: filterOptions[type.convertFilterType().rawValue].selectedItems)
     }
     
-    private func notifyMinMaxPopupOptionsDidChange(type: MinMaxPopupType, items: [String]) {
-        NotificationCenter.default.post(name: .minMaxFilterOptionsDidChange, object: nil, userInfo: ["type": type.convertFilterType(), "items": items])
+    private func notifyMinMaxFilterOptionsDidChange(type: MinMaxPopupType, items: [String]) {
+        NotificationCenter.default.post(
+            name: .minMaxFilterOptionsDidChange,
+            object: nil,
+            userInfo: [
+                NotificationCenterOutputs.type.rawValue: type.convertFilterType(),
+                NotificationCenterOutputs.items.rawValue: items
+            ]
+        )
     }
     
 }
