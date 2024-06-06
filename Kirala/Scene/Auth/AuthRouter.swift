@@ -11,12 +11,12 @@ import SafariServices
 final class AuthRouter: AuthRouterProtocol {
     
     // MARK: - Properties
-    private weak var rootNavigationController: UINavigationController?
+    private weak var rootViewController: UIViewController?
     private weak var navigationController: UINavigationController?
     
     // MARK: - Initializers
-    init(rootNavigationController: UINavigationController?, navigationController: UINavigationController?) {
-        self.rootNavigationController = rootNavigationController
+    init(rootViewController: UIViewController?, navigationController: UINavigationController?) {
+        self.rootViewController = rootViewController
         self.navigationController = navigationController
     }
     
@@ -24,7 +24,13 @@ final class AuthRouter: AuthRouterProtocol {
     func navigate(to route: AuthRoute) {
         switch route {
         case .back:
-            rootNavigationController?.dismiss(animated: true)
+            rootViewController?.dismiss(animated: true)
+        case .loginSuccess:
+            let lottieVC = LottieViewController(lottie: .loginSuccess) { [weak self] in
+                self?.rootViewController?.dismiss(animated: true)
+            }
+            lottieVC.modalPresentationStyle = .fullScreen
+            navigationController?.present(lottieVC, animated: true)
         case .safari(let url):
             let safariVC = SFSafariViewController(url: url)
             safariVC.modalPresentationStyle = .popover

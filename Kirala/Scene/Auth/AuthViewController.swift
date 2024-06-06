@@ -80,14 +80,33 @@ final class AuthViewController: UIViewController, SwipePerformable {
         return view
     }()
     
+    private lazy var forgotPasswordCard: ForgotPasswordCard = {
+        let view = ForgotPasswordCard()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var passwordTipCard: PasswordTipCard = {
+        let view = PasswordTipCard()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var resetPasswordCard: ResetPasswordCard = {
         let view = ResetPasswordCard()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var resetPasswordTipCard: ResetPasswordTipCard = {
-        let view = ResetPasswordTipCard()
+    private lazy var emptyCardView: EmptyStateView = {
+        let view = EmptyStateView()
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var loadingView: LoadingView = {
+        let view = LoadingView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -162,8 +181,11 @@ extension AuthViewController: AuthViewProtocol {
             cartContainer,
             loginCard,
             registerCard,
+            forgotPasswordCard,
+            passwordTipCard,
             resetPasswordCard,
-            resetPasswordTipCard
+            emptyCardView,
+            loadingView
         ])
         
     }
@@ -200,17 +222,34 @@ extension AuthViewController: AuthViewProtocol {
             registerCard.topAnchor.constraint(equalTo: warningCard.topAnchor, constant: 30),
             registerCard.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             registerCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-            registerCard.heightAnchor.constraint(equalToConstant: 550),
+            registerCard.heightAnchor.constraint(equalToConstant: UIDevice.deviceHeight > 700
+                                                 ? UIDevice.deviceHeight * 0.7
+                                                 : UIDevice.deviceHeight * 0.77),
+                                    
+            
+            forgotPasswordCard.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            forgotPasswordCard.topAnchor.constraint(equalTo: warningCard.topAnchor, constant: 30),
+            forgotPasswordCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            forgotPasswordCard.heightAnchor.constraint(equalToConstant: 180),
+            
+            passwordTipCard.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            passwordTipCard.topAnchor.constraint(equalTo: forgotPasswordCard.bottomAnchor, constant: 20),
+            passwordTipCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            passwordTipCard.heightAnchor.constraint(equalToConstant: 120),
             
             resetPasswordCard.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             resetPasswordCard.topAnchor.constraint(equalTo: warningCard.topAnchor, constant: 30),
             resetPasswordCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-            resetPasswordCard.heightAnchor.constraint(equalToConstant: 180),
+            resetPasswordCard.heightAnchor.constraint(equalToConstant: 300),
             
-            resetPasswordTipCard.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            resetPasswordTipCard.topAnchor.constraint(equalTo: resetPasswordCard.bottomAnchor, constant: 20),
-            resetPasswordTipCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-            resetPasswordTipCard.heightAnchor.constraint(equalToConstant: 120),
+            emptyCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIDevice.deviceHeight * 0.2),
+            emptyCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            emptyCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            emptyCardView.heightAnchor.constraint(equalToConstant: UIDevice.deviceHeight * 0.3),
+            
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            
         ])
         
     }
@@ -244,23 +283,47 @@ extension AuthViewController: AuthViewProtocol {
         registerCard.isHidden = true
     }
     
+    func prepareForgotPasswordCard() {
+        forgotPasswordCard.delegate = self
+        forgotPasswordCard.isHidden = true
+        passwordTipCard.isHidden = true
+    }
+    
     func prepareResetPasswordCard() {
         resetPasswordCard.delegate = self
         resetPasswordCard.isHidden = true
-        resetPasswordTipCard.isHidden = true
     }
     
     func showLoginCard() {
-        animateCardTransition(hideCards: [registerCard, resetPasswordCard, resetPasswordTipCard], showCards: [loginCard])
+        animateCardTransition(hideCards: [registerCard, forgotPasswordCard, passwordTipCard, resetPasswordCard, emptyCardView], showCards: [loginCard])
     }
     
     func showRegisterCard() {
         animateCardTransition(hideCards: [loginCard], showCards: [registerCard])
     }
     
-    func showResetPasswordCard() {
-        animateCardTransition(hideCards: [loginCard], showCards: [resetPasswordCard, resetPasswordTipCard])
+    func showForgotPasswordCard() {
+        animateCardTransition(hideCards: [loginCard], showCards: [forgotPasswordCard, passwordTipCard])
         navigationItem.leftBarButtonItem = leftBackNavigationButton
+    }
+    
+    func showResetPasswordCard() {
+        loginCard.isHidden = true
+        registerCard.isHidden = true
+        forgotPasswordCard.isHidden = true
+        passwordTipCard.isHidden = true
+        resetPasswordCard.isHidden = false
+    }
+    
+    func showEmptyState(type: EmptyState) {
+        loginCard.isHidden = true
+        registerCard.isHidden = true
+        forgotPasswordCard.isHidden = true
+        passwordTipCard.isHidden = true
+        resetPasswordCard.isHidden = true
+        emptyCardView.configure(with: type)
+        emptyCardView.isHidden = false
+        emptyCardView.delegate = self
     }
     
     func showWarningCard(with message: String, animated: Bool) {
@@ -277,8 +340,10 @@ extension AuthViewController: AuthViewProtocol {
             loginCard.showWarningMessageEmail()
         case .register:
             registerCard.showWarningMessageEmail()
+        case .forgotPassword:
+            forgotPasswordCard.showWarningMessageEmail()
         case .resetPassword:
-            resetPasswordCard.showWarningMessageEmail()
+            break
         }
     }
     
@@ -288,8 +353,10 @@ extension AuthViewController: AuthViewProtocol {
             loginCard.hideWarningMessageEmail()
         case .register:
             registerCard.hideWarningMessageEmail()
+        case .forgotPassword:
+            forgotPasswordCard.hideWarningMessageEmail()
         case .resetPassword:
-            resetPasswordCard.hideWarningMessageEmail()
+            break
         }
     }
     
@@ -299,8 +366,10 @@ extension AuthViewController: AuthViewProtocol {
             loginCard.showWarningMessagePassword()
         case .register:
             registerCard.showWarningMessagePassword()
-        case .resetPassword:
+        case .forgotPassword:
             break
+        case .resetPassword:
+            resetPasswordCard.showWarningMessagePassword()
         }
     }
     
@@ -310,7 +379,27 @@ extension AuthViewController: AuthViewProtocol {
             loginCard.hideWarningMessagePassword()
         case .register:
             registerCard.hideWarningMessagePassword()
+        case .forgotPassword:
+            break
         case .resetPassword:
+            resetPasswordCard.hideWarningMessagePassword()
+        }
+    }
+    
+    func showWarningNameField(type: AuthCardState) {
+        switch type {
+        case .register:
+            registerCard.showWarningMessageName()
+        case .login, .forgotPassword, .resetPassword:
+            break
+        }
+    }
+    
+    func hideWarningNameField(type: AuthCardState) {
+        switch type {
+        case .register:
+            registerCard.hideWarningMessageName()
+        case .login, .forgotPassword, .resetPassword:
             break
         }
     }
@@ -332,12 +421,23 @@ extension AuthViewController: AuthViewProtocol {
         }
     }
 
+    func showLoading() {
+        loadingView.showLoading()
+    }
+    
+    func hideLoading(loadResult: LoadingResult) {
+        loadingView.hideLoading(loadResult: loadResult)
+    }
+    
+    func closeKeyboard() {
+        view.endEditing(true)
+    }
 
     
     
 }
 
-extension AuthViewController: LoginCardDelegate, RegisterCardDelegate, ResetPasswordCardDelegate {
+extension AuthViewController: LoginCardDelegate, RegisterCardDelegate, ForgotPasswordCardDelegate, ResetPasswordCardDelegate {
     
     func didTapLoginButton() {
         viewModel.didTapLoginButton()
@@ -363,12 +463,46 @@ extension AuthViewController: LoginCardDelegate, RegisterCardDelegate, ResetPass
         viewModel.didTapLoginButton(email: email, password: password)
     }
     
-    func didTapRegisterButton(email: String, password: String) {
-        viewModel.didTapRegisterButton(email: email, password: password)
+    func didTapRegisterButton(name: String, email: String, password: String) {
+        viewModel.didTapRegisterButton(name: name, email: email, password: password)
     }
     
-    func didTapResetPasswordButton(email: String) {
-        viewModel.didTapResetPasswordButton(email: email)
+    func didTapForgotPasswordButton(email: String) {
+        viewModel.didTapForgotPasswordButton(email: email)
+    }
+    
+    func didTapResetPasswordButton(password: String, confirmPassword: String) {
+        viewModel.didTapResetPasswordButton(password: password, confirmPassword: confirmPassword)
     }
         
+}
+
+extension AuthViewController: Alertable {
+        
+    func showAlert(with alertMessage: AlertMessage) {
+        showAlert(
+            title: alertMessage.title,
+            message: alertMessage.message,
+            actions: [UIAlertAction(title: alertMessage.actionTitle, style: .default)]
+        )
+    }
+    
+    func showAlert(with alertMessage: AlertMessage, completion: @escaping () -> Void) {
+        showAlert(
+            title: alertMessage.title,
+            message: alertMessage.message,
+            actions: [UIAlertAction(title: alertMessage.actionTitle, style: .default) { _ in
+                completion()
+            }]
+        )
+    }
+    
+}
+
+extension AuthViewController: EmptyStateViewDelegate {
+    
+    func didTapActionButton() {
+        viewModel.didTapEmptyStateActionButton()
+    }
+    
 }

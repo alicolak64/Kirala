@@ -10,15 +10,17 @@ import UIKit
 enum AuthCardState {
     case login
     case register
+    case forgotPassword
     case resetPassword
 }
 
 protocol AuthBuilderProtocol {
-    static func build(rootNavigationController: UINavigationController?, navigationController: UINavigationController?) -> UIViewController
+    static func build(rootViewController: UIViewController?, navigationController: UINavigationController?) -> UIViewController
 }
 
 enum AuthRoute {
     case back
+    case loginSuccess
     case safari(URL)
 }
 
@@ -47,8 +49,10 @@ protocol AuthViewModelProtocol {
     func didTapLoginWithAppleButton()
     func didTapLoginWithGoogleButton()
     func didTapLoginButton(email: String, password: String)
-    func didTapRegisterButton(email: String, password: String)
-    func didTapResetPasswordButton(email: String)
+    func didTapRegisterButton(name: String, email: String, password: String)
+    func didTapForgotPasswordButton(email: String)
+    func didTapResetPasswordButton(password: String, confirmPassword: String)
+    func didTapEmptyStateActionButton()
     
 }
 
@@ -62,21 +66,31 @@ protocol AuthViewProtocol: AnyObject {
     func prepareConstraints()
     func prepareLoginCard()
     func prepareRegisterCard()
-    func prepareResetPasswordCard()
+    func prepareForgotPasswordCard()
     func prepareWarningCard()
+    func prepareResetPasswordCard()
     func addGestureRecognizers()
     func showLoginCard()
     func showRegisterCard()
+    func showForgotPasswordCard()
     func showResetPasswordCard()
     func showWarningCard(with message: String, animated: Bool)
     func hideWarningCard(animated: Bool)
+    func showWarningNameField(type: AuthCardState)
+    func hideWarningNameField(type: AuthCardState)
     func showWarninEmailField(type: AuthCardState)
     func hideWarningEmailField(type: AuthCardState)
     func showWarningPasswordField(type: AuthCardState)
     func hideWarningPasswordField(type: AuthCardState)
+    func showEmptyState(type: EmptyState)
     func removeGestureRecognizers()
     func addSwipeGesture()
     func removeSwipeGesture()    
+    func showAlert(with alertMessage: AlertMessage, completion: @escaping () -> Void)
+    func showAlert(with alertMessage: AlertMessage)
+    func showLoading()
+    func hideLoading(loadResult: LoadingResult)
+    func closeKeyboard()
     
 }
 
