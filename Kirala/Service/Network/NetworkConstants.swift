@@ -10,7 +10,9 @@ import Foundation
 enum NetworkConstants {
     static var baseUrl: String {
     #if DEBUG
-        return "http://localhost:8080/"
+        //return "http://localhost:8080"
+        //return "http://192.168.1.26:8080"
+        return "https://kirala-dev.onrender.com"
     #else
         return "https://example.com/api"
     #endif
@@ -22,6 +24,7 @@ enum NetworkConstants {
             static let login = "/auth/login"
             static let register = "/auth/register"
             static let logout = "/auth/logout"
+            static let forgotPassword = "/auth/send-reset-password-token"
             static let resetPassword = "/auth/reset-password"
         }
     }
