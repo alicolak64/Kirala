@@ -109,7 +109,7 @@ class APIManager: APIManagerInterface {
             let errorResponse = ErrorResponse(
                 serverResponse: ServerResponse(
                     returnMessage: serverError.returnMessage,
-                    returnCode: serverError.returnCode),
+                    returnCode: httpResponse.statusCode),
                 apiConnectionErrorType: .serverError(httpResponse.statusCode))
             completion(.failure(errorResponse))
             return
@@ -163,9 +163,9 @@ class APIManager: APIManagerInterface {
     
     private func handleErrorResponse(data: Data) -> ServerResponse {
         do {
-            let errorResponse = try jsonDecoder.decode(ServerResponse.self, from: data)
+            let errorResponse = try jsonDecoder.decode(BaseResponse<NoData>.self, from: data)
             debugPrint("error response: \(errorResponse)")
-            return errorResponse
+            return ServerResponse(returnMessage: errorResponse.message, returnCode: -1)
         } catch let error {
             debugPrint("error decoding error response: \(error)")
             return ServerResponse(returnMessage: "Unknown server error", returnCode: -1)
