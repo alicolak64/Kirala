@@ -13,6 +13,7 @@ enum EmptyState {
     case noInternet
     case noSearchResult
     case noFavorites
+    case noAds
     case emptyCart
     case noNotification
     case noOrder
@@ -37,6 +38,8 @@ enum EmptyState {
             return NoFavoritesState()
         case .emptyCart:
             return EmptyCartState()
+        case .noAds:
+            return NoAdsState()
         case .noNotification:
             return NoNotificationState()
         case .noOrder:
@@ -121,6 +124,13 @@ struct NoNotificationState: EmptyStateProtocol {
     var title: String = Strings.EmptyState.noNotificationTitle.localized
     var description: String = Strings.EmptyState.noNotificationDesc.localized
     var buttonTitle: String = Strings.EmptyState.noNotificationButton.localized
+}
+
+struct NoAdsState: EmptyStateProtocol {
+    var image: UIImage? = Symbols.rectanglePortraitOnRectanglePortraitSlashFill.symbol()
+    var title: String = Strings.EmptyState.noAdsTitle.localized
+    var description: String = Strings.EmptyState.noAdsDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noAdsButton.localized
 }
 
 struct NoOrderState: EmptyStateProtocol {
