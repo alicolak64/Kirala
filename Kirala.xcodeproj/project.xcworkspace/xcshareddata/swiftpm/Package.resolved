@@ -1,6 +1,15 @@
 {
-  "originHash" : "6d5fed33263872d77e87572fa327a512730c1d6bdd04fb98e94401019c983c0f",
+  "originHash" : "8a0d52b3b702717df52afcaf51866ff6459fd00a15d03bdb768e378db20ab772",
   "pins" : [
+    {
+      "identity" : "bsimagepicker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mikaoj/BSImagePicker.git",
+      "state" : {
+        "revision" : "87c300fac63538dfb26e17d491eaa2293e83b5e8",
+        "version" : "3.3.3"
+      }
+    },
     {
       "identity" : "jtapplecalendar",
       "kind" : "remoteSourceControl",
