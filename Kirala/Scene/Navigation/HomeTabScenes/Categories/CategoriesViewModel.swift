@@ -20,6 +20,15 @@ struct Subcategory {
         Subcategory(categoryId: "1", name: "Sneakers", imageUrl: "https://static.vecteezy.com/system/resources/previews/019/053/787/original/sneakers-shoes-drawing-png.png")
     ]
     
+    static let otherWithMockSubcategories = [
+        Subcategory(categoryId: "1", name: "Sweatshirt", imageUrl: "https://static.vecteezy.com/system/resources/thumbnails/022/206/206/small/black-sweatshirt-isolated-cut-out-png.png"),
+        Subcategory(categoryId: "1", name: "Ev Aletleri", imageUrl: "https://kuvings.com.tr/wp-content/uploads/her-evde-olmasi-gereken-kucuk-ev-aletleri-listesi.jpg"),
+        Subcategory(categoryId: "1", name: "Kozmetik", imageUrl: "https://www.tahtakaletoptanticaret.com/image/cache/catalog/product/24242406498/Kozmetik-Malzeme-Duzenleyici---Glam-Caddy-resim-292-800x800.jpg"),
+        Subcategory(categoryId: "1", name: "İç Giyim", imageUrl: "https://www.cdnaws.com/i/720167/QvGYHLnFzROHVUkzZW3D2LnFzROHVUkzZW3D2/urunler/6596d4ece557c-90896-0.jpg"),
+        Subcategory(categoryId: "1", name: "Sneakers", imageUrl: "https://static.vecteezy.com/system/resources/previews/019/053/787/original/sneakers-shoes-drawing-png.png"),
+        Subcategory(categoryId: "0", name: "Other", imageUrl: "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg")
+    ]
+    
 }
 
 final class CategoriesViewModel {
