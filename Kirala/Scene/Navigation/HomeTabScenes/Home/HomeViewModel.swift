@@ -31,6 +31,25 @@ struct Category: Selectable {
         Category(name: "Süpermarket", id: "15")
     ]
     
+    static let otherWithMockCategories = [
+        Category(name: "Kıyafet", id: "1"),
+        Category(name: "Ayakkabı", id: "2"),
+        Category(name: "Aksesuar", id: "3"),
+        Category(name: "Çanta", id: "4"),
+        Category(name: "Saat", id: "5"),
+        Category(name: "Giyim", id: "6"),
+        Category(name: "Elektronik", id: "7"),
+        Category(name: "Kozmetik", id: "8"),
+        Category(name: "Spor", id: "9"),
+        Category(name: "Ev", id: "10"),
+        Category(name: "Oyuncak", id: "11"),
+        Category(name: "Kitap", id: "12"),
+        Category(name: "Hediye", id: "13"),
+        Category(name: "Ofis", id: "14"),
+        Category(name: "Süpermarket", id: "15"),
+        Category(name: "Other", id: "0")
+    ]
+    
 }
 
 struct Campaign {
