@@ -155,7 +155,7 @@ final class MinMaxPopupView: BottomPopupViewController, BackNavigatable, Alertab
             minMaxView.heightAnchor.constraint(equalToConstant: 60),
             
             minTextField.leadingAnchor.constraint(equalTo: minMaxView.leadingAnchor, constant: 10),
-            minTextField.widthAnchor.constraint(equalTo: minMaxView.widthAnchor, multiplier: 0.4),
+            minTextField.widthAnchor.constraint(equalTo: minMaxView.widthAnchor, multiplier: 0.435),
             minTextField.topAnchor.constraint(equalTo: minMaxView.topAnchor, constant: 10),
             minTextField.bottomAnchor.constraint(equalTo: minMaxView.bottomAnchor, constant: -10),
             
@@ -163,7 +163,7 @@ final class MinMaxPopupView: BottomPopupViewController, BackNavigatable, Alertab
             minMaxSeparator.centerYAnchor.constraint(equalTo: minMaxView.centerYAnchor),
             
             maxTextField.leadingAnchor.constraint(equalTo: minMaxSeparator.trailingAnchor, constant: 10),
-            maxTextField.widthAnchor.constraint(equalTo: minMaxView.widthAnchor, multiplier: 0.4),
+            maxTextField.widthAnchor.constraint(equalTo: minMaxView.widthAnchor, multiplier: 0.435),
             maxTextField.topAnchor.constraint(equalTo: minMaxView.topAnchor, constant: 10),
             maxTextField.bottomAnchor.constraint(equalTo: minMaxView.bottomAnchor, constant: -10),
             
