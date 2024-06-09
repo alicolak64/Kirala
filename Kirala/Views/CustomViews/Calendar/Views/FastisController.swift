@@ -154,7 +154,6 @@ open class FastisController<Value: FastisValue>: UIViewController, JTACMonthView
             guard let self else { return }
             let newValue = selectedShortcut.action(self.config.calendar)
             if !newValue.outOfRange(minDate: self.privateMinimumDate, maxDate: self.privateMaximumDate) {
-                print("newValue: \(newValue)")
                 if newValue.isRangeContained(closedRanges: self.closedRanges) {
                     return
                 }
@@ -272,7 +271,11 @@ open class FastisController<Value: FastisValue>: UIViewController, JTACMonthView
         }
     }
     
-    public var closedRanges: [FastisRange] = []
+    public var closedRanges: [FastisRange] = [] {
+        didSet {
+            self.calendarView.reloadData()
+        }
+    }
     
     // MARK: - Lifecycle
     
@@ -298,6 +301,10 @@ open class FastisController<Value: FastisValue>: UIViewController, JTACMonthView
         self.configureUI()
         self.configureSubviews()
         self.configureConstraints()
+    }
+    
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.configureInitialState()
     }
     
@@ -311,6 +318,11 @@ open class FastisController<Value: FastisValue>: UIViewController, JTACMonthView
         }
         
     }
+    
+    func setClearCurrentValue() {
+        clear()
+    }
+    
     
     /**
      Present FastisController above current top view controller
@@ -462,6 +474,7 @@ open class FastisController<Value: FastisValue>: UIViewController, JTACMonthView
     
     @objc
     private func cancel() {
+        self.isDone = false
         self.dismiss(animated: true)
     }
     
