@@ -53,6 +53,24 @@ struct SearchablePopupArguments {
             return SearchablePopupArguments(title: Strings.Filter.renter.localized, type: .renter, items: renters)
         }
     }
+    
+    static func getBrandMockData() -> SearchablePopupArguments {
+        var brands = (1...20).map { SearchablePopupItem(name: "Brand \($0)", selectionState: .unselected)}
+        brands.append(SearchablePopupItem(name: "Other", selectionState: .unselected))
+        return SearchablePopupArguments(title: Strings.Filter.brand.localized, type: .brand, items: brands)
+    }
+    
+    static func getCityMockData() -> SearchablePopupArguments {
+        let cities = [
+            "All", "Uşak",
+            "Istanbul", "Ankara", "Izmir", "Bursa", "Adana", "Gaziantep", "Konya",
+            "Antalya", "Kayseri", "Mersin", "Eskisehir", "Diyarbakir", "Samsun",
+            "Denizli", "Sanliurfa", "Malatya", "Erzurum", "Sakarya", "Trabzon", "Balikesir",
+            "Manisa", "Kocaeli", "Hatay", "Tekirdag", "Aydin", "Isparta", "Canakkale"
+        ]
+        let items = cities.map { SearchablePopupItem(name: $0, selectionState: .unselected)}
+        return SearchablePopupArguments(title: Strings.Filter.city.localized, type: .city, items: items)
+    }
 
 }
 
