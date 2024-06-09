@@ -58,7 +58,7 @@ final class AuthViewController: UIViewController, SwipePerformable {
     private lazy var cartContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = ColorPalette.white.dynamicColor
+        view.backgroundColor = ColorBackground.primary.dynamicColor
         return view
     }()
     
