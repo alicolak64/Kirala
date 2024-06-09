@@ -18,7 +18,7 @@ final class CategoryCell: UICollectionViewCell, ReusableView {
         }
     }
     
-    var leadingConstraints: NSLayoutConstraint?
+    private var leadingConstraints: NSLayoutConstraint?
     
     // MARK: - UI Components
     
