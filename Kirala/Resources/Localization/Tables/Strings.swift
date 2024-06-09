@@ -32,6 +32,7 @@ enum Strings {
         case ok = "Ok"
         case error = "Error"
         case pleaseWait = "PleaseWait"
+        case delete = "Delete"
     }
     
     enum TabBar: String, Localizable {
@@ -55,6 +56,9 @@ enum Strings {
         case noFavoriteTitle = "NoFavoriteTitle"
         case noFavoriteDesc = "NoFavoriteDesc"
         case noFavoriteButton = "NoFavoriteButton"
+        case noAdsTitle = "NoAdsTitle"
+        case noAdsDesc = "NoAdsDesc"
+        case noAdsButton = "NoAdsButton"
         case emptyCartTitle = "EmptyCartTitle"
         case emptyCartDesc = "EmptyCartDesc"
         case emptyCartButton = "EmptyCartButton"
@@ -163,6 +167,68 @@ enum Strings {
         case min = "Min"
         case max = "Max"
         case minMaxError = "MinMaxError"
+    }
+    
+    enum Ad: String, Localizable {
+        case myAds = "MyAds"
+        
+        case categoryTitle = "CategoryTitle"
+        case categoryPlaceholder = "CategoryPlaceholder"
+        case categoryTip = "CategoryTip"
+        case customCategoryTitle = "CustomCategoryTitle"
+        case customCategoryPlaceholder = "CustomCategoryPlaceholder"
+        case customCategoryTip = "CustomCategoryTip"
+        
+        case subCategoryTitle = "SubCategoryTitle"
+        case subCategoryPlaceholder = "SubCategoryPlaceholder"
+        case subCategoryTip = "SubCategoryTip"
+        case customSubCategoryTitle = "CustomSubCategoryTitle"
+        case customSubCategoryPlaceholder = "CustomSubCategoryPlaceholder"
+        case customSubCategoryTip = "CustomSubCategoryTip"
+        
+        case brandTitle = "BrandTitle"
+        case brandPlaceholder = "BrandPlaceholder"
+        case brandTip = "BrandTip"
+        case customBrandTitle = "CustomBrandTitle"
+        case customBrandPlaceholder = "CustomBrandPlaceholder"
+        case customBrandTip = "CustomBrandTip"
+        
+        case cityTitle = "CityTitle"
+        case cityPlaceholder = "CityPlaceholder"
+        case cityTip = "CityTip"
+        
+        case nameTitle = "NameTitle"
+        case namePlaceholder = "NamePlaceholder"
+        case nameTip = "NameTip"
+        
+        case priceTitle = "PriceTitle"
+        case pricePlaceholder = "PricePlaceholder"
+        case priceTip = "PriceTip"
+        
+        case descriptionTitle = "DescriptionTitle"
+        case descriptionPlaceholder = "DescriptionPlaceholder"
+        case descriptionTip = "DescriptionTip"
+        
+        case imagesHeaderTitle = "ImagesHeaderTitle"
+        case imagesHeaderButtonTitle = "ImagesHeaderButtonTitle"
+        case imagesNoImageDescription = "ImagesNoImageDescription"
+        
+        case addLeastOneImage = "AddLeastOneImage"
+        
+        case selectLocation = "SelectLocation"
+        case locationTitle = "LocationTitle"
+        case locationPlaceholder = "LocationNoLocationDescription"
+        
+        case rentalPeriodTitle = "RentalPeriodTitle"
+        case rentalPeriodTip = "RentalPeriodTip"
+        
+        case closedRangeTitle = "ClosedRangeTitle"
+        case closedRangePlaceholder = "ClosedRangePlaceholder"
+        case closedRangeHeaderButtonTitle = "ClosedRangeHeaderButtonTitle"
+        
+        case addAd = "AddAd"
+        case updateAd = "UpdateAd"
+        case deleteAd = "DeleteAd"
     }
     
 }

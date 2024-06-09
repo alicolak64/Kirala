@@ -18,7 +18,7 @@
 "To" = "To";
 "Rent" = "Rent";
 "ChooseDate" = "Choose Date";
-"ChooseRangeRent" = "Choose Rent Range";
+"ChooseRangeRent" = "Choose Range";
 "Day" = "day";
 "Total" = "total";
 "PerDay" = "per day";
@@ -27,3 +27,4 @@
 "Ok" = "OK";
 "Error" = "Error";
 "PleaseWait" = "Please wait...";
+"Delete" = "Delete";

@@ -9,6 +9,10 @@
 "NoDataDesc" = "There is no data available for this section.";
 "NoDataButton" = "Refresh";
 
+"NoAdsTitle" = "No Ads";
+"NoAdsDesc" = "There are no your ads available.";
+"NoAdsButton" = "Add Ad";
+
 "NoInternetTitle" = "No Internet Connection";
 "NoInternetDesc" = "Please check your internet connection and try again.";
 "NoInternetButton" = "Try again";

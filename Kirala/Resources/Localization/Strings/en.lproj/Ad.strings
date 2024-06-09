@@ -1,0 +1,69 @@
+/* 
+  Ad.strings
+  Kirala
+
+  Created by Ali Çolak on 9.06.2024.
+  
+*/
+
+"MyAds" = "My Ads";
+"AddAd" = "Add Ad";
+
+"CategoryTitle" = "Product Category";
+"CategoryPlaceholder" = "Select or enter a product category";
+"CategoryTip" = "Select a product category or select other to enter a custom product category";
+"CustomCategoryTitle" = "Custom Product Category";
+"CustomCategoryPlaceholder" = "Enter a custom product category";
+"CustomCategoryTip" = "Enter a custom product category if you couldn't find a suitable category in the list";
+
+"SubCategoryTitle" = "Product Subcategory";
+"SubCategoryPlaceholder" = "Select or enter a product subcategory";
+"SubCategoryTip" = "Select a product subcategory or select other to enter a custom product subcategory";
+"CustomSubCategoryTitle" = "Custom Product Subcategory";
+"CustomSubCategoryPlaceholder" = "Enter a custom product subcategory";
+"CustomSubCategoryTip" = "Enter a custom product subcategory if you couldn't find a suitable subcategory in the list";
+
+"BrandTitle" = "Product Brand";
+"BrandPlaceholder" = "Select or enter a product brand";
+"BrandTip" = "Select a product brand or select other to enter a custom product brand";
+"CustomBrandTitle" = "Custom Product Brand";
+"CustomBrandPlaceholder" = "Enter a custom product brand";
+"CustomBrandTip" = "Enter a custom product brand if you couldn't find a suitable brand in the list";
+
+"CityTitle" = "City where the product is located";
+"CityPlaceholder" = "Select or enter a city";
+"CityTip" = "Select the city where the product is located or select all if you can provide shipping to all cities";
+
+"NameTitle" = "Product Name";
+"NamePlaceholder" = "Enter the product name";
+"NameTip" = "Enter the name of the product you want to advertise";
+
+"PriceTitle" = "Product Daily Rental Price";
+"PricePlaceholder" = "Enter the daily rental price of the product";
+"PriceTip" = "Enter the daily rental price of the product you want to advertise";
+
+"DescriptionTitle" = "Product Description";
+"DescriptionPlaceholder" = "Enter the product description";
+"DescriptionTip" = "Enter a detailed description of the product you want to advertise";
+
+"ImagesHeaderTitle" = "Product Images";
+"ImagesHeaderButtonTitle" = "Add Image";
+"ImagesNoImageDescription" = "Please add at least one image of the product you want to advertise";
+
+"AddLeastOneImage" = "Please add at least one image";
+"SelectLocation" = "Select a location";
+"LocationTitle" = "Product Location";
+"LocationNoLocationDescription" = "Please select a location where the product is located";
+
+"RentalPeriodTitle" = "Rental Period";
+"RentalPeriodTip" = "Enter the minimum and maximum rental period of your product.";
+
+"ClosedRangeTitle" = "Closed Ranges";
+"ClosedRangePlaceholder" = "Select the days the product is not available for rent";
+"ClosedRangeHeaderButtonTitle" = "Add Closed Range";
+
+"AddAd" = "Add Product";
+"UpdateAd" = "Update Product";
+"DeleteAd" = "Delete Product";
+
+

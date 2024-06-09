@@ -15,6 +15,7 @@ enum LocalizationTable: String {
     case alert = "Alert"
     case auth = "Auth"
     case filter = "Filter"
+    case Ad = "Ad"
 }
 
 /// A struct to manage localization from different tables.

@@ -1,0 +1,67 @@
+/*
+  Ad.strings
+  Kirala
+
+  Created by Ali Çolak on 9.06.2024.
+  
+*/
+
+"MyAds" = "İlanlarım";
+"AddAd" = "İlan Ekle";
+
+"CategoryTitle" = "Ürün Kategorisi";
+"CategoryPlaceholder" = "Bir ürün kategorisi seçin veya girin";
+"CategoryTip" = "Bir ürün kategorisi seçin veya özel bir ürün kategorisi girmek için diğerini seçin";
+"CustomCategoryTitle" = "Özel Ürün Kategorisi";
+"CustomCategoryPlaceholder" = "Özel bir ürün kategorisi girin";
+"CustomCategoryTip" = "Listede uygun bir kategori bulamazsanız özel bir ürün kategorisi girin";
+
+"SubCategoryTitle" = "Ürün Alt Kategorisi";
+"SubCategoryPlaceholder" = "Bir ürün alt kategorisi seçin veya girin";
+"SubCategoryTip" = "Bir ürün alt kategorisi seçin veya özel bir ürün alt kategorisi girmek için diğerini seçin";
+"CustomSubCategoryTitle" = "Özel Ürün Alt Kategorisi";
+"CustomSubCategoryPlaceholder" = "Özel bir ürün alt kategorisi girin";
+"CustomSubCategoryTip" = "Listede uygun bir alt kategori bulamazsanız özel bir ürün alt kategorisi girin";
+
+"BrandTitle" = "Ürün Markası";
+"BrandPlaceholder" = "Bir ürün markası seçin veya girin";
+"BrandTip" = "Bir ürün markası seçin veya özel bir ürün markası girmek için diğerini seçin";
+"CustomBrandTitle" = "Özel Ürün Markası";
+"CustomBrandPlaceholder" = "Özel bir ürün markası girin";
+"CustomBrandTip" = "Listede uygun bir marka bulamazsanız özel bir ürün markası girin";
+
+"CityTitle" = "Ürünün Bulunduğu Şehir";
+"CityPlaceholder" = "Bir şehir seçin veya girin";
+"CityTip" = "Ürünün bulunduğu şehri seçin veya tüm şehirlere kargo sağlayabiliyorsanız tümünü seçin";
+
+"NameTitle" = "Ürün Adı";
+"NamePlaceholder" = "Ürün adını girin";
+"NameTip" = "Reklamını yapmak istediğiniz ürünün adını girin";
+
+"PriceTitle" = "Ürünün Günlük Kiralama Fiyatı";
+"PricePlaceholder" = "Ürünün günlük kiralama fiyatını girin";
+"PriceTip" = "Reklamını yapmak istediğiniz ürünün günlük kiralama fiyatını girin";
+
+"DescriptionTitle" = "Ürün Açıklaması";
+"DescriptionPlaceholder" = "Ürün açıklamasını girin";
+"DescriptionTip" = "Reklamını yapmak istediğiniz ürünün detaylı açıklamasını girin";
+
+"ImagesHeaderTitle" = "Ürün Görselleri";
+"ImagesHeaderButtonTitle" = "Görsel Ekle";
+"ImagesNoImageDescription" = "Reklamını yapmak istediğiniz ürünün en az bir görsel ekleyin";
+
+"AddLeastOneImage" = "Lütfen en az bir görsel ekleyin";
+"SelectLocation" = "Lütfen bir konum seçin";
+"LocationTitle" = "Ürün Konumu";
+"LocationNoLocationDescription" = "Ürünün bulunduğu konumu seçin";
+
+"RentalPeriodTitle" = "Kiralama Aralığı";
+"RentalPeriodTip" = "Ürününüzün minimum ve maksimum kiralama süresini giriniz";
+
+"ClosedRangeTitle" = "Kapalı Günler";
+"ClosedRangePlaceholder" = "Ürünün kiralamaya kapalı günlerini seçin";
+"ClosedRangeHeaderButtonTitle" = "Kapalı Gün Ekle";
+
+"AddAd" = "İlan Ekle";
+"UpdateAd" = "İlan Güncelle";
+"DeleteAd" = "İlan Sil";

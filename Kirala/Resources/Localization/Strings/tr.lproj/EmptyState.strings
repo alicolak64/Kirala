@@ -9,6 +9,10 @@
 "NoDataDesc" = "Bu bölüm için kullanılabilir veri yok.";
 "NoDataButton" = "Yenile";
 
+"NoAdsTitle" = "İlan Yok";
+"NoAdsDesc" = "Hiç bir ilanınız bulunmamaktadır.";
+"NoAdsButton" = "İlan Ekle";
+
 "NoInternetTitle" = "İnternet Bağlantısı Yok";
 "NoInternetDesc" = "Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.";
 "NoInternetButton" = "Tekrar Dene";
