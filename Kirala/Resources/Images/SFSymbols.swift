@@ -42,6 +42,10 @@ enum Symbols: Symbolable {
     case xmark
     case chevronDown
     case chevronUp
+    case plusCircleFill
+    case trash
+    case locationFill
+    case calendar
     
     var symbolName: String {
         switch self {
@@ -111,6 +115,14 @@ enum Symbols: Symbolable {
             return "chevron.down"
         case .chevronUp:
             return "chevron.up"
+        case .plusCircleFill:
+            return "plus.circle.fill"
+        case .trash:
+            return "trash"
+        case .locationFill:
+            return "location.fill"
+        case .calendar:
+            return "calendar"
         }
     }
     
