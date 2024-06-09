@@ -93,7 +93,7 @@ final class TabBarViewModel: TabBarViewModelProtocol {
             case .home:
                 return HomeTabBuilder.build(arguments: items[0])
             case .myAds:
-                return MyAdsNavigationBuilder.build(arguments: items[1])
+                return AdsTabBuilder.build(arguments: items[1])
             case .myOrders:
                 return MyOrdersNavigationBuilder.build(arguments: items[2])
             case .cart:
