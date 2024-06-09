@@ -127,13 +127,14 @@ extension SortPopupView: SortPopupViewProtocol {
         tableView.reloadRows(at: indexPaths, with: .automatic)
     }
     
+    func dismiss() {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension SortPopupView: UITableViewDelegate, UITableViewDataSource {
     
-    func dismiss() {
-        dismiss(animated: true, completion: nil)
-    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         presenter.numberOfSections()
