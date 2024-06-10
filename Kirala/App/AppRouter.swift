@@ -17,8 +17,11 @@ final class AppRouter {
     // MARK: - Initializers
     
     init(window: UIWindow = UIWindow(frame: UIScreen.main.bounds), dependencies: [DependencyType : Any]) {
+        guard let authService = dependencies[.authService] as? AuthService else {
+            fatalError("AuthService not found")
+        }
         self.window = window
-        self.authService = dependencies[.authService] as! AuthService
+        self.authService = authService
     }
     
     // MARK: - Start

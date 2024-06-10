@@ -25,7 +25,10 @@ class ProfileViewController: UIViewController {
     let authService: AuthService
     
     init(dependencies: [DependencyType: Any]) {
-        self.authService = dependencies[.authService] as! AuthService
+        guard let authService = dependencies[.authService] as? AuthService else {
+            fatalError("AuthService dependency not found!")
+        }
+        self.authService = authService
         super.init(nibName: nil, bundle: nil)
     }
     

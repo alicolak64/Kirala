@@ -9,7 +9,6 @@ import UIKit
 
 final class AddAdBuilder: AddAdBuilderProtocol {
     
-    
     static func build(rootNavigationController: UINavigationController?, navigationController: UINavigationController?) -> UIViewController {
         let router = AddAdRouter(rootNavigationController: rootNavigationController, navigationController: navigationController)
         let dependencies = app.resolveDependencyArray(dependencies: [.categoryService, .authService, .authenticationService])

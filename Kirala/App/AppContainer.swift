@@ -11,6 +11,7 @@ enum DependencyType {
     case authService
     case authenticationService
     case categoryService
+    case productService
 }
 
 // MARK: - App Container Instance
@@ -36,6 +37,10 @@ final class AppContainer {
     
     private lazy var categoryService: CategoryService = {
         CategoryManager()
+    }()
+    
+    private lazy var productService: ProductService = {
+        ProductManager()
     }()
         
     // MARK: - Initializers

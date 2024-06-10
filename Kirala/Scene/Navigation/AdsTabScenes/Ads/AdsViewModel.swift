@@ -45,8 +45,11 @@ final class AdsViewModel {
     // MARK: - Initializers
     
     init(router: AdsRouterProtocol, dependencies: [DependencyType: Any]) {
+        guard let authService = dependencies[.authService] as? AuthService else {
+            fatalError("AuthService not found")
+        }
         self.router = router
-        self.authService = dependencies[.authService] as! AuthService
+        self.authService = authService
     }
     
 }

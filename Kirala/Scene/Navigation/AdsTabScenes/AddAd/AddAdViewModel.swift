@@ -54,19 +54,29 @@ final class AddAdViewModel {
     // MARK: - Initializers
     
     init(router: AddAdRouterProtocol, dependencies: [DependencyType: Any]) {
+        guard let authService = dependencies[.authService] as? AuthService,
+              let categoryService = dependencies[.categoryService] as? CategoryService,
+              let authenticationService = dependencies[.authenticationService] as? AuthenticationService else {
+            fatalError("AuthService, CategoryService or AuthenticationService not found")
+        }
         self.router = router
-        self.authService = dependencies[.authService] as! AuthService
-        self.categoryService = dependencies[.categoryService] as! CategoryService
-        self.authenticationService = dependencies[.authenticationService] as! AuthenticationService
+        self.authService = authService
+        self.categoryService = categoryService
+        self.authenticationService = authenticationService
         self.editArguments = nil
     }
     
     init(router: AddAdRouterProtocol, arguments: EditAddAdArguments, dependencies: [DependencyType: Any]) {
+        guard let authService = dependencies[.authService] as? AuthService,
+              let categoryService = dependencies[.categoryService] as? CategoryService,
+              let authenticationService = dependencies[.authenticationService] as? AuthenticationService else {
+            fatalError("AuthService, CategoryService or AuthenticationService not found")
+        }
         self.router = router
-        self.authService = dependencies[.authService] as! AuthService
-        self.categoryService = dependencies[.categoryService] as! CategoryService
-        self.authenticationService = dependencies[.authenticationService] as! AuthenticationService
         self.editArguments = arguments
+        self.authService = authService
+        self.categoryService = categoryService
+        self.authenticationService = authenticationService
     }
     
 }
