@@ -29,7 +29,7 @@ final class DetailRouter: DetailRouterProtocol {
             let searchViewController = SearchBuilder.build(navigationController: navigationController, searchOption: option)
             navigationController?.pushViewController(searchViewController, animated: animated)
         case .cart:
-            let cartViewController = CartViewController()
+            let cartViewController = CartViewController(dependencies: app.resolveDependencyArray(dependencies: [.authService]))
             navigationController?.pushViewController(cartViewController, animated: false)
             navigationController?.navigationBar.backIndicatorImage = Symbols.arrowLeft.symbol()
             navigationController?.navigationBar.backIndicatorTransitionMaskImage = Symbols.arrowLeft.symbol()

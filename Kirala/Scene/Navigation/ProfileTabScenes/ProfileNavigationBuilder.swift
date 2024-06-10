@@ -10,7 +10,7 @@ import UIKit
 final class ProfileNavigationBuilder: NavigationBuilderProtocol {
     
     static func build(arguments: TabBarItemArguments) -> UINavigationController {
-        let profileViewController = ProfileViewController()
+        let profileViewController = ProfileViewController(dependencies: app.resolveDependencyArray(dependencies: [.authService]))
         profileViewController.tabBarItem = UITabBarItem(title: arguments.title, image: arguments.image.symbol(), tag: arguments.tag)
         let navigationController = UINavigationController(rootViewController: profileViewController)
         return navigationController
@@ -21,6 +21,17 @@ final class ProfileNavigationBuilder: NavigationBuilderProtocol {
 
 
 class ProfileViewController: UIViewController {
+    
+    let authService: AuthService
+    
+    init(dependencies: [DependencyType: Any]) {
+        self.authService = dependencies[.authService] as! AuthService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private lazy var emptyCardView: EmptyStateView = {
         let view = EmptyStateView()
@@ -55,7 +66,7 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         emptyCardView.delegate = self
         
-        guard app.authService.isLoggedIn else {
+        guard authService.isLoggedIn else {
             emptyCardView.configure(with: .noLoginProfile)
             emptyCardView.show(withAnimation: true)
             return
@@ -64,8 +75,8 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func didTapLogoutButton() {
-        app.authService.removeAuthToken()
-        app.router.startTabBar()
+        authService.removeAuthToken()
+        app.startTabBar()
     }
     
 }

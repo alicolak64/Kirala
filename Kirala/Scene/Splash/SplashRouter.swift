@@ -12,7 +12,7 @@ final class SplashRouter: SplashRouterProtocol {
     func route(to route: SplashRoute) {
         switch route {
         case .tabbar:
-            app.router.startTabBar()
+            app.startTabBar()
         }
     }
     

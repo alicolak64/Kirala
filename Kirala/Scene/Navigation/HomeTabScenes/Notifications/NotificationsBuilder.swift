@@ -11,7 +11,8 @@ final class NotificationsBuilder: NotificationsBuilderProtocol {
     
     static func build(navigationController: UINavigationController?) -> UIViewController {
         let router = NotificationsRouter(navigationController: navigationController)
-        let viewModel = NotificationsViewModel(router: router, authService: app.authService)
+        let dependencies = app.resolveDependencyArray(dependencies: [.authService])
+        let viewModel = NotificationsViewModel(router: router, dependencies: dependencies)
         let viewController = NotificationsViewController(viewModel: viewModel)
         return viewController
     }

@@ -12,11 +12,13 @@ final class AppRouter {
     // MARK: - Properties
     
     let window: UIWindow
+    let authService: AuthService
     
     // MARK: - Initializers
     
-    init(window: UIWindow = UIWindow(frame: UIScreen.main.bounds)) {
+    init(window: UIWindow = UIWindow(frame: UIScreen.main.bounds), dependencies: [DependencyType : Any]) {
         self.window = window
+        self.authService = dependencies[.authService] as! AuthService
     }
     
     // MARK: - Start
@@ -75,8 +77,8 @@ final class AppRouter {
             }
         case "oauth2":
             if let (token, tokenType) = getAuthToken(url: url) {
-                app.authService.saveAuthToken(token: token)
-                app.authService.saveAuthTokenType(tokenType: tokenType)
+                authService.saveAuthToken(token: token)
+                authService.saveAuthTokenType(tokenType: tokenType)
                 navigateToProfileWithLoginSuccess()
             }
         case "login":
@@ -90,7 +92,7 @@ final class AppRouter {
             tabBarController.present(authNavController, animated: false, completion: nil)
         case "reset-password":
             if let token = getResetPasswordToken(url: url) {
-                app.authService.saveResetPasswordToken(token: token)
+                authService.saveResetPasswordToken(token: token)
                 DispatchQueue.main.async { [weak self] in
                     let tabBarController = TabBarBuilder.build()
                     let authNavController = UINavigationController()
@@ -104,7 +106,7 @@ final class AppRouter {
             }
         case "reset-password-error":
             if let error = getError(url: url) {
-                app.authService.saveError(error: error)
+                authService.saveError(error: error)
                 DispatchQueue.main.async { [weak self] in
                     let tabBarController = TabBarBuilder.build()
                     let authNavController = UINavigationController()

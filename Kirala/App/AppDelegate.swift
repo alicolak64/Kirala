@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        app.router.start() // Start the app
+        app.start()// Start the app
         
 #if DEBUG
         DispatchQueue.global().async {
@@ -48,12 +48,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Handle incoming URLs for iOS 13 and later
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        return app.router.handleDeepLink(url: url)
+        return app.handleDeepLink(with: url)
     }
     
     // Handle incoming URLs for iOS 12 and earlier
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return app.router.handleDeepLink(url: url)
+        return app.handleDeepLink(with: url)
     }
     
 }

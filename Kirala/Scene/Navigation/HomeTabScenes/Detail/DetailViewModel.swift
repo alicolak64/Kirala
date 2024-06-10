@@ -81,9 +81,9 @@ final class DetailViewModel {
     
     // MARK: - Initializers
     
-    init(router: DetailRouterProtocol, authService: AuthService) {
+    init(router: DetailRouterProtocol, dependencies: [DependencyType: Any]) {
         self.router = router
-        self.authService = authService
+        self.authService = dependencies[.authService] as! AuthService
     }
     
 }

@@ -10,7 +10,7 @@ import UIKit
 final class CartNavigationBuilder: NavigationBuilderProtocol {
     
     static func build(arguments: TabBarItemArguments) -> UINavigationController {
-        let cartViewController = CartViewController()
+        let cartViewController = CartViewController(dependencies: app.resolveDependencyArray(dependencies: [.authService]))
         let tabBarItem = UITabBarItem(title: arguments.title, image: arguments.image.symbol(), tag: arguments.tag)
         tabBarItem.badgeColor = ColorPalette.appPrimary.dynamicColor
         tabBarItem.badgeValue = arguments.badge?.description
@@ -22,6 +22,17 @@ final class CartNavigationBuilder: NavigationBuilderProtocol {
 }
 
 class CartViewController: UIViewController {
+    
+    let authService: AuthService
+    
+    init(dependencies: [DependencyType: Any]) {
+        self.authService = dependencies[.authService] as! AuthService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private lazy var emptyCardView: EmptyStateView = {
         let view = EmptyStateView()
@@ -50,7 +61,7 @@ class CartViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         emptyCardView.delegate = self
         
-        guard app.authService.isLoggedIn else {
+        guard authService.isLoggedIn else {
             emptyCardView.configure(with: .noLoginCart)
             emptyCardView.show(withAnimation: true)
             return

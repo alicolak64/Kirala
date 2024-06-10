@@ -22,6 +22,8 @@ final class AddAdViewModel {
     
     private let router: AddAdRouterProtocol
     private let authService: AuthService
+    private let categoryService: CategoryService
+    private let authenticationService: AuthenticationService
     private let editArguments: EditAddAdArguments?
     
     private var categories = Category.otherWithMockCategories.map { $0.name }
@@ -51,15 +53,19 @@ final class AddAdViewModel {
         
     // MARK: - Initializers
     
-    init(router: AddAdRouterProtocol, authService: AuthService) {
+    init(router: AddAdRouterProtocol, dependencies: [DependencyType: Any]) {
         self.router = router
-        self.authService = authService
+        self.authService = dependencies[.authService] as! AuthService
+        self.categoryService = dependencies[.categoryService] as! CategoryService
+        self.authenticationService = dependencies[.authenticationService] as! AuthenticationService
         self.editArguments = nil
     }
     
-    init(router: AddAdRouterProtocol, arguments: EditAddAdArguments, authService: AuthService) {
+    init(router: AddAdRouterProtocol, arguments: EditAddAdArguments, dependencies: [DependencyType: Any]) {
         self.router = router
-        self.authService = authService
+        self.authService = dependencies[.authService] as! AuthService
+        self.categoryService = dependencies[.categoryService] as! CategoryService
+        self.authenticationService = dependencies[.authenticationService] as! AuthenticationService
         self.editArguments = arguments
     }
     

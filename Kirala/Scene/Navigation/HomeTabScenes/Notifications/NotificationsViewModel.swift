@@ -18,9 +18,9 @@ final class NotificationsViewModel {
     
     // MARK: - Initializers
     
-    init(router: NotificationsRouterProtocol, authService: AuthService) {
+    init(router: NotificationsRouterProtocol, dependencies: [DependencyType: Any]) {
         self.router = router
-        self.authService = authService
+        self.authService = dependencies[.authService] as! AuthService
     }
     
 }

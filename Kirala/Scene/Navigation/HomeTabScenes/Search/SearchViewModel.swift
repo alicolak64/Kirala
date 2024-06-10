@@ -70,11 +70,11 @@ final class SearchViewModel {
     
     // MARK: - Initializers
     
-    init(router: SearchRouterProtocol, searchOption: SearchRouteOption, authService: AuthService, filterRouter: FilterRouterProtocol) {
+    init(router: SearchRouterProtocol, searchOption: SearchRouteOption, filterRouter: FilterRouterProtocol, dependencies: [DependencyType: Any]) {
         self.router = router
         self.searchOption = searchOption
-        self.authService = authService
         self.filterRouter = filterRouter
+        self.authService = dependencies[.authService] as! AuthService
         self.searchbalePopupOptions = Dictionary(uniqueKeysWithValues: SearchablePopupType.allCases.map { ($0, []) })
         self.minMaxPopupOptions = Dictionary(uniqueKeysWithValues: MinMaxPopupType.allCases.map { ($0, []) })
         addInitialSearchableFilterOptions()

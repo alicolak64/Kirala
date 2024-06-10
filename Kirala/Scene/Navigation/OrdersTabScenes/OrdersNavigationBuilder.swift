@@ -11,7 +11,7 @@ final class MyOrdersNavigationBuilder: NavigationBuilderProtocol {
     
     
     static func build(arguments: TabBarItemArguments) -> UINavigationController {
-        let ordersViewController = OrdersViewController()
+        let ordersViewController = OrdersViewController(dependencies: app.resolveDependencyArray(dependencies: [.authService]))
         ordersViewController.tabBarItem = UITabBarItem(title: arguments.title, image: arguments.image.symbol(), tag: arguments.tag)
         let navigationController = UINavigationController(rootViewController: ordersViewController)
         return navigationController
@@ -21,6 +21,17 @@ final class MyOrdersNavigationBuilder: NavigationBuilderProtocol {
 
 
 class OrdersViewController: UIViewController {
+    
+    let authService: AuthService
+    
+    init(dependencies: [DependencyType: Any]) {
+        self.authService = dependencies[.authService] as! AuthService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private lazy var emptyCardView: EmptyStateView = {
         let view = EmptyStateView()
@@ -49,7 +60,7 @@ class OrdersViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         emptyCardView.delegate = self
         
-        guard app.authService.isLoggedIn else {
+        guard authService.isLoggedIn else {
             emptyCardView.configure(with: .noLoginOrder)
             emptyCardView.show(withAnimation: true)
             return

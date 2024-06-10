@@ -33,10 +33,10 @@ final class AuthViewModel {
         
     // MARK: - Initializers
     
-    init(router: AuthRouterProtocol, authService: AuthService, authenticationService: AuthenticationService) {
+    init(router: AuthRouterProtocol, dependencies: [DependencyType: Any]) {
         self.router = router
-        self.authService = authService
-        self.authenticationService = authenticationService
+        self.authService = dependencies[.authService] as! AuthService
+        self.authenticationService = dependencies[.authenticationService] as! AuthenticationService
     }
     
 }

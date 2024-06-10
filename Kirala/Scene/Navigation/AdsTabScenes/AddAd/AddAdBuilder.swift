@@ -12,14 +12,16 @@ final class AddAdBuilder: AddAdBuilderProtocol {
     
     static func build(rootNavigationController: UINavigationController?, navigationController: UINavigationController?) -> UIViewController {
         let router = AddAdRouter(rootNavigationController: rootNavigationController, navigationController: navigationController)
-        let viewModel = AddAdViewModel(router: router, authService: app.authService)
+        let dependencies = app.resolveDependencyArray(dependencies: [.categoryService, .authService, .authenticationService])
+        let viewModel = AddAdViewModel(router: router, dependencies: dependencies)
         let viewController = AddAdViewController(viewModel: viewModel)
         return viewController
     }
     
     static func build(rootNavigationController: UINavigationController?, navigationController: UINavigationController?, arguments: EditAddAdArguments) -> UIViewController {
         let router = AddAdRouter(rootNavigationController: rootNavigationController, navigationController: navigationController)
-        let viewModel = AddAdViewModel(router: router, arguments: arguments, authService: app.authService)
+        let dependencies = app.resolveDependencyArray(dependencies: [.categoryService, .authService, .authenticationService])
+        let viewModel = AddAdViewModel(router: router, arguments: arguments, dependencies: dependencies)
         let viewController = AddAdViewController(viewModel: viewModel)
         return viewController
     }

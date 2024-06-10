@@ -12,7 +12,8 @@ final class SearchBuilder: SearchBuilderProtocol {
     static func build(navigationController: UINavigationController?, searchOption: SearchRouteOption) -> UIViewController {
         let router = SearchRouter(navigationController: navigationController)
         let filterRouter = FilterRouter(rootNavigationController: navigationController)
-        let viewModel = SearchViewModel(router: router, searchOption: searchOption, authService: app.authService, filterRouter: filterRouter)
+        let dependencies = app.resolveDependencyArray(dependencies: [.authService])
+        let viewModel = SearchViewModel(router: router, searchOption: searchOption, filterRouter: filterRouter, dependencies: dependencies)
         let viewController = SearchViewController(viewModel: viewModel)
         return viewController
     }

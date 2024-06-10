@@ -113,9 +113,9 @@ final class HomeViewModel {
     
     // MARK: - Initializers
     
-    init(router: HomeRouterProtocol, authService: AuthService) {
+    init(router: HomeRouterProtocol, dependencies: [DependencyType: Any]) {
         self.router = router
-        self.authService = authService
+        self.authService = dependencies[.authService] as! AuthService
     }
     
     private func startTimer() {

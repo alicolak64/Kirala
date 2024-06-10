@@ -7,6 +7,12 @@
 
 import UIKit
 
+enum DependencyType {
+    case authService
+    case authenticationService
+    case categoryService
+}
+
 // MARK: - App Container Instance
 let app = AppContainer()
 
@@ -14,18 +20,22 @@ final class AppContainer {
     
     // MARK: - Properties
     
-    let window: UIWindow
+    private let window: UIWindow
     
-    lazy var router: AppRouter = {
-        AppRouter(window: window)
+    private lazy var router: AppRouter = {
+        AppRouter(window: window, dependencies: resolveDependencyArray(dependencies: [.authService]))
     }()
     
-    lazy var authService: AuthService = {
+    private lazy var authService: AuthService = {
         AuthManager(keychainService: KeychainManager())
     }()
     
-    lazy var authenticationService: AuthenticationService = {
+    private lazy var authenticationService: AuthenticationService = {
         AuthenticationManager()
+    }()
+    
+    private lazy var categoryService: CategoryService = {
+        CategoryManager()
     }()
         
     // MARK: - Initializers
@@ -34,4 +44,49 @@ final class AppContainer {
         self.window = UIWindow(frame: UIScreen.main.bounds)
     }
     
+    // MARK: - Dependency Injection
+        
+    func resolve(dependency: DependencyType) -> Any {
+        switch dependency {
+        case .authService:
+            return authService
+        case .authenticationService:
+            return authenticationService
+        case .categoryService:
+            return categoryService
+        }
+    }
+    
+    func resolveDependencyArray(dependencies: [DependencyType]) -> [DependencyType : Any] {
+        var resolvedDependencies: [DependencyType : Any] = [:]
+        for dependency in dependencies {
+            switch dependency {
+            case .authService:
+                resolvedDependencies[.authService] = authService
+            case .authenticationService:
+                resolvedDependencies[.authenticationService] = authenticationService
+            case .categoryService:
+                resolvedDependencies[.categoryService] = categoryService
+            }
+        }
+        return resolvedDependencies
+    }
+    
+    // MARK: - Navigation
+    
+    func start() {
+        router.start()
+    }
+    
+    func startTabBar() {
+        router.startTabBar()
+    }
+    
+    func handleDeepLink(with url: URL) -> Bool {
+        return router.handleDeepLink(url: url)
+    }
+    
+    
+    
 }
+

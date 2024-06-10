@@ -44,9 +44,9 @@ final class AdsViewModel {
     
     // MARK: - Initializers
     
-    init(router: AdsRouterProtocol, authService: AuthService) {
+    init(router: AdsRouterProtocol, dependencies: [DependencyType: Any]) {
         self.router = router
-        self.authService = authService
+        self.authService = dependencies[.authService] as! AuthService
     }
     
 }
