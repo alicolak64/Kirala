@@ -432,8 +432,6 @@ extension AuthViewController: AuthViewProtocol {
     func closeKeyboard() {
         view.endEditing(true)
     }
-
-    
     
 }
 
@@ -477,27 +475,7 @@ extension AuthViewController: LoginCardDelegate, RegisterCardDelegate, ForgotPas
         
 }
 
-extension AuthViewController: Alertable {
-        
-    func showAlert(with alertMessage: AlertMessage) {
-        showAlert(
-            title: alertMessage.title,
-            message: alertMessage.message,
-            actions: [UIAlertAction(title: alertMessage.actionTitle, style: .default)]
-        )
-    }
-    
-    func showAlert(with alertMessage: AlertMessage, completion: @escaping () -> Void) {
-        showAlert(
-            title: alertMessage.title,
-            message: alertMessage.message,
-            actions: [UIAlertAction(title: alertMessage.actionTitle, style: .default) { _ in
-                completion()
-            }]
-        )
-    }
-    
-}
+
 
 extension AuthViewController: EmptyStateViewDelegate {
     

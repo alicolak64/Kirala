@@ -188,6 +188,13 @@
 		E652DD052BF7FA1400CD4866 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E652DD042BF7FA1400CD4866 /* Searchable.swift */; };
 		E65A7D7D2BF983C2006A2E15 /* CampaignCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A7D7C2BF983C2006A2E15 /* CampaignCellPresenter.swift */; };
 		E65A7D7F2BF983CA006A2E15 /* CampaignCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A7D7E2BF983CA006A2E15 /* CampaignCell.swift */; };
+		E66149802C18E57400BE5659 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E661497F2C18E57400BE5659 /* ProductService.swift */; };
+		E66149822C18E5F800BE5659 /* CreateAdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66149812C18E5F800BE5659 /* CreateAdRequest.swift */; };
+		E66149842C18E9F700BE5659 /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66149832C18E9F700BE5659 /* CategoryService.swift */; };
+		E66149862C18EA2B00BE5659 /* CategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66149852C18EA2B00BE5659 /* CategoryResponse.swift */; };
+		E66149882C18EA5100BE5659 /* CityResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66149872C18EA5100BE5659 /* CityResponse.swift */; };
+		E661498A2C18EA6100BE5659 /* SubcategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66149892C18EA6100BE5659 /* SubcategoryResponse.swift */; };
+		E661498C2C18EA7C00BE5659 /* BrandResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E661498B2C18EA7C00BE5659 /* BrandResponse.swift */; };
 		E66CDB6E2C05F7A800E94F1B /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CDB6D2C05F7A800E94F1B /* Animation.swift */; };
 		E66CDB702C05F7C400E94F1B /* CALayer+ApplyShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CDB6F2C05F7C400E94F1B /* CALayer+ApplyShadow.swift */; };
 		E66CDB722C05F7EF00E94F1B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CDB712C05F7EF00E94F1B /* Card.swift */; };
@@ -490,6 +497,16 @@
 		E65A7D792BF98307006A2E15 /* SliderCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCounter.swift; sourceTree = "<group>"; };
 		E65A7D7C2BF983C2006A2E15 /* CampaignCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignCellPresenter.swift; sourceTree = "<group>"; };
 		E65A7D7E2BF983CA006A2E15 /* CampaignCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignCell.swift; sourceTree = "<group>"; };
+		E661497C2C18E4AD00BE5659 /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
+		E661497D2C18E4AD00BE5659 /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
+		E661497E2C18E4AD00BE5659 /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
+		E661497F2C18E57400BE5659 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProductService.swift; path = ../Local/ProductService.swift; sourceTree = "<group>"; };
+		E66149812C18E5F800BE5659 /* CreateAdRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAdRequest.swift; sourceTree = "<group>"; };
+		E66149832C18E9F700BE5659 /* CategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
+		E66149852C18EA2B00BE5659 /* CategoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryResponse.swift; sourceTree = "<group>"; };
+		E66149872C18EA5100BE5659 /* CityResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityResponse.swift; sourceTree = "<group>"; };
+		E66149892C18EA6100BE5659 /* SubcategoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcategoryResponse.swift; sourceTree = "<group>"; };
+		E661498B2C18EA7C00BE5659 /* BrandResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandResponse.swift; sourceTree = "<group>"; };
 		E66CDB6D2C05F7A800E94F1B /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		E66CDB6F2C05F7C400E94F1B /* CALayer+ApplyShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+ApplyShadow.swift"; sourceTree = "<group>"; };
 		E66CDB712C05F7EF00E94F1B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
@@ -523,9 +540,6 @@
 		E67563822BE873E000959F1A /* OrdersNavigationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersNavigationBuilder.swift; sourceTree = "<group>"; };
 		E67563842BE873FB00959F1A /* CartNavigationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartNavigationBuilder.swift; sourceTree = "<group>"; };
 		E67563862BE8740400959F1A /* ProfileNavigationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationBuilder.swift; sourceTree = "<group>"; };
-		E67D49CC2C161D12004E13DF /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
-		E67D49CD2C161D12004E13DF /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
-		E67D49CE2C161D12004E13DF /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
 		E67D49CF2C161EE7004E13DF /* SelectLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationViewController.swift; sourceTree = "<group>"; };
 		E67D49D42C1635F3004E13DF /* AdClosedRangeHeaderPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdClosedRangeHeaderPresenter.swift; sourceTree = "<group>"; };
 		E67D49D62C1635F8004E13DF /* AdClosedRangeHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdClosedRangeHeaderCell.swift; sourceTree = "<group>"; };
@@ -1642,6 +1656,8 @@
 			children = (
 				E67563362BE7D60700959F1A /* NetworkConstants.swift */,
 				E67563382BE7D6A600959F1A /* AuthenticationService.swift */,
+				E661497F2C18E57400BE5659 /* ProductService.swift */,
+				E66149832C18E9F700BE5659 /* CategoryService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1675,6 +1691,7 @@
 		E6E55D632C0F6CE30036C814 /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				E66149812C18E5F800BE5659 /* CreateAdRequest.swift */,
 				E6E55D642C0F6CF20036C814 /* LoginRequest.swift */,
 				E6E55D692C0FBEFE0036C814 /* RegisterRequest.swift */,
 				E6E55D742C0FE6D20036C814 /* ForgotPasswordRequest.swift */,
@@ -1696,6 +1713,10 @@
 			children = (
 				E6E55D6C2C0FC4DC0036C814 /* LoginResponse.swift */,
 				E6E55D762C0FEDA00036C814 /* BaseResponse.swift */,
+				E66149852C18EA2B00BE5659 /* CategoryResponse.swift */,
+				E66149872C18EA5100BE5659 /* CityResponse.swift */,
+				E66149892C18EA6100BE5659 /* SubcategoryResponse.swift */,
+				E661498B2C18EA7C00BE5659 /* BrandResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1762,7 +1783,7 @@
 				E60816C62C15A026005346D2 /* BSImagePicker */,
 			);
 			productName = Kirala;
-			productReference = E67D49CC2C161D12004E13DF /* Kirala.app */;
+			productReference = E661497C2C18E4AD00BE5659 /* Kirala.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E645F1282BE6CE4B0038075F /* KiralaTests */ = {
@@ -1780,7 +1801,7 @@
 			);
 			name = KiralaTests;
 			productName = KiralaTests;
-			productReference = E67D49CD2C161D12004E13DF /* KiralaTests.xctest */;
+			productReference = E661497D2C18E4AD00BE5659 /* KiralaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		E645F1322BE6CE4B0038075F /* KiralaUITests */ = {
@@ -1798,7 +1819,7 @@
 			);
 			name = KiralaUITests;
 			productName = KiralaUITests;
-			productReference = E67D49CE2C161D12004E13DF /* KiralaUITests.xctest */;
+			productReference = E661497E2C18E4AD00BE5659 /* KiralaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -1984,6 +2005,7 @@
 				E632A56C2BFFB87200727DFF /* Selectable.swift in Sources */,
 				E6B294B02BF752C000BBC20F /* EmptyStates.swift in Sources */,
 				E66CDB8A2C05F86B00E94F1B /* CurrentValueView.swift in Sources */,
+				E66149802C18E57400BE5659 /* ProductService.swift in Sources */,
 				E675636B2BE8493D00959F1A /* TabBarController.swift in Sources */,
 				E62760582C10C7010043039F /* ProgressHUD+TriangleDotShift.swift in Sources */,
 				E6350DAB2C01110B0026D72F /* EmailContainer.swift in Sources */,
@@ -1994,7 +2016,9 @@
 				E67563632BE8490400959F1A /* TabBarContracts.swift in Sources */,
 				E652DCF52BF7DA1600CD4866 /* SearchRouter.swift in Sources */,
 				E6D43E3E2C00CDA400B7B01D /* KeychainService.swift in Sources */,
+				E66149862C18EA2B00BE5659 /* CategoryResponse.swift in Sources */,
 				E6E5E1E42BF54B5500B12BD7 /* LoadingView.swift in Sources */,
+				E66149822C18E5F800BE5659 /* CreateAdRequest.swift in Sources */,
 				E631A7452C11D2600070BDEE /* AdsViewModel.swift in Sources */,
 				E6A939BD2C08F0570015B6F3 /* FilterPopupView.swift in Sources */,
 				E689FE3E2BF27583001884D6 /* SFSymbols.swift in Sources */,
@@ -2024,8 +2048,10 @@
 				E6B63B182C0A1C350093AA8B /* Notification+Center.swift in Sources */,
 				E62ADF102C0D638200422933 /* FilterHeaderCell.swift in Sources */,
 				E6B294B22BF7530000BBC20F /* EmptyStateContracts.swift in Sources */,
+				E66149842C18E9F700BE5659 /* CategoryService.swift in Sources */,
 				E652DCF12BF7D9FA00CD4866 /* SearchContracts.swift in Sources */,
 				E689FE5D2BF298E1001884D6 /* SplashRouter.swift in Sources */,
+				E661498A2C18EA6100BE5659 /* SubcategoryResponse.swift in Sources */,
 				E66CDB8B2C05F86B00E94F1B /* DayCell.swift in Sources */,
 				E66CDB972C05F86B00E94F1B /* String+CapitalizeFirstLetter.swift in Sources */,
 				E632A6082BFFFEDE00727DFF /* UIViewExtensions.swift in Sources */,
@@ -2104,11 +2130,13 @@
 				E635ECAD2BF8F3C000AD36EC /* CategoriesHeaderView.swift in Sources */,
 				E646EE632BE794D20024269E /* ServerResponse.swift in Sources */,
 				E67D49D72C1635F8004E13DF /* AdClosedRangeHeaderCell.swift in Sources */,
+				E66149882C18EA5100BE5659 /* CityResponse.swift in Sources */,
 				E652DCE92BF7AF1500CD4866 /* HomeRouter.swift in Sources */,
 				E652DCF92BF7DA2C00CD4866 /* SearchViewController.swift in Sources */,
 				E645F1842BE6DF250038075F /* LoadingPerformable.swift in Sources */,
 				E646EE6B2BE794D20024269E /* ParameterEncoding.swift in Sources */,
 				E60816D52C15A0A9005346D2 /* UITextView+Extension.swift in Sources */,
+				E661498C2C18EA7C00BE5659 /* BrandResponse.swift in Sources */,
 				E65A7D7F2BF983CA006A2E15 /* CampaignCell.swift in Sources */,
 				E6BF171E2C0809C600C6EA2D /* BottomPopupDismissAnimator.swift in Sources */,
 				E645F1492BE6CE9F0038075F /* AppRouter.swift in Sources */,

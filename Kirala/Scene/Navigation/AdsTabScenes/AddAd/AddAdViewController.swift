@@ -365,13 +365,6 @@ final class AddAdViewController: UIViewController, SwipePerformable, BackNavigat
 }
 
 extension AddAdViewController: AddAdViewProtocol {
-    func showAlert(with alertMessage: AlertMessage, completion: @escaping () -> Void) {
-        
-    }
-    
-    func showAlert(with alertMessage: AlertMessage) {
-        
-    }
     
     
     func showLoading() {
@@ -1039,6 +1032,26 @@ extension AuthViewController: Alertable {
     }
     
     
+}
+
+extension AddAdViewController: Alertable {
+    func showAlert(with alertMessage: AlertMessage, completion: @escaping () -> Void) {
+        showAlert(
+            title: alertMessage.title,
+            message: alertMessage.message,
+            actions: [UIAlertAction(title: alertMessage.actionTitle, style: .default) { _ in
+                completion()
+            }]
+        )
+    }
+    
+    func showAlert(with alertMessage: AlertMessage) {
+        showAlert(
+            title: alertMessage.title,
+            message: alertMessage.message,
+            actions: [UIAlertAction(title: alertMessage.actionTitle, style: .default)]
+        )
+    }
 }
 
 extension AddAdViewController: UITextFieldDelegate {

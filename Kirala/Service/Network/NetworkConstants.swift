@@ -11,8 +11,9 @@ enum NetworkConstants {
     static var baseUrl: String {
     #if DEBUG
         //return "http://localhost:8080"
-        return "http://192.168.1.26:8080"
+        //return "http://192.168.1.26:8080"
         //return "https://kirala-dev.onrender.com"
+        return "http://172.16.34.221:8080"
     #else
         return "https://example.com/api"
     #endif
