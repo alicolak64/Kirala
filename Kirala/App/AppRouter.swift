@@ -7,6 +7,16 @@
 
 import UIKit
 
+enum DeepLink {
+    case home
+    case profile
+    case product(productId: String)
+    case oauth2(token: String, tokenType: String)
+    case login
+    case resetPassword(token: String)
+    case resetPasswordError(error: String)
+}
+
 final class AppRouter {
     
     // MARK: - Properties
@@ -16,7 +26,7 @@ final class AppRouter {
     
     // MARK: - Initializers
     
-    init(window: UIWindow = UIWindow(frame: UIScreen.main.bounds), dependencies: [DependencyType : Any]) {
+    init(window: UIWindow = UIWindow(frame: UIScreen.main.bounds), dependencies: [Dependency : Any]) {
         guard let authService = dependencies[.authService] as? AuthService else {
             fatalError("AuthService not found")
         }
@@ -31,9 +41,9 @@ final class AppRouter {
     }
     
     private func getAuthToken(url: URL) -> (String, String)? {
-        // URL'i işleyip yetkilendirme kodunu çekin
         if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
-            if let token = components.queryItems?.first(where: { $0.name == "accessToken" })?.value, let tokenType = components.queryItems?.first(where: { $0.name == "tokenType" })?.value {
+            if let token = components.queryItems?.first(where: { $0.name == "accessToken" })?.value,
+               let tokenType = components.queryItems?.first(where: { $0.name == "tokenType" })?.value {
                 return (token, tokenType)
             }
         }
@@ -59,32 +69,65 @@ final class AppRouter {
     }
     
     func handleDeepLink(url: URL) -> Bool {
+        guard let deepLink = parseDeepLink(url: url) else {
+            return false
+        }
         
+        navigateToDeepLink(deepLink)
+        return true
+    }
+    
+    private func parseDeepLink(url: URL) -> DeepLink? {
         guard let scheme = url.scheme, scheme == "kiralaapp",
               let host = url.host else {
-            return false
+            return nil
         }
         
         let pathComponents = url.pathComponents.filter { $0 != "/" }
         
-        print("url", url)
-        
         switch host {
         case "home":
-            navigateToHome()
+            return .home
         case "profile":
-            navigateToProfile(userId: "")
+            return .profile
         case "product":
             if let productId = pathComponents.first {
-                navigateToProduct(productId: productId)
+                return .product(productId: productId)
             }
         case "oauth2":
             if let (token, tokenType) = getAuthToken(url: url) {
-                authService.saveAuthToken(token: token)
-                authService.saveAuthTokenType(tokenType: tokenType)
-                navigateToProfileWithLoginSuccess()
+                return .oauth2(token: token, tokenType: tokenType)
             }
         case "login":
+            return .login
+        case "reset-password":
+            if let token = getResetPasswordToken(url: url) {
+                return .resetPassword(token: token)
+            }
+        case "reset-password-error":
+            if let error = getError(url: url) {
+                return .resetPasswordError(error: error)
+            }
+        default:
+            return nil
+        }
+        
+        return nil
+    }
+    
+    private func navigateToDeepLink(_ deepLink: DeepLink) {
+        switch deepLink {
+        case .home:
+            navigateToHome()
+        case .profile:
+            navigateToProfile(userId: "")
+        case .product(let productId):
+            navigateToProduct(productId: productId)
+        case .oauth2(let token, let tokenType):
+            authService.saveAuthToken(token: token)
+            authService.saveAuthTokenType(tokenType: tokenType)
+            navigateToProfileWithLoginSuccess()
+        case .login:
             let tabBarController = TabBarBuilder.build()
             let authNavController = UINavigationController()
             let authViewController = AuthBuilder.build(rootViewController: tabBarController, navigationController: authNavController)
@@ -93,39 +136,31 @@ final class AppRouter {
             window.rootViewController = tabBarController
             window.makeKeyAndVisible()
             tabBarController.present(authNavController, animated: false, completion: nil)
-        case "reset-password":
-            if let token = getResetPasswordToken(url: url) {
-                authService.saveResetPasswordToken(token: token)
-                DispatchQueue.main.async { [weak self] in
-                    let tabBarController = TabBarBuilder.build()
-                    let authNavController = UINavigationController()
-                    let authViewController = AuthBuilder.build(rootViewController: tabBarController, navigationController: authNavController)
-                    authNavController.viewControllers = [authViewController]
-                    authNavController.modalPresentationStyle = .fullScreen
-                    self?.window.rootViewController = tabBarController
-                    self?.window.makeKeyAndVisible()
-                    tabBarController.present(authNavController, animated: false, completion: nil)
-                }
+        case .resetPassword(let token):
+            authService.saveResetPasswordToken(token: token)
+            DispatchQueue.main.async { [weak self] in
+                let tabBarController = TabBarBuilder.build()
+                let authNavController = UINavigationController()
+                let authViewController = AuthBuilder.build(rootViewController: tabBarController, navigationController: authNavController)
+                authNavController.viewControllers = [authViewController]
+                authNavController.modalPresentationStyle = .fullScreen
+                self?.window.rootViewController = tabBarController
+                self?.window.makeKeyAndVisible()
+                tabBarController.present(authNavController, animated: false, completion: nil)
             }
-        case "reset-password-error":
-            if let error = getError(url: url) {
-                authService.saveError(error: error)
-                DispatchQueue.main.async { [weak self] in
-                    let tabBarController = TabBarBuilder.build()
-                    let authNavController = UINavigationController()
-                    let authViewController = AuthBuilder.build(rootViewController: tabBarController, navigationController: authNavController)
-                    authNavController.viewControllers = [authViewController]
-                    authNavController.modalPresentationStyle = .fullScreen
-                    self?.window.rootViewController = tabBarController
-                    self?.window.makeKeyAndVisible()
-                    tabBarController.present(authNavController, animated: false, completion: nil)
-                }
+        case .resetPasswordError(let error):
+            authService.saveError(error: error)
+            DispatchQueue.main.async { [weak self] in
+                let tabBarController = TabBarBuilder.build()
+                let authNavController = UINavigationController()
+                let authViewController = AuthBuilder.build(rootViewController: tabBarController, navigationController: authNavController)
+                authNavController.viewControllers = [authViewController]
+                authNavController.modalPresentationStyle = .fullScreen
+                self?.window.rootViewController = tabBarController
+                self?.window.makeKeyAndVisible()
+                tabBarController.present(authNavController, animated: false, completion: nil)
             }
-        default:
-            return false
         }
-        
-        return true
     }
     
     private func navigateToHome() {
@@ -155,22 +190,16 @@ final class AppRouter {
         temporaryViewController.present(lottieVC, animated: true)
     }
     
-    
     private func navigateToProduct(productId: String) {
         print("Product ID: \(productId)")
     }
     
     func checkOnboarding() {
-        //        if app.stroageService.isOnBoardingSeen() {
-        //            startHome()
-        //        } else {
-        //            startOnboarding()
-        //        }
         startSplash()
     }
     
     func startOnboarding() {
-        //        window.rootViewController = OnboardingBuilder().build()
+        // window.rootViewController = OnboardingBuilder().build()
     }
     
     func startSplash() {
@@ -180,12 +209,8 @@ final class AppRouter {
     }
     
     func startTabBar() {
-        //        let homeViewController = HomeBuilder().build()
-        //        let navigationController = app.navigationController
-        //        navigationController.viewControllers = [homeViewController]
-        //        window.rootViewController = navigationController
         let tabBarController = TabBarBuilder.build()
         window.rootViewController = tabBarController
     }
-    
 }
+

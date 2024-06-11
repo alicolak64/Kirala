@@ -18,6 +18,12 @@ final class AddAdViewController: UIViewController, SwipePerformable, BackNavigat
     
     // MARK: - UI Properties
     
+    private lazy var loadingView: LoadingView = {
+        let view = LoadingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var verticalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -201,6 +207,7 @@ final class AddAdViewController: UIViewController, SwipePerformable, BackNavigat
         textField.addCornerRadius(radius: 10)
         textField.tag = MinMaxItemType.min.rawValue
         textField.delegate = self
+        textField.addTarget(self, action: #selector(minTextFieldDidChange), for: .editingChanged)
         return textField
     }()
     
@@ -223,6 +230,7 @@ final class AddAdViewController: UIViewController, SwipePerformable, BackNavigat
         textField.addBorder(width: 1, color: ColorPalette.border.dynamicColor)
         textField.addCornerRadius(radius: 10)
         textField.tag = MinMaxItemType.max.rawValue
+        textField.addTarget(self, action: #selector(maxTextFieldDidChange), for: .editingChanged)
         textField.delegate = self
         return textField
     }()
@@ -331,23 +339,61 @@ final class AddAdViewController: UIViewController, SwipePerformable, BackNavigat
     }
     
     @objc func didTapAdAddButton() {
-        print("Add Ad Button Tapped")
+        viewModel.didTapAddAdButton()
     }
     
     @objc func didTapAdEditButton() {
-        print("Edit Ad Button Tapped")
+        viewModel.didTapEditAdButton()
     }
     
     @objc func didTapAdDeleteButton() {
-        print("Delete Ad Button Tapped")
+        viewModel.didTapDeleteAdButton()
     }
     
     @objc func didTapSelectLocationButton() {
         viewModel.didTapSelectLocationButton()
     }
+    
+    @objc func minTextFieldDidChange(_ textField: UITextField) {
+        viewModel.textFieldDidChanged(text: textField.text ?? "", type: .min)
+    }
+    
+    @objc func maxTextFieldDidChange(_ textField: UITextField) {
+        viewModel.textFieldDidChanged(text: textField.text ?? "", type: .max)
+    }
+    
 }
 
 extension AddAdViewController: AddAdViewProtocol {
+    func showAlert(with alertMessage: AlertMessage, completion: @escaping () -> Void) {
+        
+    }
+    
+    func showAlert(with alertMessage: AlertMessage) {
+        
+    }
+    
+    
+    func showLoading() {
+        loadingView.showLoading()
+    }
+    
+    func hideLoading(loadResult: LoadingResult) {
+        loadingView.hideLoading(loadResult: loadResult)
+    }
+    
+    func updatePickerViewDataSources(_ items: [String], type: PickerViewType) {
+        switch type {
+        case .category:
+            categoryPickerView.updateItems(items)
+        case .subcategory:
+            subcategoryPickerView.updateItems(items)
+        case .brand:
+            brandPickerView.updateItems(items)
+        case .city:
+            cityPickerView.updateItems(items)
+        }
+    }
     
     func showImagePicker() {
         
@@ -433,8 +479,12 @@ extension AddAdViewController: AddAdViewProtocol {
     func prepareUI() {
         view.backgroundColor = ColorBackground.primary.dynamicColor
         
-        view.addSubview(scrollView)
-        view.addSubview(footerView)
+        view.addSubviews([
+            scrollView,
+            footerView,
+            loadingView
+        ])
+        
         scrollView.addSubview(verticalStackView)
         
         locationSelectView.addSubviews([
@@ -476,6 +526,9 @@ extension AddAdViewController: AddAdViewProtocol {
         closedRangesTableViewHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
+            
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
             footerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -913,6 +966,10 @@ extension AddAdViewController: PickerViewDelegate {
         viewModel.didSelectRow(at: index, type: pickerViewType)
     }
     
+    func customTextFieldTextDidChanged(_ text: String, pickerViewType: PickerViewType) {
+        viewModel.textFieldDidChanged(text: text, type: pickerViewType)
+    }
+    
 }
 
 extension AddAdViewController: TextFieldWithTitleDelegate {
@@ -957,6 +1014,30 @@ extension AddAdViewController: AdClosedRangeCellDelegate {
     func didTapDateLabel(with indexPath: IndexPath) {
         viewModel.didTapDateLabel(with: indexPath)
     }
+    
+}
+
+extension AuthViewController: Alertable {
+    
+    
+    func showAlert(with alertMessage: AlertMessage, completion: @escaping () -> Void) {
+        showAlert(
+            title: alertMessage.title,
+            message: alertMessage.message,
+            actions: [UIAlertAction(title: alertMessage.actionTitle, style: .default) { _ in
+                completion()
+            }]
+        )
+    }
+    
+    func showAlert(with alertMessage: AlertMessage) {
+        showAlert(
+            title: alertMessage.title,
+            message: alertMessage.message,
+            actions: [UIAlertAction(title: alertMessage.actionTitle, style: .default)]
+        )
+    }
+    
     
 }
 

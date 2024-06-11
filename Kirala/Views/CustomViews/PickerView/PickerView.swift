@@ -152,6 +152,10 @@ final class PickerView: UIView {
         closeCustomTextField()
     }
     
+    @objc private func customTextFieldTextDidChanged() {
+        presenter.customTextFieldTextDidChanged(customTextField.text ?? "")
+    }
+    
 }
 
 // MARK: - PickerViewViewProtocol
@@ -188,6 +192,7 @@ extension PickerView: PickerViewViewProtocol {
     
     func prepareCustomTextField() {
         customTextField.delegate = self
+        customTextField.addTarget(self, action: #selector(customTextFieldTextDidChanged), for: .editingChanged)
     }
     
     func setPickerViewPlaceholder(_ placeholder: String) {
@@ -302,6 +307,10 @@ extension PickerView: PickerViewViewProtocol {
         customTextField.resignFirstResponder()
     }
     
+    func updateItems(_ items: [String]) {
+        presenter.updateItems(items)
+    }
+    
     
 }
 
@@ -333,6 +342,7 @@ extension PickerView: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         presenter.textFieldShouldReturn(isPickerViewTextField: textField == pickerViewTextField)
+        
     }
         
 }

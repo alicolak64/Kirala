@@ -52,6 +52,8 @@ protocol AddAdViewModelProtocol {
     // MARK: Methods
     func didSelectRow(at index: Int, type: PickerViewType)
     func textFieldDidChanged(text: String, type: TextFieldWithTitleType)
+    func textFieldDidChanged(text: String, type: PickerViewType)
+    func textFieldDidChanged(text: String, type: MinMaxItemType)
     
     // MARK: Data Source Methods
     func numberOfSections(type: AddAdTableViewTag) -> Int
@@ -66,6 +68,10 @@ protocol AddAdViewModelProtocol {
     func sortSelectedItems(assets: [PHAsset], completion: @escaping ([PHAsset]) -> Void)
     func didSelectImages(assets: [PHAsset])
     
+    func didTapAddAdButton()
+    func didTapEditAdButton()
+    func didTapDeleteAdButton()
+    
 }
 
 
@@ -77,6 +83,9 @@ protocol AddAdViewProtocol: AnyObject {
     func prepareUI()
     func prepareConstraints()
     func addTapGesture()
+    
+    func showLoading()
+    func hideLoading(loadResult: LoadingResult)
     
     func prepareCategoryPickerView(with categories: [String])
     func prepareSubcategoryPickerView(with subcategories: [String])
@@ -117,5 +126,12 @@ protocol AddAdViewProtocol: AnyObject {
     func deleteItems(at indexPaths: [IndexPath], type: AddAdTableViewTag)
     
     func showMapView(with cgLocation: CLLocationCoordinate2D, annotationTitle: String)
+    
+    
+    func updatePickerViewDataSources(_ items: [String], type: PickerViewType)
+    
+    
+    func showAlert(with alertMessage: AlertMessage, completion: @escaping () -> Void)
+    func showAlert(with alertMessage: AlertMessage)
         
 }

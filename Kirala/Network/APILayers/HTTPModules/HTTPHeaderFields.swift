@@ -16,6 +16,9 @@ enum HTTPHeaderFields {
     /// Content-Type header with JSON.
     case contentType
     
+    /// Content-Type header with a multipart form data.
+    case contentTypeMultipart(String)
+    
     /// Authorization header with a token.
     case authorization(String)
     
@@ -35,6 +38,8 @@ enum HTTPHeaderFields {
             return ("Content-Type", "application/json")
         case .contentTypeUTF8:
             return ("Content-Type", "application/json; charset=utf-8")
+        case .contentTypeMultipart(let boundary):
+            return ("Content-Type", "multipart/form-data; boundary=\(boundary)")
         case .authorization(let auth):
             return ("Authorization", auth)
         case .rapidApi(let key):

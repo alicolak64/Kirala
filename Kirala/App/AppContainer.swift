@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum DependencyType {
+enum Dependency {
     case authService
     case authenticationService
     case categoryService
@@ -51,7 +51,7 @@ final class AppContainer {
     
     // MARK: - Dependency Injection
         
-    func resolve(dependency: DependencyType) -> Any {
+    func resolve(dependency: Dependency) -> Any {
         switch dependency {
         case .authService:
             return authService
@@ -59,11 +59,13 @@ final class AppContainer {
             return authenticationService
         case .categoryService:
             return categoryService
+        case .productService:
+            return productService
         }
     }
     
-    func resolveDependencyArray(dependencies: [DependencyType]) -> [DependencyType : Any] {
-        var resolvedDependencies: [DependencyType : Any] = [:]
+    func resolveDependencyArray(dependencies: [Dependency]) -> [Dependency : Any] {
+        var resolvedDependencies: [Dependency : Any] = [:]
         for dependency in dependencies {
             switch dependency {
             case .authService:
@@ -72,6 +74,8 @@ final class AppContainer {
                 resolvedDependencies[.authenticationService] = authenticationService
             case .categoryService:
                 resolvedDependencies[.categoryService] = categoryService
+            case .productService:
+                resolvedDependencies[.productService] = productService
             }
         }
         return resolvedDependencies

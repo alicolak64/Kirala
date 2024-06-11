@@ -11,8 +11,8 @@ enum NetworkConstants {
     static var baseUrl: String {
     #if DEBUG
         //return "http://localhost:8080"
-        //return "http://192.168.1.26:8080"
-        return "https://kirala-dev.onrender.com"
+        return "http://192.168.1.26:8080"
+        //return "https://kirala-dev.onrender.com"
     #else
         return "https://example.com/api"
     #endif
@@ -26,6 +26,17 @@ enum NetworkConstants {
             static let logout = "/auth/logout"
             static let forgotPassword = "/auth/send-reset-password-token"
             static let resetPassword = "/auth/reset-password"
+        }
+        
+        enum Category {
+            static let getCategories = "/categories"
+            static let getSubcategories = "/subcategories/category/"
+            static let getBrands = "/brands"
+            static let getCities = "/cities"
+        }
+        
+        enum Product {
+            static let createProduct = "/products"
         }
     }
     

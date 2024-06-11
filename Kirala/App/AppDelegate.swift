@@ -18,32 +18,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         app.start()// Start the app
         
-#if DEBUG
+        #if DEBUG
         DispatchQueue.global().async {
             // Background tasks
             NFX.sharedInstance().start()
         }
-#endif
+        #endif
         
         return true
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-#if DEBUG
+        #if DEBUG
         NFX.sharedInstance().stop()
-#endif
+        #endif
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-#if DEBUG
+        #if DEBUG
         NFX.sharedInstance().stop()
-#endif
+        #endif
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-#if DEBUG
+        #if DEBUG
         NFX.sharedInstance().start()
-#endif
+        #endif
     }
     
     // Handle incoming URLs for iOS 13 and later

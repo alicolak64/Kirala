@@ -70,7 +70,7 @@ final class SearchViewModel {
     
     // MARK: - Initializers
     
-    init(router: SearchRouterProtocol, searchOption: SearchRouteOption, filterRouter: FilterRouterProtocol, dependencies: [DependencyType: Any]) {
+    init(router: SearchRouterProtocol, searchOption: SearchRouteOption, filterRouter: FilterRouterProtocol, dependencies: [Dependency: Any]) {
         
         guard let authService = dependencies[.authService] as? AuthService else {
             fatalError("AuthService not found")

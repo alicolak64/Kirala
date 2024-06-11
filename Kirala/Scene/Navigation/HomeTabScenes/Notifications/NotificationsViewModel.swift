@@ -18,7 +18,7 @@ final class NotificationsViewModel {
     
     // MARK: - Initializers
     
-    init(router: NotificationsRouterProtocol, dependencies: [DependencyType: Any]) {
+    init(router: NotificationsRouterProtocol, dependencies: [Dependency: Any]) {
         guard let authService = dependencies[.authService] as? AuthService else {
             fatalError("AuthService not found")
         }

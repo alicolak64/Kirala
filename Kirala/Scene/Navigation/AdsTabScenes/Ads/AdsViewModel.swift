@@ -44,7 +44,7 @@ final class AdsViewModel {
     
     // MARK: - Initializers
     
-    init(router: AdsRouterProtocol, dependencies: [DependencyType: Any]) {
+    init(router: AdsRouterProtocol, dependencies: [Dependency: Any]) {
         guard let authService = dependencies[.authService] as? AuthService else {
             fatalError("AuthService not found")
         }
@@ -64,7 +64,7 @@ extension AdsViewModel: AdsViewModelProtocol {
     }
     
     func viewWillAppear() {
-        guard !authService.isLoggedIn else {
+        guard authService.isLoggedIn else {
             delegate?.showEmptyState(with: .noLoginAds)
             return
         }

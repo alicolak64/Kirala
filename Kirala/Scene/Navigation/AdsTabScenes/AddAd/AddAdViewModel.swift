@@ -13,6 +13,21 @@ struct Image {
     let image: UIImage
 }
 
+struct CreateAd {
+    var selectedCategory: String
+    var selectedSubcategory: String
+    var selectedBrand: String
+    var selectedCity: String
+    var name: String
+    var price: Double
+    var description: String
+    var minRentPeriod: Int
+    var maxRentPeriod: Int
+    var location: Location
+    var closedRanges: [FastisRange]
+    var images: [Image]
+}
+
 
 final class AddAdViewModel {
     
@@ -23,17 +38,33 @@ final class AddAdViewModel {
     private let router: AddAdRouterProtocol
     private let authService: AuthService
     private let categoryService: CategoryService
+    private let productService: ProductService
     private let authenticationService: AuthenticationService
     private let editArguments: EditAddAdArguments?
     
-    private var categories = Category.otherWithMockCategories.map { $0.name }
-    private var subCategories = Subcategory.otherWithMockSubcategories.map { $0.name }
-    private var cities = SearchablePopupArguments.getCityMockData().items.map { $0.name }
-    private var brands = SearchablePopupArguments.getBrandMockData().items.map { $0.name }
-    private var selectedImages = [Image]()
-    private var selectedClosedRanges = [FastisRange]()
+    
+    private var categories = [CategoryResponse]()
+    private var subCategories = [SubcategoryResponse]()
+    private var cities = [CityResponse]()
+    private var brands = [BrandResponse]()
+    
     private var editedClosedRangeIndex: Int?
     private var editedClosedRange: FastisRange?
+    
+    private var createAd: CreateAd = CreateAd(
+        selectedCategory: "",
+        selectedSubcategory: "",
+        selectedBrand: "",
+        selectedCity: "",
+        name: "",
+        price: 0,
+        description: "",
+        minRentPeriod: 0,
+        maxRentPeriod: 0,
+        location: Location(latitude: 0, longitude: 0),
+        closedRanges: [],
+        images: []
+    )
     
     private let calendar: Calendar = .current
     
@@ -50,25 +81,41 @@ final class AddAdViewModel {
         .nextWeek,
         .nextMonth
     ]
-        
+    
+    private var loadingState: LoadingState = .loading {
+        didSet {
+            switch loadingState {
+            case .loading:
+                delegate?.showLoading()
+            case .loaded(let result):
+                delegate?.hideLoading(loadResult: result)
+            }
+        }
+    }
+    
+    private let dispatchGroup = DispatchGroup()
+    
     // MARK: - Initializers
     
-    init(router: AddAdRouterProtocol, dependencies: [DependencyType: Any]) {
+    init(router: AddAdRouterProtocol, dependencies: [Dependency: Any]) {
         guard let authService = dependencies[.authService] as? AuthService,
               let categoryService = dependencies[.categoryService] as? CategoryService,
+              let productService = dependencies[.productService] as? ProductService,
               let authenticationService = dependencies[.authenticationService] as? AuthenticationService else {
             fatalError("AuthService, CategoryService or AuthenticationService not found")
         }
         self.router = router
         self.authService = authService
         self.categoryService = categoryService
+        self.productService = productService
         self.authenticationService = authenticationService
         self.editArguments = nil
     }
     
-    init(router: AddAdRouterProtocol, arguments: EditAddAdArguments, dependencies: [DependencyType: Any]) {
+    init(router: AddAdRouterProtocol, arguments: EditAddAdArguments, dependencies: [Dependency: Any]) {
         guard let authService = dependencies[.authService] as? AuthService,
               let categoryService = dependencies[.categoryService] as? CategoryService,
+              let productService = dependencies[.productService] as? ProductService,
               let authenticationService = dependencies[.authenticationService] as? AuthenticationService else {
             fatalError("AuthService, CategoryService or AuthenticationService not found")
         }
@@ -76,6 +123,7 @@ final class AddAdViewModel {
         self.editArguments = arguments
         self.authService = authService
         self.categoryService = categoryService
+        self.productService = productService
         self.authenticationService = authenticationService
     }
     
@@ -86,6 +134,8 @@ extension AddAdViewModel: AddAdViewModelProtocol {
     // MARK: - Lifecycle Methods
     
     func viewDidLoad() {
+        
+        fetchInitialData()
         
         delegate?.prepareUI()
         delegate?.prepareConstraints()
@@ -98,26 +148,30 @@ extension AddAdViewModel: AddAdViewModelProtocol {
             delegate?.prepareAddAdFooter()
         }
         
-        delegate?.prepareCategoryPickerView(with: categories)
-        delegate?.prepareSubcategoryPickerView(with: subCategories)
-        delegate?.prepareBrandPickerView(with: brands)
-        delegate?.prepareCityPickerView(with: cities)
-        delegate?.prepareNameTextField()
-        delegate?.preparePriceTextField()
-        delegate?.prepareDescriptionTextField()
-        delegate?.prepareMinMaxPeriodTextField()
-        delegate?.prepareImagesTableView()
-        delegate?.prepareClosedRangeTableView()
-        delegate?.prepareCalendar(
-            minDate: minDate,
-            maxDate: maxDate,
-            selectMonthOnHeaderTap: true,
-            allowToChooseNilDate: false,
-            shortcuts: shortcuts,
-            closedRanges: selectedClosedRanges
-        )
-        
-        
+    }
+    
+    func prepareInitalConfig() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            delegate?.prepareCategoryPickerView(with: categories.map { $0.name })
+            delegate?.prepareSubcategoryPickerView(with: subCategories.map { $0.name })
+            delegate?.prepareBrandPickerView(with: brands.map { $0.name })
+            delegate?.prepareCityPickerView(with: cities.map { $0.name })
+            delegate?.prepareNameTextField()
+            delegate?.preparePriceTextField()
+            delegate?.prepareDescriptionTextField()
+            delegate?.prepareMinMaxPeriodTextField()
+            delegate?.prepareImagesTableView()
+            delegate?.prepareClosedRangeTableView()
+            delegate?.prepareCalendar(
+                minDate: minDate,
+                maxDate: maxDate,
+                selectMonthOnHeaderTap: true,
+                allowToChooseNilDate: false,
+                shortcuts: shortcuts,
+                closedRanges: createAd.closedRanges
+            )
+        }
     }
     
     func viewWillAppear() {
@@ -135,6 +189,96 @@ extension AddAdViewModel: AddAdViewModelProtocol {
         
     }
     
+    // MARK: - Setups
+    
+    private func fetchInitialData() {
+        
+        loadingState = .loading
+        
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            self.fetchCategories()
+            self.fetchBrands()
+            self.fetchCities()
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            guard let self = self else { return }
+            self.prepareInitalConfig()
+            self.loadingState = .loaded(.none)
+        }
+        
+    }
+    
+    private func fetchCategories() {
+        dispatchGroup.enter()
+        categoryService.getCategoryList { [weak self] result in
+            guard let self = self else { return }
+            defer { self.dispatchGroup.leave() }
+            switch result {
+            case .success(let categories):
+                self.categories = categories.data ?? []
+                self.categories.append(CategoryResponse(id: "0", name: Strings.Ad.other.localized))
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func fetchBrands() {
+        dispatchGroup.enter()
+        categoryService.getBrandList { [weak self] result in
+            guard let self = self else { return }
+            defer { self.dispatchGroup.leave() }
+            switch result {
+            case .success(let brands):
+                self.brands = brands.data ?? []
+                self.brands.append(BrandResponse(id: "0", name: Strings.Ad.other.localized))
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func fetchCities() {
+        dispatchGroup.enter()
+        categoryService.getCityList { [weak self] result in
+            guard let self = self else { return }
+            defer { self.dispatchGroup.leave() }
+            switch result {
+            case .success(let cities):
+                self.cities = cities.data ?? []
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func fetchSubcategories(for categoryId: String) {
+        loadingState = .loading
+        categoryService.getSubcategoryList(categoryId: categoryId) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let subcategories):
+                self.subCategories = subcategories.data ?? []
+                self.subCategories.append(SubcategoryResponse(id: "0", name: Strings.Ad.other.localized))
+                self.loadingState = .loaded(.none)
+                DispatchQueue.main.async { [weak self] in
+                    let subcateories = self?.subCategories.map { $0.name }
+                    guard let subcateories = subcateories else { return }
+                    self?.delegate?.updatePickerViewDataSources(subcateories, type: .subcategory)
+                    if !(subcateories.count == 1 && subcateories[0] == Strings.Ad.other.localized) {
+                        self?.createAd.selectedSubcategory = subcateories.first ?? ""
+                    }
+                }
+            case .failure(let error):
+                print(error)
+                self.loadingState = .loaded(.none)
+            }
+        }
+    }
+    
+    
     // MARK: - Actions
     
     func didTapCancelButton() {
@@ -142,25 +286,103 @@ extension AddAdViewModel: AddAdViewModelProtocol {
     }
     
     func didSelectRow(at index: Int, type: PickerViewType) {
+        
+        switch type {
+        case .category:
+            if index == categories.count - 1 {
+                subCategories = [SubcategoryResponse(id: "0", name: Strings.Ad.other.localized)]
+                createAd.selectedCategory = ""
+                delegate?.updatePickerViewDataSources(subCategories.map { $0.name }, type: .subcategory)
+                delegate?.setPickerViewHeightConstraint(to: 175, type: .subcategory)
+                delegate?.layoutIfNeeded()
+                delegate?.showCustomTextFieldPickerView(type: .subcategory, animated: true, firstResponder: false)
+            } else {
+                fetchSubcategories(for: categories[index].id)
+                delegate?.setPickerViewHeightConstraint(to: 75, type: .subcategory)
+                delegate?.layoutIfNeeded()
+                delegate?.hideCustomTextFieldPickerView(type: .subcategory, animated: true)
+            }
+            
+        default:
+            break
+        }
+        
+        switch type {
+        case .category:
+            if index != categories.count - 1 {
+                createAd.selectedCategory = categories[index].name
+            }
+        case .subcategory:
+            if index != subCategories.count - 1 {
+                createAd.selectedSubcategory = subCategories[index].name
+            }
+        case .city:
+            createAd.selectedCity = cities[index].name
+        case .brand:
+            if index != brands.count - 1 {
+                createAd.selectedBrand = brands[index].name
+            }
+        }
+        
         switch type {
         case .category, .subcategory, .brand:
-            let items = type == .category ? categories : type == .subcategory ? subCategories : brands
-            guard index == items.count - 1 else {
+            let itemCount = type == .category ? categories.count : type == .subcategory ? subCategories.count : brands.count
+            guard index == itemCount - 1 else {
                 delegate?.setPickerViewHeightConstraint(to: 75, type: type)
                 delegate?.layoutIfNeeded()
                 delegate?.hideCustomTextFieldPickerView(type: type, animated: true)
                 return
             }
-            delegate?.setPickerViewHeightConstraint(to: 160, type: type)
+            delegate?.setPickerViewHeightConstraint(to: 175, type: type)
             delegate?.layoutIfNeeded()
             delegate?.showCustomTextFieldPickerView(type: type, animated: true, firstResponder: true)
+            switch type {
+            case .category:
+                createAd.selectedCategory = ""
+            case .brand:
+                createAd.selectedBrand = ""
+            case .subcategory:
+                createAd.selectedSubcategory = ""
+            default:
+                break
+            }
         case .city:
             break
         }
     }
     
     func textFieldDidChanged(text: String, type: TextFieldWithTitleType) {
-        print(text)
+        switch type {
+        case .name:
+            createAd.name = text
+        case .price:
+            createAd.price = Double(text) ?? 0
+        case .description:
+            createAd.description = text
+        }
+    }
+    
+    func textFieldDidChanged(text: String, type: PickerViewType) {
+        switch type {
+        case .category:
+            createAd.selectedCategory = text
+        case .subcategory:
+            createAd.selectedSubcategory = text
+        case .city:
+            createAd.selectedCity = text
+        case .brand:
+            createAd.selectedBrand = text
+        }
+    }
+    
+    func textFieldDidChanged(text: String, type: MinMaxItemType) {
+        guard var value = Int(text) else { return }
+        switch type {
+        case .min:
+            createAd.minRentPeriod = value
+        case .max:
+            createAd.maxRentPeriod = value
+        }
     }
     
     func numberOfSections(type: AddAdTableViewTag) -> Int {
@@ -189,9 +411,9 @@ extension AddAdViewModel: AddAdViewModelProtocol {
     func numberOfRows(in section: Int, type: AddAdTableViewTag) -> Int {
         switch type {
         case .image:
-            selectedImages.count == 0 ? 1 : selectedImages.count
+            createAd.images.count == 0 ? 1 : createAd.images.count
         case .closedRange:
-            selectedClosedRanges.count == 0 ? 1 : selectedClosedRanges.count
+            createAd.closedRanges.count == 0 ? 1 : createAd.closedRanges.count
         }
     }
     
@@ -199,16 +421,16 @@ extension AddAdViewModel: AddAdViewModelProtocol {
         
         switch type {
         case .image:
-            guard selectedImages.count > 0 else {
+            guard createAd.images.count > 0 else {
                 return AdImageCellArguments(index: 0, image: nil, imageUrl: nil, isLast: true)
             }
-                    
-            return AdImageCellArguments(index: indexPath.row, image: selectedImages[indexPath.row].image, imageUrl: nil, isLast: indexPath.row == selectedImages.count - 1)
+            
+            return AdImageCellArguments(index: indexPath.row, image: createAd.images[indexPath.row].image, imageUrl: nil, isLast: indexPath.row == createAd.images.count - 1)
         case .closedRange:
-            guard selectedClosedRanges.count > 0 else {
+            guard createAd.closedRanges.count > 0 else {
                 return AdClosedRangeCellArguments(indexPath: indexPath, range: nil, isLast: true)
             }
-            return AdClosedRangeCellArguments(indexPath: indexPath, range: selectedClosedRanges[indexPath.row], isLast: indexPath.row == selectedClosedRanges.count - 1)
+            return AdClosedRangeCellArguments(indexPath: indexPath, range: createAd.closedRanges[indexPath.row], isLast: indexPath.row == createAd.closedRanges.count - 1)
         }
         
         
@@ -218,12 +440,12 @@ extension AddAdViewModel: AddAdViewModelProtocol {
         
         switch type {
         case .image:
-            guard selectedImages.count > 0 else {
-               return 50
+            guard createAd.images.count > 0 else {
+                return 50
             }
             return 80
         case .closedRange:
-            guard selectedClosedRanges.count > 0 else {
+            guard createAd.closedRanges.count > 0 else {
                 return 50
             }
             return 80
@@ -239,13 +461,13 @@ extension AddAdViewModel: AddAdViewModelProtocol {
     }
     
     func isImageSelected(identifier: String) -> Bool {
-        return selectedImages.contains { $0.id == identifier }
+        return createAd.images.contains { $0.id == identifier }
     }
     
     func sortSelectedItems(assets: [PHAsset], completion: @escaping ([PHAsset]) -> Void) {
         let sortedAssets = assets.sorted { (asset1, asset2) -> Bool in
-            guard let index1 = selectedImages.firstIndex(where: { $0.id == asset1.localIdentifier }),
-                  let index2 = selectedImages.firstIndex(where: { $0.id == asset2.localIdentifier }) else { return false }
+            guard let index1 = createAd.images.firstIndex(where: { $0.id == asset1.localIdentifier }),
+                  let index2 = createAd.images.firstIndex(where: { $0.id == asset2.localIdentifier }) else { return false }
             return index1 < index2
         }
         completion(sortedAssets)
@@ -255,7 +477,7 @@ extension AddAdViewModel: AddAdViewModelProtocol {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             addImages(assets: assets)
-            delegate?.setTableViewHeightConstraint(type: .image, to: CGFloat(selectedImages.count * 80) + 100)
+            delegate?.setTableViewHeightConstraint(type: .image, to: CGFloat(createAd.images.count * 80) + 100)
             delegate?.layoutIfNeeded()
             delegate?.reloadTableView(with: .image)
         }
@@ -266,11 +488,11 @@ extension AddAdViewModel: AddAdViewModelProtocol {
         case .image:
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                selectedImages.remove(at: index)
-                if selectedImages.count == 0 {
+                createAd.images.remove(at: index)
+                if createAd.images.count == 0 {
                     delegate?.setTableViewHeightConstraint(type: .image, to: CGFloat(100))
                 } else {
-                    delegate?.setTableViewHeightConstraint(type: .image, to: CGFloat(selectedImages.count * 80) + 100)
+                    delegate?.setTableViewHeightConstraint(type: .image, to: CGFloat(createAd.images.count * 80) + 100)
                 }
                 delegate?.layoutIfNeeded()
                 delegate?.reloadTableView(with: .image)
@@ -278,13 +500,13 @@ extension AddAdViewModel: AddAdViewModelProtocol {
         case .closedRange:
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                selectedClosedRanges.remove(at: index)
-                if selectedClosedRanges.count == 0 {
+                createAd.closedRanges.remove(at: index)
+                if createAd.closedRanges.count == 0 {
                     delegate?.setTableViewHeightConstraint(type: .closedRange, to: CGFloat(100))
                 } else {
-                    delegate?.setTableViewHeightConstraint(type: .closedRange, to: CGFloat(selectedClosedRanges.count * 80) + 100)
+                    delegate?.setTableViewHeightConstraint(type: .closedRange, to: CGFloat(createAd.closedRanges.count * 80) + 100)
                 }
-                delegate?.updateClosedRanges(with: selectedClosedRanges)
+                delegate?.updateClosedRanges(with: createAd.closedRanges)
                 delegate?.layoutIfNeeded()
                 delegate?.reloadTableView(with: .closedRange)
             }
@@ -300,12 +522,12 @@ extension AddAdViewModel: AddAdViewModelProtocol {
         
         assets.forEach { (asset) in
             PHImageManager.default().requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: options) { (image, info) in
-                guard let image = image, !self.selectedImages.contains(where: { $0.id == asset.localIdentifier }) else { return }
-                self.selectedImages.append(Image(id: asset.localIdentifier, image: image))
+                guard let image = image, !self.createAd.images.contains(where: { $0.id == asset.localIdentifier }) else { return }
+                self.createAd.images.append(Image(id: asset.localIdentifier, image: image))
             }
         }
         
-        selectedImages.removeAll { (image) -> Bool in
+        createAd.images.removeAll { (image) -> Bool in
             !assets.contains(where: { $0.localIdentifier == image.id })
         }
         
@@ -322,33 +544,206 @@ extension AddAdViewModel: AddAdViewModelProtocol {
     func didSelectCalendarValue(with value: FastisValue?) {
         guard let value = value, let range = value as? FastisRange else {
             if let editedClosedRange = editedClosedRange, let editedClosedRangeIndex = editedClosedRangeIndex {
-                selectedClosedRanges.insert(editedClosedRange, at: editedClosedRangeIndex)
-                delegate?.updateClosedRanges(with: selectedClosedRanges)
+                createAd.closedRanges.insert(editedClosedRange, at: editedClosedRangeIndex)
+                delegate?.updateClosedRanges(with: createAd.closedRanges)
                 self.editedClosedRangeIndex = nil
                 self.editedClosedRange = nil
             }
             return
         }
         if let index = editedClosedRangeIndex {
-            selectedClosedRanges.insert(range, at: index)
+            createAd.closedRanges.insert(range, at: index)
             editedClosedRangeIndex = nil
             editedClosedRange = nil
         } else {
-            selectedClosedRanges.append(range)
+            createAd.closedRanges.append(range)
         }
-        delegate?.updateClosedRanges(with: selectedClosedRanges)
-        delegate?.setTableViewHeightConstraint(type: .closedRange, to: CGFloat(selectedClosedRanges.count * 80) + 100)
+        delegate?.updateClosedRanges(with: createAd.closedRanges)
+        delegate?.setTableViewHeightConstraint(type: .closedRange, to: CGFloat(createAd.closedRanges.count * 80) + 100)
         delegate?.layoutIfNeeded()
         delegate?.reloadTableView(with: .closedRange)
     }
     
     func didTapDateLabel(with indexPath: IndexPath) {
-        guard indexPath.row < selectedClosedRanges.count else { return }
+        guard indexPath.row < createAd.closedRanges.count else { return }
         editedClosedRangeIndex = indexPath.row
-        editedClosedRange =  selectedClosedRanges[indexPath.row]
-        selectedClosedRanges.remove(at: indexPath.row)
-        delegate?.updateClosedRanges(with: selectedClosedRanges)
+        editedClosedRange =  createAd.closedRanges[indexPath.row]
+        createAd.closedRanges.remove(at: indexPath.row)
+        delegate?.updateClosedRanges(with: createAd.closedRanges)
         delegate?.showCalendar(with: editedClosedRange)
+    }
+    
+    func didTapAddAdButton() {
+        guard validateAd() else { return }
+        guard let token = authService.getAuthToken() else { return }
+        productService.createProduct(product: createAd, token: token) { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    self.loadingState = .loaded(.none)
+                    self.delegate?.showAlert(
+                        with: AlertMessage(
+                            title: Strings.Ad.addSuccessTitle.localized,
+                            message: Strings.Ad.addSuccessMessage.localized,
+                            actionTitle: Strings.Common.ok.localized
+                        ),
+                        completion: {
+                            self.router.navigate(to: .back)
+                        }
+                    )
+                case .failure(let error):
+                    self.loadingState = .loaded(.none)
+                    self.delegate?.showAlert(
+                        with: AlertMessage(
+                            title: Strings.Ad.addErrorTitle.localized,
+                            message: Strings.Ad.addErrorMessage.localized,
+                            actionTitle: Strings.Ad.addErrorAction.localized
+                        ),
+                        completion: {
+                            self.router.navigate(to: .back)
+                        }
+                    )
+                }
+            }
+            
+        }
+        
+        
+        
+    }
+    
+    func didTapEditAdButton() {
+        print(createAd)
+    }
+    
+    func didTapDeleteAdButton() {
+        print(createAd)
+    }
+    
+    private func validateAd () -> Bool {
+        
+        guard createAd.selectedCategory.isEmpty else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.categoryErrorTitle.localized,
+                message: Strings.Ad.categoryErrorMessage.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        guard createAd.selectedSubcategory.isEmpty else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.subcategoryErrorTitle.localized,
+                message: Strings.Ad.subcategoryErrorMessage.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        guard createAd.selectedBrand.isEmpty else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.brandErrorTitle.localized,
+                message: Strings.Ad.brandErrorMessage.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        guard createAd.selectedCity.isEmpty else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.cityErrorTitle.localized,
+                message: Strings.Ad.cityErrorMessage.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        guard createAd.name.count < 10 else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.nameErrorTitle.localized,
+                message: Strings.Ad.nameErrorMessage.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        guard createAd.price == 0 || createAd.price < 0 else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.priceErrorTitle.localized,
+                message: Strings.Ad.priceErrorMessage.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        guard createAd.description.count < 20 else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.descriptionErrorTitle.localized,
+                message: Strings.Ad.descriptionErrorMessage.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        guard createAd.minRentPeriod == 0 || createAd.minRentPeriod < 0 else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.minRentPeriodErrorTitle.localized,
+                message: Strings.Ad.minRentPeriodErrorMessage.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        guard createAd.maxRentPeriod == 0 || createAd.maxRentPeriod < 0 else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.maxRentPeriodErrorTitle.localized,
+                message: Strings.Ad.maxRentPeriodErrorMessage.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        guard createAd.minRentPeriod < createAd.maxRentPeriod else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.minMaxRentPeriodErrorTitle.localized,
+                message: Strings.Ad.minMaxRentPeriodErrorMessage.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        guard createAd.images.count > 0 else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.imageErrorTitle.localized,
+                message: Strings.Ad.imageErrorMessage.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        guard createAd.location.latitude != 0 && createAd.location.longitude != 0 else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.locationNotFoundErrorTitle.localized,
+                message: Strings.Ad.locationNotFoundErrorTitle.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        guard createAd.location.latitude < 90 && createAd.location.latitude > -90 && createAd.location.longitude < 180 && createAd.location.longitude > -180 else {
+            delegate?.showAlert(with: AlertMessage(
+                title: Strings.Ad.locationErrorTitle.localized,
+                message: Strings.Ad.locationErrorMessage.localized,
+                actionTitle: Strings.Common.ok.localized
+            ))
+            return false
+        }
+        
+        return true
+        
+        
     }
     
 }
@@ -356,6 +751,7 @@ extension AddAdViewModel: AddAdViewModelProtocol {
 extension AddAdViewModel: SelectLocationDelegate {
     
     func didSelectLocation(coordinate: CLLocationCoordinate2D, address: String) {
+        createAd.location = Location(latitude: coordinate.latitude, longitude: coordinate.longitude)
         delegate?.showMapView(with: coordinate, annotationTitle: address)
     }
     

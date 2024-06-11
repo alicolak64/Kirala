@@ -75,6 +75,10 @@ public struct FastisRange: FastisValue, Hashable {
         Calendar.current.dateComponents([.day], from: fromDate, to: toDate).day ?? 0
     }
     
+    func toClosedRange() -> ClosedRange {
+        ClosedRange(startDate: fromDate, endDate: toDate, order: false)
+    }
+    
 }
 
 public enum FastisModeSingle {

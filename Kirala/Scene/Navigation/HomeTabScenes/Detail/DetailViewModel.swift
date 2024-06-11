@@ -81,7 +81,7 @@ final class DetailViewModel {
     
     // MARK: - Initializers
     
-    init(router: DetailRouterProtocol, dependencies: [DependencyType: Any]) {
+    init(router: DetailRouterProtocol, dependencies: [Dependency: Any]) {
         guard let authService = dependencies[.authService] as? AuthService else {
             fatalError("AuthService not found")
         }

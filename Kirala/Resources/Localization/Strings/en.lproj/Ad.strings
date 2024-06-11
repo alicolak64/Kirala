@@ -8,6 +8,8 @@
 
 "MyAds" = "My Ads";
 "AddAd" = "Add Ad";
+"Other" = "Other";
+"All" = "All";
 
 "CategoryTitle" = "Product Category";
 "CategoryPlaceholder" = "Select or enter a product category";
@@ -65,5 +67,54 @@
 "AddAd" = "Add Product";
 "UpdateAd" = "Update Product";
 "DeleteAd" = "Delete Product";
+
+
+"CategoryErrorTitle" = "Category Error";
+"CategoryErrorMessage" = "Please select a category.";
+
+"SubcategoryErrorTitle" = "Subcategory Error";
+"SubcategoryErrorMessage" = "Please select a subcategory.";
+
+"BrandErrorTitle" = "Brand Error";
+"BrandErrorMessage" = "Please select a brand.";
+
+"CityErrorTitle" = "City Error";
+"CityErrorMessage" = "Please select a city.";
+
+"NameErrorTitle" = "Name Error";
+"NameErrorMessage" = "Product name must be at least 10 characters.";
+
+"PriceErrorTitle" = "Price Error";
+"PriceErrorMessage" = "Please enter a valid price.";
+
+"DescriptionErrorTitle" = "Description Error";
+"DescriptionErrorMessage" = "Description must be at least 20 characters.";
+
+"MinRentPeriodErrorTitle" = "Minimum Rental Period Error";
+"MinRentPeriodErrorMessage" = "Minimum rental period must be greater than 0.";
+
+"MaxRentPeriodErrorTitle" = "Maximum Rental Period Error";
+"MaxRentPeriodErrorMessage" = "Maximum rental period must be greater than 0.";
+
+"MinMaxRentPeriodErrorTitle" = "Rental Period Error";
+"MinMaxRentPeriodErrorMessage" = "Minimum rental period must be less than maximum rental period.";
+
+"ImageErrorTitle" = "Image Error";
+"ImageErrorMessage" = "Please add at least one image.";
+
+"LocationNotFoundErrorTitle" = "Location Not Found Error";
+"LocationNotFoundErrorMessage" = "Please select a location.";
+
+"LocationErrorTitle" = "Location Error";
+"LocationErrorMessage" = "Invalid location.";
+
+
+"AddSuccessTitle" = "Success";
+"AddSuccessMessage" = "Ad has been added successfully.";
+
+"AddErrorTitle" = "Error";
+"AddErrorMessage" = "An error occurred while adding the ad. Please try again later.";
+"AddErrorAction" = "Back My Ads";
+
 
 

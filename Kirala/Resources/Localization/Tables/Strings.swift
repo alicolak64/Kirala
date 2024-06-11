@@ -170,6 +170,10 @@ enum Strings {
     }
     
     enum Ad: String, Localizable {
+        
+        case other = "Other"
+        case all = "All"
+        
         case myAds = "MyAds"
         
         case categoryTitle = "CategoryTitle"
@@ -229,6 +233,40 @@ enum Strings {
         case addAd = "AddAd"
         case updateAd = "UpdateAd"
         case deleteAd = "DeleteAd"
+        
+        case categoryErrorTitle = "CategoryErrorTitle"
+        case categoryErrorMessage = "CategoryErrorMessage"
+        case subcategoryErrorTitle = "SubcategoryErrorTitle"
+        case subcategoryErrorMessage = "SubcategoryErrorMessage"
+        case brandErrorTitle = "BrandErrorTitle"
+        case brandErrorMessage = "BrandErrorMessage"
+        case cityErrorTitle = "CityErrorTitle"
+        case cityErrorMessage = "CityErrorMessage"
+        case nameErrorTitle = "NameErrorTitle"
+        case nameErrorMessage = "NameErrorMessage"
+        case priceErrorTitle = "PriceErrorTitle"
+        case priceErrorMessage = "PriceErrorMessage"
+        case descriptionErrorTitle = "DescriptionErrorTitle"
+        case descriptionErrorMessage = "DescriptionErrorMessage"
+        case minRentPeriodErrorTitle = "MinRentPeriodErrorTitle"
+        case minRentPeriodErrorMessage = "MinRentPeriodErrorMessage"
+        case maxRentPeriodErrorTitle = "MaxRentPeriodErrorTitle"
+        case maxRentPeriodErrorMessage = "MaxRentPeriodErrorMessage"
+        case minMaxRentPeriodErrorTitle = "MinMaxRentPeriodErrorTitle"
+        case minMaxRentPeriodErrorMessage = "MinMaxRentPeriodErrorMessage"
+        case imageErrorTitle = "ImageErrorTitle"
+        case imageErrorMessage = "ImageErrorMessage"
+        case locationNotFoundErrorTitle = "LocationNotFoundErrorTitle"
+        case locationNotFoundErrorMessage = "LocationNotFoundErrorMessage"
+        case locationErrorTitle = "LocationErrorTitle"
+        case locationErrorMessage = "LocationErrorMessage"
+        
+        case addSuccessTitle = "AddSuccessTitle"
+        case addSuccessMessage = "AddSuccessMessage"
+        case addErrorTitle = "AddErrorTitle"
+        case addErrorMessage = "AddErrorMessage"
+        case addErrorAction = "AddErrorAction"
+        
     }
     
 }

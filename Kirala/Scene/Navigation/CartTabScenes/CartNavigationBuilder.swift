@@ -25,7 +25,7 @@ class CartViewController: UIViewController {
     
     let authService: AuthService
     
-    init(dependencies: [DependencyType: Any]) {
+    init(dependencies: [Dependency: Any]) {
         guard let authService = dependencies[.authService] as? AuthService else {
             fatalError("AuthService dependency not found!")
         }

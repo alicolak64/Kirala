@@ -113,7 +113,7 @@ final class HomeViewModel {
     
     // MARK: - Initializers
     
-    init(router: HomeRouterProtocol, dependencies: [DependencyType: Any]) {
+    init(router: HomeRouterProtocol, dependencies: [Dependency: Any]) {
        
         guard let authService = dependencies[.authService] as? AuthService else {
             fatalError("AuthService not found")

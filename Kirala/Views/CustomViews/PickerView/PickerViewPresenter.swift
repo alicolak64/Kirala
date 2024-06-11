@@ -34,6 +34,7 @@ struct PickerViewArguments {
 
 protocol PickerViewDelegate: AnyObject {
     func didSelectRow(at index: Int, pickerViewType: PickerViewType)
+    func customTextFieldTextDidChanged(_ text: String, pickerViewType: PickerViewType)
 }
 
 protocol PickerViewPresenterProtocol {
@@ -44,6 +45,8 @@ protocol PickerViewPresenterProtocol {
     func titleForRow(at index: Int) -> String?
     func didSelectRow(at index: Int)
     func textFieldShouldReturn(isPickerViewTextField: Bool) -> Bool
+    func customTextFieldTextDidChanged(_ text: String)
+    func updateItems(_ items: [String])
 }
 
 protocol PickerViewViewProtocol: AnyObject {
@@ -64,6 +67,8 @@ protocol PickerViewViewProtocol: AnyObject {
     func setPickerViewSelectedRow(at index: Int)
     func closePickerView()
     func closeCustomTextField()
+    
+    func updateItems(_ items: [String])
 }
 
 final class PickerViewPresenter {
@@ -75,11 +80,18 @@ final class PickerViewPresenter {
     
     private let arguments: PickerViewArguments
     
+    private var items: [String] {
+        didSet {
+            view?.reloadPickerView()
+        }
+    }
+    
     // MARK: - Init
     
     init(view: PickerViewViewProtocol, arguments: PickerViewArguments) {
         self.view = view
         self.arguments = arguments
+        self.items = arguments.items
     }
     
 }
@@ -87,6 +99,11 @@ final class PickerViewPresenter {
 // MARK: - PickerViewPresenterProtocol
 
 extension PickerViewPresenter: PickerViewPresenterProtocol {
+    
+    func updateItems(_ items: [String]) {
+        self.items = items
+        view?.setPickerViewTextFieldText(items.first ?? "")
+    }
     
     func load() {
         view?.setPickerViewTitle(arguments.pickerViewTitle)
@@ -107,7 +124,7 @@ extension PickerViewPresenter: PickerViewPresenterProtocol {
             view?.hideCustomTextField(animated: false)
         }
         
-        if let selectedItem = arguments.selectedItem, let index = arguments.items.firstIndex(of: selectedItem) {
+        if let selectedItem = arguments.selectedItem, let index = items.firstIndex(of: selectedItem) {
             view?.setPickerViewSelectedRow(at: index)
         }
     }
@@ -117,18 +134,18 @@ extension PickerViewPresenter: PickerViewPresenterProtocol {
     }
     
     func numberOfRows() -> Int {
-        arguments.items.count
+        items.count
     }
     
     func titleForRow(at index: Int) -> String? {
-        guard arguments.items.indices.contains(index) else { return nil }
-        return arguments.items[index]
+        guard items.indices.contains(index) else { return nil }
+        return items[index]
     }
     
     func didSelectRow(at index: Int) {
-        guard arguments.items.indices.contains(index) else { return }
+        guard items.indices.contains(index) else { return }
         delegate?.didSelectRow(at: index, pickerViewType: arguments.pickerViewType)
-        view?.setPickerViewTextFieldText(arguments.items[index])
+        view?.setPickerViewTextFieldText(items[index])
     }
     
     func textFieldShouldReturn(isPickerViewTextField: Bool) -> Bool {
@@ -138,6 +155,10 @@ extension PickerViewPresenter: PickerViewPresenterProtocol {
             view?.closeCustomTextField()
         }
         return true
+    }
+    
+    func customTextFieldTextDidChanged(_ text: String) {
+        delegate?.customTextFieldTextDidChanged(text, pickerViewType: arguments.pickerViewType)
     }
     
 }

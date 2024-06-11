@@ -33,7 +33,7 @@ final class AuthViewModel {
         
     // MARK: - Initializers
     
-    init(router: AuthRouterProtocol, dependencies: [DependencyType: Any]) {
+    init(router: AuthRouterProtocol, dependencies: [Dependency: Any]) {
         guard let authService = dependencies[.authService] as? AuthService, 
               let authenticationService = dependencies[.authenticationService] as? AuthenticationService else {
             fatalError("AuthService or AuthenticationService not found")
@@ -41,7 +41,6 @@ final class AuthViewModel {
         self.router = router
         self.authService = authService
         self.authenticationService = authenticationService
-       
     }
     
 }

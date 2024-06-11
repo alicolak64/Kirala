@@ -9,6 +9,9 @@
 "MyAds" = "İlanlarım";
 "AddAd" = "İlan Ekle";
 
+"Other" = "Diğer";
+"All" = "Tümü";
+
 "CategoryTitle" = "Ürün Kategorisi";
 "CategoryPlaceholder" = "Bir ürün kategorisi seçin veya girin";
 "CategoryTip" = "Bir ürün kategorisi seçin veya özel bir ürün kategorisi girmek için diğerini seçin";
@@ -65,3 +68,51 @@
 "AddAd" = "İlan Ekle";
 "UpdateAd" = "İlan Güncelle";
 "DeleteAd" = "İlan Sil";
+
+"CategoryErrorTitle" = "Kategori Hatası";
+"CategoryErrorMessage" = "Lütfen bir kategori seçin.";
+
+"SubcategoryErrorTitle" = "Alt Kategori Hatası";
+"SubcategoryErrorMessage" = "Lütfen bir alt kategori seçin.";
+
+"BrandErrorTitle" = "Marka Hatası";
+"BrandErrorMessage" = "Lütfen bir marka seçin.";
+
+"CityErrorTitle" = "Şehir Hatası";
+"CityErrorMessage" = "Lütfen bir şehir seçin.";
+
+"NameErrorTitle" = "Ad Hatası";
+"NameErrorMessage" = "Ürün adı en az 10 karakter olmalıdır.";
+
+"PriceErrorTitle" = "Fiyat Hatası";
+"PriceErrorMessage" = "Lütfen geçerli bir fiyat girin.";
+
+"DescriptionErrorTitle" = "Açıklama Hatası";
+"DescriptionErrorMessage" = "Açıklama en az 20 karakter olmalıdır.";
+
+"MinRentPeriodErrorTitle" = "Minimum Kiralama Süresi Hatası";
+"MinRentPeriodErrorMessage" = "Minimum kiralama süresi 0'dan büyük olmalıdır.";
+
+"MaxRentPeriodErrorTitle" = "Maksimum Kiralama Süresi Hatası";
+"MaxRentPeriodErrorMessage" = "Maksimum kiralama süresi 0'dan büyük olmalıdır.";
+
+"MinMaxRentPeriodErrorTitle" = "Kiralama Süresi Hatası";
+"MinMaxRentPeriodErrorMessage" = "Minimum kiralama süresi, maksimum kiralama süresinden küçük olmalıdır.";
+
+"ImageErrorTitle" = "Resim Hatası";
+"ImageErrorMessage" = "Lütfen en az bir resim ekleyin.";
+
+"LocationNotFoundErrorTitle" = "Konum Bulunamadı Hatası";
+"LocationNotFoundErrorMessage" = "Lütfen bir konum seçin.";
+
+"LocationErrorTitle" = "Konum Hatası";
+"LocationErrorMessage" = "Geçersiz konum.";
+
+
+"AddSuccessTitle" = "Başarılı";
+"AddSuccessMessage" = "İlan başarıyla eklendi.";
+
+"AddErrorTitle" = "Hata";
+"AddErrorMessage" = "İlan eklenirken bir hata oluştu.";
+"AddErrorAction" = "İlanlarıma geri dön";
+
