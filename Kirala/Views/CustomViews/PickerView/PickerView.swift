@@ -292,6 +292,7 @@ extension PickerView: PickerViewViewProtocol {
     }
     
     func setPickerViewSelectedRow(at index: Int) {
+        pickerViewTextField.text = presenter.titleForRow(at: index)
         pickerView.selectRow(index, inComponent: 0, animated: false)
     }
     
