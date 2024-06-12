@@ -21,6 +21,12 @@ final class AdsViewController: UIViewController {
         return view
     }()
     
+    private lazy var loadingView: LoadingView = {
+        let view = LoadingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var addAdButton: UIBarButtonItem = {
         let button = UIBarButtonItem(
             image: Symbols.plusCircleFill.symbol(),
@@ -37,6 +43,12 @@ final class AdsViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
+    }()
+    
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = ColorPalette.appPrimary.dynamicColor
+        return refreshControl
     }()
     
     // MARK: - Initializers
@@ -78,6 +90,10 @@ final class AdsViewController: UIViewController {
     
     // MARK: - Actions
     
+    @objc private func refreshControlPulled() {
+        viewModel.refresh()
+    }
+    
 }
 
 extension AdsViewController: AdsViewProtocol {
@@ -94,11 +110,18 @@ extension AdsViewController: AdsViewProtocol {
     
     func prepareUI() {
         view.backgroundColor = ColorBackground.primary.dynamicColor
-        view.addSubview(emptyCardView)
+        view.addSubviews([
+            emptyCardView,
+            loadingView
+        ])
     }
     
     func prepareConstraints() {
         NSLayoutConstraint.activate([
+            
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
             emptyCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIDevice.deviceHeight * 0.2),
             emptyCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             emptyCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
@@ -138,6 +161,24 @@ extension AdsViewController: AdsViewProtocol {
         tableView.reloadRows(at: indexPaths, with: .automatic)
     }
     
+    func showLoading() {
+        loadingView.showLoading()
+    }
+    
+    func hideLoading(loadResult: LoadingResult) {
+        loadingView.hideLoading(loadResult: loadResult)
+    }
+    
+    func addRefreshControl() {
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshControlPulled), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+    }
+    
+    func endRefreshing() {
+        refreshControl.endRefreshing()
+    }
+    
 }
 
 extension AdsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -168,6 +209,7 @@ extension AdsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         viewModel.heightForRow(at: indexPath)
     }
+    
     
 }
 
