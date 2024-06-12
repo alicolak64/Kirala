@@ -35,6 +35,25 @@ final class HomeViewController: UIViewController {
     
     private lazy var searchBarView = searchBar
     
+    private lazy var emptyCardView: EmptyStateView = {
+        let view = EmptyStateView()
+        view.delegate = self
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var loadingView: LoadingView = {
+        let view = LoadingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = ColorPalette.appPrimary.dynamicColor
+        return refreshControl
+    }()
+    
     private lazy var categoriesContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -101,6 +120,10 @@ final class HomeViewController: UIViewController {
     @objc private func didTapNotificationButton() {
         viewModel.didTapNotificationButton()
     }
+    
+    @objc private func refreshControlPulled() {
+        viewModel.refresh()
+    }
         
     // MARK: - Helper Methods
     
@@ -125,13 +148,9 @@ extension HomeViewController: HomeViewProtocol {
     func prepareUI() {
         view.backgroundColor = ColorBackground.primary.dynamicColor
         
-        categoriesContainer.addSubviews([
-            categoriesCollectionView
-        ])
-        
         view.addSubviews([
-            categoriesContainer,
-            contentCompositinalLayoutCollectionView
+            emptyCardView,
+            loadingView,
         ])
         
     }
@@ -139,6 +158,27 @@ extension HomeViewController: HomeViewProtocol {
     func prepareConstraints() {
         NSLayoutConstraint.activate([
             
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            emptyCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIDevice.deviceHeight * 0.2),
+            emptyCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            emptyCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            emptyCardView.heightAnchor.constraint(equalToConstant: UIDevice.deviceHeight * 0.3),
+                    
+            
+        ])
+    }
+    
+    func prepareCategoriesCollectionView() {
+        
+        categoriesContainer.addSubviews([
+            categoriesCollectionView
+        ])
+        
+        view.addSubview(categoriesContainer)
+        
+        NSLayoutConstraint.activate([
             categoriesContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             categoriesContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             categoriesContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -149,15 +189,9 @@ extension HomeViewController: HomeViewProtocol {
             categoriesCollectionView.leadingAnchor.constraint(equalTo: categoriesContainer.leadingAnchor, constant: 15),
             categoriesCollectionView.trailingAnchor.constraint(equalTo: categoriesContainer.trailingAnchor),
             categoriesCollectionView.heightAnchor.constraint(equalToConstant: UIDevice.deviceHeight * 0.045),
-            
-            contentCompositinalLayoutCollectionView.topAnchor.constraint(equalTo: categoriesContainer.bottomAnchor),
-            contentCompositinalLayoutCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            contentCompositinalLayoutCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            contentCompositinalLayoutCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+
         ])
-    }
-    
-    func prepareCategoriesCollectionView() {
+        
         categoriesCollectionView.register(CategoryCell.self)
         categoriesCollectionView.registerHeader(CategoriesHeaderView.self)
         categoriesCollectionView.delegate = self
@@ -165,6 +199,16 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     func prepareContentCompositinalLayoutCollectionView() {
+        
+        view.addSubview(contentCompositinalLayoutCollectionView)
+        
+        NSLayoutConstraint.activate([
+            contentCompositinalLayoutCollectionView.topAnchor.constraint(equalTo: categoriesContainer.bottomAnchor),
+            contentCompositinalLayoutCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentCompositinalLayoutCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentCompositinalLayoutCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
         contentCompositinalLayoutCollectionView.register(CampaignCell.self)
         contentCompositinalLayoutCollectionView.register(ProductCell.self)
         contentCompositinalLayoutCollectionView.registerHeader(ProductsHeaderCell.self)
@@ -232,6 +276,29 @@ extension HomeViewController: HomeViewProtocol {
     
     func didScrollToItem(at indexPath: IndexPath) {
         viewModel.didScrollToItem(at: indexPath)
+    }
+    
+    func showEmptyState(with state: EmptyState) {
+        emptyCardView.configure(with: state)
+        emptyCardView.show()
+    }
+    
+    func showLoading() {
+        loadingView.showLoading()
+    }
+    
+    func hideLoading(loadResult: LoadingResult) {
+        loadingView.hideLoading(loadResult: loadResult)
+    }
+    
+    func addRefreshControl() {
+        contentCompositinalLayoutCollectionView.refreshControl = refreshControl
+        contentCompositinalLayoutCollectionView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(refreshControlPulled), for: .valueChanged)
+    }
+    
+    func endRefreshing() {
+        refreshControl.endRefreshing()
     }
     
 }
@@ -395,3 +462,13 @@ extension HomeViewController: ProductCellDelegate {
 extension HomeViewController: ActionSheetable {
     
 }
+
+extension HomeViewController: EmptyStateViewDelegate {
+    
+    func didTapActionButton() {
+        viewModel.didTapEmptyStateActionButton()
+    }
+    
+}
+
+
