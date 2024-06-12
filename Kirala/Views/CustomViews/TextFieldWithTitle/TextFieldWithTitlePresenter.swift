@@ -28,8 +28,9 @@ protocol TextFieldWithTitleDelegate: AnyObject {
 protocol TextFieldWithTitlePresenterProtocol {
     var delegate: TextFieldWithTitleDelegate? { get set }
     func load()
-    func textFieldDidChanged(_ text: String)
     func getPleaceholder() -> String
+    func shouldChangeCharactersIn(range: NSRange, replacementString string: String, text: String) -> Bool
+    func textViewTextDidChange(_ text: String)
 }
 
 protocol TextFieldWithTitleViewProtocol: AnyObject {
@@ -61,7 +62,6 @@ final class TextFieldWithTitlePresenter: TextFieldWithTitlePresenterProtocol {
         view.setTextFieldTitle(arguments.title)
         view.setTextFieldPlaceholder(arguments.placeholder)
         
-        
         switch arguments.type {
         case .name, .price:
             view.setTextFieldTip(arguments.tip)
@@ -81,13 +81,52 @@ final class TextFieldWithTitlePresenter: TextFieldWithTitlePresenterProtocol {
         
     }
     
-    func textFieldDidChanged(_ text: String) {
-        delegate?.textFieldDidChanged(text, type: arguments.type)
-    }
+    
     
     func getPleaceholder() -> String {
         return arguments.placeholder
     }
+    
+    func shouldChangeCharactersIn(range: NSRange, replacementString string: String, text: String) -> Bool {
+        switch arguments.type {
+        case .name, .description:
+            textFieldDidChanged(text)
+            return true
+        case .price:
+            let allowedCharacters = CharacterSet(charactersIn: "0123456789.,")
+            let characterSet = CharacterSet(charactersIn: string)
+            if !allowedCharacters.isSuperset(of: characterSet) {
+                return false
+            }
+            
+            // Get the current text
+            if let textRange = Range(range, in: text) {
+                let updatedText = text.replacingCharacters(in: textRange, with: string)
+                
+                // Replace commas with periods to handle decimal separator uniformly
+                let standardizedText = updatedText.replacingOccurrences(of: ",", with: ".")
+                
+                // Update the text field with the standardized text
+                view.setTextFieldText(standardizedText)
+                
+                // Notify the delegate about the text change
+                textFieldDidChanged(standardizedText)
+                
+                return false // Return false since we manually updated the text
+            }
+            
+            return true
+        }
+    }
+    
+    func textViewTextDidChange(_ text: String) {
+        textFieldDidChanged(text)
+    }
+    
+    private func textFieldDidChanged(_ text: String) {
+        delegate?.textFieldDidChanged(text, type: arguments.type)
+    }
+    
 }
 
 

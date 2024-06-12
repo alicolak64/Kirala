@@ -28,6 +28,7 @@ final class TextFieldWithTitle: UIView {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.borderStyle = .roundedRect
         textField.setCustomBorder()
+        textField.delegate = self
         return textField
     }()
     
@@ -98,7 +99,7 @@ final class TextFieldWithTitle: UIView {
 extension TextFieldWithTitle: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        presenter.textFieldDidChanged(textView.text)
+        presenter.textViewTextDidChange(textView.text)
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -121,7 +122,6 @@ extension TextFieldWithTitle: TextFieldWithTitleViewProtocol {
     
     
     func prepareTextField() {
-        textField.addTarget(self, action: #selector(textFieldDidChanged), for: .editingChanged)
         textView.delegate = self
     }
     
@@ -139,15 +139,12 @@ extension TextFieldWithTitle: TextFieldWithTitleViewProtocol {
     
     func setTextViewText(_ text: String) {
         textView.text = text
+        textView.textColor = ColorText.primary.dynamicColor
     }
     
     func setTextViewPlaceholder(_ placeholder: String) {
         textView.text = placeholder
         textView.textColor = .lightGray
-    }
-    
-    @objc private func textFieldDidChanged() {
-        presenter.textFieldDidChanged(textField.text ?? "")
     }
     
     func setTextFieldTip(_ tip: String) {
@@ -187,6 +184,14 @@ extension TextFieldWithTitle: TextFieldWithTitleViewProtocol {
             textView.isHidden = false
             textViewTipLabel.isHidden = false
         }
+    }
+    
+}
+
+extension TextFieldWithTitle: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return presenter.shouldChangeCharactersIn(range: range, replacementString: string, text: textField.text ?? "")
     }
     
 }
