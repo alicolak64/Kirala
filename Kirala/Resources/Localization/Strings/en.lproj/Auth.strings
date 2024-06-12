@@ -35,3 +35,9 @@
 "ForgotPasswordTip1" = "• It may take up to 10 minutes for the password reset email to arrive.";
 "ForgotPasswordTip2" = "• Check your spam and other email folders.";
 "ForgotPasswordTip3" = "• Ensure the accuracy of the email address you entered.";
+
+"ResendVerifyEmailTitle" = "Resend Verification Email";
+"ResendVerifyEmailMessage" = "Would you like to resend the verification email?";
+"ResendVerifyEmailAction" = "Resend";
+"ResendVerifyEmailSuccess" = "Email Sent";
+"ResendVerifyEmailSuccessMessage" = "The verification email has been resent successfully.";

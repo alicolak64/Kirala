@@ -35,3 +35,9 @@
 "ForgotPasswordTip1" = "• Şifre yenileme e-postasının gelmesi 10 dakikayı bulabilir.";
 "ForgotPasswordTip2" = "• Spam ve diğer e-posta klasörlerinizi kontrol ediniz.";
 "ForgotPasswordTip3" = "• Girdiğiniz e-posta adresinin doğruluğunu kontrol ediniz.";
+
+"ResendVerifyEmailTitle" = "Doğrulama E-postasını Yeniden Gönder";
+"ResendVerifyEmailMessage" = "Doğrulama e-postasını yeniden göndermek ister misiniz?";
+"ResendVerifyEmailAction" = "Yeniden Gönder";
+"ResendVerifyEmailSuccess" = "E-posta Gönderildi";
+"ResendVerifyEmailSuccessMessage" = "Doğrulama e-postası başarıyla yeniden gönderildi.";
