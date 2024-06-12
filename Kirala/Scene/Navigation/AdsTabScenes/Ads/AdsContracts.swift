@@ -49,6 +49,8 @@ protocol AdsViewModelProtocol {
     func didTapEmptyStateActionButton()
     func didTapAddAdButton()
     
+    func refresh()
+    
 }
 
 
@@ -64,5 +66,11 @@ protocol AdsViewProtocol: AnyObject {
     func prepareTableView()
     func reloadTableView()
     func reloadRows(at indexPaths: [IndexPath])
+    
+    func showLoading()
+    func hideLoading(loadResult: LoadingResult)
+    
+    func addRefreshControl()
+    func endRefreshing()
     
 }
