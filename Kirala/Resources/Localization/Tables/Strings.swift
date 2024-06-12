@@ -106,8 +106,6 @@ enum Strings {
         case resetPasswordSuccessMessage = "ResetPasswordSuccessMessage"
         case registerSuccess = "RegisterSuccess"
         case registerSuccessMessage = "RegisterSuccessMessage"
-        case resendVerifyEmailSuccess = "ResendVerifyEmailSuccess"
-        case resendVerifyEmailSuccessMessage = "ResendVerifyEmailSuccessMessage"
         case somethingWentWrong = "SomethingWentWrong"
         case somethingWentWrongMessage = "SomethingWentWrongMessage"
     }
@@ -148,6 +146,8 @@ enum Strings {
         case resendVerifyEmailTitle = "ResendVerifyEmailTitle"
         case resendVerifyEmailMessage = "ResendVerifyEmailMessage"
         case resendVerifyEmailAction = "ResendVerifyEmailAction"
+        case resendVerifyEmailSuccess = "ResendVerifyEmailSuccess"
+        case resendVerifyEmailSuccessMessage = "ResendVerifyEmailSuccessMessage"
     }
     
     enum Filter: String, Localizable {
