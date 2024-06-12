@@ -130,8 +130,13 @@ protocol AddAdViewProtocol: AnyObject {
     
     func updatePickerViewDataSources(_ items: [String], type: PickerViewType)
     
+    func setTextFieldText(text: String, type: TextFieldWithTitleType)
+    func setTextFieldText(text: String, type: MinMaxItemType)
+    func pickerViewSelectRow(row: Int, type: PickerViewType)
+    
     
     func showAlert(with alertMessage: AlertMessage, completion: @escaping () -> Void)
     func showAlert(with alertMessage: AlertMessage)
+    func showActionSheet(title: String, message: String, actionTitle: String, completion: @escaping () -> Void)
         
 }
