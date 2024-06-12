@@ -92,5 +92,7 @@ protocol AuthViewProtocol: AnyObject {
     func hideLoading(loadResult: LoadingResult)
     func closeKeyboard()
     
+    func showActionSheet(title: String, message: String, actionTitle: String, completion: @escaping () -> Void)
+    
 }
 
