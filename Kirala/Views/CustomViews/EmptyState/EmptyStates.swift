@@ -9,6 +9,7 @@ import UIKit
 
 /// Enum representing different empty states.
 enum EmptyState {
+    case error(ErrorResponse)
     case noData
     case noInternet
     case noSearchResult
@@ -28,6 +29,8 @@ enum EmptyState {
     /// Returns the data associated with each empty state.
     var data: EmptyStateProtocol {
         switch self {
+        case .error(let error):
+            return ErrorEmptyState(error: error)
         case .noData:
             return NoDataState()
         case .noInternet:
@@ -187,4 +190,18 @@ struct UnknownState: EmptyStateProtocol {
     var title: String = Strings.EmptyState.unknownErrorTitle.localized
     var description: String = Strings.EmptyState.unknownErrorDesc.localized
     var buttonTitle: String = Strings.EmptyState.unknownErrorButton.localized
+}
+
+struct ErrorEmptyState: EmptyStateProtocol {
+    var image: UIImage? = Symbols.exclamationmarkTriangleFill.symbol()
+    var title: String
+    var description: String
+    var buttonTitle: String = Strings.Common.tryAgain.localized
+    var error: ErrorResponse
+    
+    init(error: ErrorResponse) {
+        self.error = error
+        self.title = Strings.Common.error.localized
+        self.description = error.errorDescription ?? Strings.EmptyState.unknownErrorDesc.localized
+    }
 }
