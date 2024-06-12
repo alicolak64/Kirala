@@ -381,4 +381,12 @@ extension HomeViewModel: HomeViewModelProtocol {
         }
     }
     
+    func refresh() {
+        
+    }
+    
+    func didTapEmptyStateActionButton() {
+        print("didTapEmptyStateActionButton")
+    }
+    
 }
