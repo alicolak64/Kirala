@@ -61,6 +61,7 @@
 		E62ADF122C0DFD7300422933 /* Expandable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62ADF112C0DFD7300422933 /* Expandable.swift */; };
 		E62ADF142C0DFDB000422933 /* ExpandState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62ADF132C0DFDB000422933 /* ExpandState.swift */; };
 		E62FFDD42C1A02BF0019B09F /* UpdateAdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62FFDD32C1A02BF0019B09F /* UpdateAdRequest.swift */; };
+		E62FFDD62C1A53030019B09F /* ResendEmailVerificationTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62FFDD52C1A53030019B09F /* ResendEmailVerificationTokenRequest.swift */; };
 		E630537E2C08773D007FE3A4 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630537D2C08773D007FE3A4 /* FilterViewModel.swift */; };
 		E63053802C087752007FE3A4 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630537F2C087752007FE3A4 /* FilterView.swift */; };
 		E631A73F2C11D2440070BDEE /* AdsContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E631A73E2C11D2440070BDEE /* AdsContracts.swift */; };
@@ -369,10 +370,11 @@
 		E62ADF0F2C0D638200422933 /* FilterHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHeaderCell.swift; sourceTree = "<group>"; };
 		E62ADF112C0DFD7300422933 /* Expandable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expandable.swift; sourceTree = "<group>"; };
 		E62ADF132C0DFDB000422933 /* ExpandState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandState.swift; sourceTree = "<group>"; };
-		E62FFDD02C19E3260019B09F /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kirala.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E62FFDD12C19E3260019B09F /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiralaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E62FFDD22C19E3260019B09F /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiralaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E62FFDD02C19E3260019B09F /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
+		E62FFDD12C19E3260019B09F /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
+		E62FFDD22C19E3260019B09F /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
 		E62FFDD32C1A02BF0019B09F /* UpdateAdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAdRequest.swift; sourceTree = "<group>"; };
+		E62FFDD52C1A53030019B09F /* ResendEmailVerificationTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendEmailVerificationTokenRequest.swift; sourceTree = "<group>"; };
 		E630537D2C08773D007FE3A4 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		E630537F2C087752007FE3A4 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		E631A73E2C11D2440070BDEE /* AdsContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsContracts.swift; sourceTree = "<group>"; };
@@ -991,9 +993,6 @@
 				E645F1152BE6CE4A0038075F /* Kirala */,
 				E645F12C2BE6CE4B0038075F /* KiralaTests */,
 				E645F1362BE6CE4B0038075F /* KiralaUITests */,
-				E62FFDD02C19E3260019B09F /* Kirala.app */,
-				E62FFDD12C19E3260019B09F /* KiralaTests.xctest */,
-				E62FFDD22C19E3260019B09F /* KiralaUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1706,6 +1705,7 @@
 				E6E55D692C0FBEFE0036C814 /* RegisterRequest.swift */,
 				E6E55D742C0FE6D20036C814 /* ForgotPasswordRequest.swift */,
 				E6E55D7D2C1008100036C814 /* ResetPasswordRequest.swift */,
+				E62FFDD52C1A53030019B09F /* ResendEmailVerificationTokenRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1982,6 +1982,7 @@
 				E689FE572BF298B0001884D6 /* SplashBuilder.swift in Sources */,
 				E646EE732BE794D30024269E /* APIServiceProvider.swift in Sources */,
 				E6D029332C0B80AE005E77BE /* Lottie.swift in Sources */,
+				E62FFDD62C1A53030019B09F /* ResendEmailVerificationTokenRequest.swift in Sources */,
 				E64C03042BFC0F53007771C6 /* CategoriesContracts.swift in Sources */,
 				E64C03102BFC0FA7007771C6 /* DetailBuilder.swift in Sources */,
 				E62760482C10C7010043039F /* ProgressHUD+CircleBarSpinFade.swift in Sources */,
