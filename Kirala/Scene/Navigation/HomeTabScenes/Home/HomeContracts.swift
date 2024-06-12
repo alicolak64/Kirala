@@ -120,6 +120,7 @@ protocol HomeViewModelProtocol {
     func viewDidLayoutSubviews()
     
     // MARK: - Actions
+    func didTapEmptyStateActionButton()
     func didTapNotificationButton()
     func didTapSearchButton()
     func didTapAllCategoriesButton()
@@ -134,6 +135,10 @@ protocol HomeViewModelProtocol {
     
     func didTapFavoriteButton(at indexPath: IndexPath)
     func didTapAllProductsButton(headerType: HeaderType)
+    
+    
+    func refresh()
+
 }
 
 protocol HomeViewProtocol: AnyObject {
@@ -153,6 +158,13 @@ protocol HomeViewProtocol: AnyObject {
     func reloadFavoriteState(indexPath: IndexPath, favoriteState: FavoriteState)
         
     func showActionSheet(title: String, message: String, actionTitle: String, completion: @escaping () -> Void)
+    
+    func showLoading()
+    func hideLoading(loadResult: LoadingResult)
+    func showEmptyState(with state: EmptyState)
+    
+    func addRefreshControl()
+    func endRefreshing()
     
 }
 
