@@ -116,3 +116,19 @@
 "AddErrorMessage" = "İlan eklenirken bir hata oluştu.";
 "AddErrorAction" = "İlanlarıma geri dön";
 
+"UpdateSuccessTitle" = "Güncelleme Başarılı";
+"UpdateSuccessMessage" = "Güncelleme başarılı oldu.";
+"UpdateErrorTitle" = "Güncelleme Hatası";
+"UpdateErrorMessage" = "Güncelleme sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.";
+"UpdateErrorAction" = "Tekrar Dene";
+
+"DeleteSuccessTitle" = "Silme Başarılı";
+"DeleteSuccessMessage" = "Öğe başarıyla silindi.";
+"DeleteErrorTitle" = "Silme Hatası";
+"DeleteErrorMessage" = "Silme sırasında bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.";
+"DeleteErrorAction" = "Tekrar Dene";
+
+"DeleteConfirmationTitle" = "Silme Onayı";
+"DeleteConfirmationMessage" = "Bu öğeyi silmek istediğinizden emin misiniz?";
+"DeleteConfirmationAction" = "Sil";
+"DeleteConfirmationCancel" = "İptal";

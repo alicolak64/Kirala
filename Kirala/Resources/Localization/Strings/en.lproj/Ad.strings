@@ -117,4 +117,22 @@
 "AddErrorAction" = "Back My Ads";
 
 
+"UpdateSuccessTitle" = "Update Success";
+"UpdateSuccessMessage" = "The update was successful.";
+"UpdateErrorTitle" = "Update Error";
+"UpdateErrorMessage" = "An error occurred while updating. Please try again later.";
+"UpdateErrorAction" = "Retry";
+
+"DeleteSuccessTitle" = "Delete Success";
+"DeleteSuccessMessage" = "The item was successfully deleted.";
+"DeleteErrorTitle" = "Delete Error";
+"DeleteErrorMessage" = "An error occurred while deleting. Please try again later.";
+"DeleteErrorAction" = "Retry";
+
+"DeleteConfirmationTitle" = "Delete Confirmation";
+"DeleteConfirmationMessage" = "Are you sure you want to delete this item?";
+"DeleteConfirmationAction" = "Delete";
+"DeleteConfirmationCancel" = "Cancel";
+
+
 
