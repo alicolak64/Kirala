@@ -33,6 +33,7 @@ enum Strings {
         case error = "Error"
         case pleaseWait = "PleaseWait"
         case delete = "Delete"
+        case tryAgain = "TryAgain"
     }
     
     enum TabBar: String, Localizable {
@@ -266,6 +267,25 @@ enum Strings {
         case addErrorTitle = "AddErrorTitle"
         case addErrorMessage = "AddErrorMessage"
         case addErrorAction = "AddErrorAction"
+        
+        
+        case updateSuccessTitle = "UpdateSuccessTitle"
+        case updateSuccessMessage = "UpdateSuccessMessage"
+        case updateErrorTitle = "UpdateErrorTitle"
+        case updateErrorMessage = "UpdateErrorMessage"
+        case updateErrorAction = "UpdateErrorAction"
+        
+        case deleteSuccessTitle = "DeleteSuccessTitle"
+        case deleteSuccessMessage = "DeleteSuccessMessage"
+        case deleteErrorTitle = "DeleteErrorTitle"
+        case deleteErrorMessage = "DeleteErrorMessage"
+        case deleteErrorAction = "DeleteErrorAction"
+        
+        case deleteConfirmationTitle = "DeleteConfirmationTitle"
+        case deleteConfirmationMessage = "DeleteConfirmationMessage"
+        case deleteConfirmationAction = "DeleteConfirmationAction"
+        case deleteConfirmationCancel = "DeleteConfirmationCancel"
+        
         
     }
     
