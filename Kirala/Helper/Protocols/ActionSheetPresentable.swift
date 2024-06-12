@@ -31,6 +31,10 @@ extension ActionSheetable where Self: UIViewController {
             completion()
         }
         
+        if actionTitle == Strings.Ad.deleteConfirmationAction.localized {
+            action.setValue(UIColor.systemRed, forKey: "titleTextColor")
+        }
+        
         alertController.addAction(action)
         
         present(alertController, animated: true, completion: nil)
