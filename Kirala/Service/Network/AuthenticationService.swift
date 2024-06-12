@@ -14,6 +14,7 @@ protocol AuthenticationService {
     func logout(completion: @escaping (Result<BaseResponse<NoData>, ErrorResponse>) -> Void)
     func forgotPassword(email: String, completion: @escaping (Result<BaseResponse<NoData>, ErrorResponse>) -> Void)
     func resetPassword(token: String, password: String, completion: @escaping (Result<BaseResponse<NoData>, ErrorResponse>) -> Void)
+    func resendEmailVerificationToken(email: String, completion: @escaping (Result<BaseResponse<NoData>, ErrorResponse>) -> Void)
 }
 
 final class AuthenticationManager: AuthenticationService {
@@ -54,6 +55,12 @@ final class AuthenticationManager: AuthenticationService {
     func resetPassword(token: String, password: String, completion: @escaping (Result<BaseResponse<NoData>, ErrorResponse>) -> Void) {
         let parameters = ResetPasswordRequest(token: token, password: password)
         let provider = ApiServiceProvider<ResetPasswordRequest>(method: .post, baseUrl: NetworkConstants.baseUrl, path: NetworkConstants.Endpoints.Auth.resetPassword, data: parameters)
+        try? APIManager.shared.executeRequest(urlRequest: provider.returnUrlRequest(), completion: completion)
+    }
+    
+    func resendEmailVerificationToken(email: String, completion: @escaping (Result<BaseResponse<NoData>, ErrorResponse>) -> Void) {
+        let parameters = ResendEmailVerificationTokenRequest(email: email)
+        let provider = ApiServiceProvider<ResendEmailVerificationTokenRequest>(method: .post, baseUrl: NetworkConstants.baseUrl, path: NetworkConstants.Endpoints.Auth.resendVerificationEmail, data: parameters)
         try? APIManager.shared.executeRequest(urlRequest: provider.returnUrlRequest(), completion: completion)
     }
     
