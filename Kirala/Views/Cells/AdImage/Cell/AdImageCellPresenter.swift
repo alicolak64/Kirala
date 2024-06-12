@@ -66,7 +66,7 @@ extension AdImageCellPresenter: AdImageCellPresenterProtocol {
     
     /// Loads the data and configures the view.
     func load() {
-                        
+        
         guard arguments.image != nil || arguments.imageUrl != nil else {
             view?.setNoImageLabelTitle(Strings.Ad.addLeastOneImage.localized)
             return
@@ -78,9 +78,8 @@ extension AdImageCellPresenter: AdImageCellPresenterProtocol {
         }
         
         if let imageUrl = arguments.imageUrl {
+            view?.setIndex(arguments.index + 1)
             view?.setImageURL(with: imageUrl.imageUrl)
-            view?.setIndex(arguments.index)
-            
         }
         
         if !arguments.isLast {
