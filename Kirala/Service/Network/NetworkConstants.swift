@@ -13,7 +13,9 @@ enum NetworkConstants {
         //return "http://localhost:8080"
         //return "http://192.168.1.26:8080"
         //return "https://kirala-dev.onrender.com"
-        return "http://172.16.34.221:8080"
+        //return "http://172.16.34.221:8080"
+        //return "http://192.168.1.111:8080"
+        return "http://172.16.35.37:8080"
     #else
         return "https://example.com/api"
     #endif
@@ -38,6 +40,10 @@ enum NetworkConstants {
         
         enum Product {
             static let createProduct = "/products"
+            static let getProductsByUser = "/products/user"
+            static let getProductById = "/products/"
+            static let updateProduct = "/products"
+            static let deleteProduct = "/products/"
         }
     }
     
