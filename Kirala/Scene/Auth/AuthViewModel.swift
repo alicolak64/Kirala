@@ -104,6 +104,23 @@ extension AuthViewModel: AuthViewModelProtocol {
         }
     }
     
+    private func checkEmailVerificationError(error: ErrorResponse, email: String) {
+        
+        if error.serverResponse?.returnMessage?.contains("Email not verified") ?? false {
+            print("Email is not verified")
+            delegate?.showActionSheet(
+                title: Strings.Auth.resendVerifyEmailTitle.localized,
+                message: Strings.Auth.resendVerifyEmailMessage.localized,
+                actionTitle: Strings.Auth.resendVerifyEmailAction.localized,
+                completion: { [weak self] in
+                    self?.didTapResendVerifyEmailButton(email: email)
+                }
+                
+            )
+        }
+        
+    }
+    
     func didTapEmptyStateActionButton() {
         delegate?.showLoginCard()
         delegate?.closeKeyboard()
@@ -199,6 +216,7 @@ extension AuthViewModel: AuthViewModelProtocol {
                     self.authService.saveAuthTokenType(tokenType: data.tokenType)
                     self.router.navigate(to: .loginSuccess)
                 case .failure(let error):
+                    self.checkEmailVerificationError(error: error, email: email)
                     self.loadingState = .loaded(.none)
                     self.delegate?.showWarningCard(with: error.serverResponse?.returnMessage ?? Strings.Common.error.localized, animated: true)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
@@ -367,6 +385,30 @@ extension AuthViewModel: AuthViewModelProtocol {
             }
         }
         
+    }
+    
+    private func didTapResendVerifyEmailButton(email: String) {
+        loadingState = .loading
+        authenticationService.resendEmailVerificationToken(email: email) { result in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    self.loadingState = .loaded(.none)
+                    self.delegate?.showAlert(with: AlertMessage(
+                        title: Strings.Auth.resendVerifyEmailSuccess.localized,
+                        message: Strings.Auth.resendVerifyEmailSuccessMessage.localized,
+                        actionTitle: Strings.Common.ok.localized
+                    ))
+                case .failure(let error):
+                    self.loadingState = .loaded(.none)
+                    self.delegate?.showWarningCard(with: error.serverResponse?.returnMessage ?? Strings.Common.error.localized, animated: true)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self.delegate?.hideWarningCard(animated: true)
+                    }
+                }
+            }
+        }
     }
     
 }
