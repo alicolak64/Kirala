@@ -213,7 +213,7 @@ extension AuthViewController: AuthViewProtocol {
             warningCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
             warningCard.heightAnchor.constraint(equalToConstant: 80),
             
-
+            
             loginCard.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loginCard.topAnchor.constraint(equalTo: warningCard.topAnchor, constant: 30),
             loginCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
@@ -225,7 +225,7 @@ extension AuthViewController: AuthViewProtocol {
             registerCard.heightAnchor.constraint(equalToConstant: UIDevice.deviceHeight > 700
                                                  ? UIDevice.deviceHeight * 0.7
                                                  : UIDevice.deviceHeight * 0.77),
-                                    
+            
             
             forgotPasswordCard.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             forgotPasswordCard.topAnchor.constraint(equalTo: warningCard.topAnchor, constant: 30),
@@ -272,7 +272,7 @@ extension AuthViewController: AuthViewProtocol {
     func prepareWarningCard() {
         warningCard.isHidden = true
     }
-        
+    
     func prepareLoginCard() {
         loginCard.delegate = self
         loginCard.isHidden = false
@@ -420,7 +420,7 @@ extension AuthViewController: AuthViewProtocol {
             }, completion: nil)
         }
     }
-
+    
     func showLoading() {
         loadingView.showLoading()
     }
@@ -472,10 +472,8 @@ extension AuthViewController: LoginCardDelegate, RegisterCardDelegate, ForgotPas
     func didTapResetPasswordButton(password: String, confirmPassword: String) {
         viewModel.didTapResetPasswordButton(password: password, confirmPassword: confirmPassword)
     }
-        
+    
 }
-
-
 
 extension AuthViewController: EmptyStateViewDelegate {
     
