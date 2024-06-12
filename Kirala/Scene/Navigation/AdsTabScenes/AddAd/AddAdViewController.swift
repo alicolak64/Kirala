@@ -271,7 +271,7 @@ final class AddAdViewController: UIViewController, SwipePerformable, BackNavigat
         button.setTitle(Strings.Ad.deleteAd.localized, for: .normal)
         button.tintColor = ColorText.primary.dynamicColor
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        button.backgroundColor = ColorPalette.appPrimary.dynamicColor
+        button.backgroundColor = ColorPalette.gray.dynamicColor
         button.addCornerRadius(radius: 10)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapAdDeleteButton), for: .touchUpInside)
@@ -366,6 +366,39 @@ final class AddAdViewController: UIViewController, SwipePerformable, BackNavigat
 
 extension AddAdViewController: AddAdViewProtocol {
     
+    
+    func setTextFieldText(text: String, type: TextFieldWithTitleType) {
+        switch type {
+        case .name:
+            nameTextField.setTextFieldText(text)
+        case .price:
+            priceTextField.setTextFieldText(text)
+        case .description:
+            descriptionTextField.setTextViewText(text)
+        }
+    }
+    
+    func setTextFieldText(text: String, type: MinMaxItemType) {
+        switch type {
+        case .min:
+            minTextField.text = text
+        case .max:
+            maxTextField.text = text
+        }
+    }
+    
+    func pickerViewSelectRow(row: Int, type: PickerViewType) {
+        switch type {
+        case .category:
+            categoryPickerView.setPickerViewSelectedRow(at: row)
+        case .subcategory:
+            subcategoryPickerView.setPickerViewSelectedRow(at: row)
+        case .brand:
+            brandPickerView.setPickerViewSelectedRow(at: row)
+        case .city:
+            cityPickerView.setPickerViewSelectedRow(at: row)
+        }
+    }
     
     func showLoading() {
         loadingView.showLoading()
@@ -817,13 +850,15 @@ extension AddAdViewController: AddAdViewProtocol {
         ])
         
         NSLayoutConstraint.activate([
-            editAdButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 20),
-            editAdButton.trailingAnchor.constraint(equalTo: footerView.centerXAnchor, constant: -10),
-            editAdButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor),
-            
-            deleteAdButton.leadingAnchor.constraint(equalTo: footerView.centerXAnchor, constant: 10),
-            deleteAdButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -20),
+            deleteAdButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 20),
+            deleteAdButton.trailingAnchor.constraint(equalTo: footerView.centerXAnchor, constant: -10),
             deleteAdButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor),
+            deleteAdButton.heightAnchor.constraint(equalToConstant: 40),
+            
+            editAdButton.leadingAnchor.constraint(equalTo: footerView.centerXAnchor, constant: 10),
+            editAdButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -20),
+            editAdButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor),
+            editAdButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
@@ -1010,7 +1045,7 @@ extension AddAdViewController: AdClosedRangeCellDelegate {
     
 }
 
-extension AuthViewController: Alertable {
+extension AuthViewController: Alertable, ActionSheetable {
     
     
     func showAlert(with alertMessage: AlertMessage, completion: @escaping () -> Void) {
@@ -1034,7 +1069,7 @@ extension AuthViewController: Alertable {
     
 }
 
-extension AddAdViewController: Alertable {
+extension AddAdViewController: Alertable, ActionSheetable {
     func showAlert(with alertMessage: AlertMessage, completion: @escaping () -> Void) {
         showAlert(
             title: alertMessage.title,
