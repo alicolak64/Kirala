@@ -7,30 +7,6 @@
 
 import Foundation
 
-struct Ad {
-    let brand: String
-    let name: String
-    let price: String
-    let imageUrl: String
-    let id: String
-    
-    private static let mockAds = [
-        Ad(brand: "META", name: "Quest 3 128 Gb Kablosuz Vr Sanal Gerçeklik Gözlüğü", price: "20000", imageUrl: "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1316/product/media/images/prod/QC/20240516/05/4fe5b52b-9683-30b8-8f02-8f27427563ce/1_org_zoom.jpg", id: "1"),
-        Ad(brand: "Fancy&Dancy", name: "Kadın Siyah Dalgıç Kumaş Özel Üretim Şık Spor Şort Etek", price: "200", imageUrl: "https://cdn.dsmcdn.com/mnresize/1200/1800/ty523/product/media/images/20220906/10/169669516/559695008/1/1_org_zoom.jpg", id: "2"),
-        Ad(brand: "MUCE", name: "Concept Siyah Cam Beyaz Çerçeve Kadın Güneş Gözlüğü Uv 400 Ultraviyole Korumalı", price: "84,90", imageUrl: "https://cdn.dsmcdn.com/mnresize/1200/1800/ty524/product/media/images/20220906/23/169944258/473258342/1/1_org_zoom.jpg", id: "3"),
-        Ad(brand: "King", name: "P-637 Grillmax Mor Izgara Ve Tost Makinesi", price: "1.250", imageUrl: "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1217/product/media/images/prod/SPM/PIM/20240311/22/99113d09-65de-3c1a-af43-632c965fb05e/1_org_zoom.jpg", id: "4"),
-        Ad(brand: "KORKMAZ", name: "A369 Demtez Elektrikli &ccedil;aydanlık Inox-siyah", price: "1.746,78", imageUrl: "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1244/product/media/images/prod/SPM/PIM/20240405/20/b0799cb4-d205-3193-be0a-7399a4929d55/1_org_zoom.jpg", id: "5"),
-        Ad(brand: "Philips", name: "3000 Serisi Airfryer, 0.8kg, 4.1L Kapasite, Siyah, HD9243/90", price: "₺2.589", imageUrl: "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1187/product/media/images/prod/SPM/PIM/20240224/17/e382a0cd-ad62-3611-aa9a-14e2ce302389/1_org_zoom.jpg", id: "6"),
-    ]
-    
-    static func getAds() -> [Ad] {
-        // random count of ads return
-        let count = Int.random(in: 0...mockAds.count)
-        return mockAds.shuffled().prefix(count).map { $0 }
-    }
-    
-}
-
 final class AdsViewModel {
     
     // MARK: - Dependency Properties
@@ -39,17 +15,58 @@ final class AdsViewModel {
     
     private let router: AdsRouterProtocol
     private let authService: AuthService
+    private let productService: ProductService
     
-    private let ads: [Ad] = Ad.getAds()
+    private var ads = [MyProductResponse]()
+    
+    private var loadingState: LoadingState = .loading {
+        didSet {
+            switch loadingState {
+            case .loading:
+                delegate?.showLoading()
+            case .loaded(let result):
+                delegate?.hideLoading(loadResult: result)
+            }
+        }
+    }
+    
+    private var emptyState: EmptyState?
     
     // MARK: - Initializers
     
     init(router: AdsRouterProtocol, dependencies: [Dependency: Any]) {
-        guard let authService = dependencies[.authService] as? AuthService else {
+        guard let authService = dependencies[.authService] as? AuthService,
+              let productService = dependencies[.productService] as? ProductService
+        else {
             fatalError("AuthService not found")
         }
         self.router = router
         self.authService = authService
+        self.productService = productService
+    }
+    
+    deinit {
+        removeObserver()
+    }
+    
+    // MARK: - Private Functions
+    
+    private func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(productsChanged(_:)), name: .changedProduct, object: nil)
+    }
+ 
+    private func removeObserver() {
+        NotificationCenter.default.removeObserver(self, name: .changedProduct, object: nil)
+    }
+    
+    @objc private func productsChanged(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let productId = userInfo[NotificationCenterOutputs.productId.rawValue] as? String else {
+            return
+        }
+        
+        fetchMyAds()
+        
     }
     
 }
@@ -61,23 +78,23 @@ extension AdsViewModel: AdsViewModelProtocol {
     func viewDidLoad() {
         delegate?.prepareNavigationBar()
         delegate?.prepareUI()
+        delegate?.addRefreshControl()
+        
+        guard authService.isLoggedIn else {
+            return
+        }
+        
+        addObserver()
+        fetchMyAds()
+        
     }
     
     func viewWillAppear() {
         guard authService.isLoggedIn else {
             delegate?.showEmptyState(with: .noLoginAds)
+            emptyState = .noLoginAds
             return
         }
-        delegate?.addAddAdButtonNavigationItem()
-        
-        guard !ads.isEmpty else {
-            delegate?.showEmptyState(with: .noAds)
-            return
-        }
-        
-        delegate?.prepareTableView()
-        delegate?.reloadTableView()
-        
     }
     
     func viewDidAppear() {
@@ -96,12 +113,16 @@ extension AdsViewModel: AdsViewModelProtocol {
     
     func didTapEmptyStateActionButton() {
         
-        guard authService.isLoggedIn else {
+        switch emptyState {
+        case .noAds:
+            didTapAddAdButton()
+        case .error:
+            fetchMyAds()
+        case .noLoginAds:
             router.navigate(to: .auth)
-            return
+        default:
+            break
         }
-        
-        router.navigate(to: .add(.addAd))
         
     }
     
@@ -123,7 +144,14 @@ extension AdsViewModel: AdsViewModelProtocol {
         }
         
         let ad = ads[indexPath.row]
-        return AdCellArguments(brand: ad.brand, name: ad.name, imageUrl: ad.imageUrl, price: ad.price)
+        
+        if let imageUrl = ad.imageUrl {
+            return AdCellArguments(brand: ad.brand, name: ad.name, imageUrl: imageUrl, price: ad.price.toString())
+        } else {
+            return AdCellArguments(brand: ad.brand, name: ad.name, imageUrl: String.noImageURLString, price: ad.price.toString())
+        }
+        
+        
     }
     
     func didSelectRow(at indexPath: IndexPath) {
@@ -139,6 +167,53 @@ extension AdsViewModel: AdsViewModelProtocol {
     
     func heightForRow(at indexPath: IndexPath) -> CGFloat {
         80
+    }
+    
+    private func fetchMyAds() {
+        
+        guard let token = authService.getAuthToken() else { return }
+        
+        loadingState = .loading
+        
+        productService.getProductListByUser(token: token) { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    guard let data = response.data else { return }
+                    self.loadingState = .loaded(.none)
+                    self.ads = data
+                    self.delegate?.endRefreshing()
+                    self.assignData()
+                case .failure(let error):
+                    self.loadingState = .loaded(.none)
+                    self.emptyState = .error(error)
+                    self.delegate?.endRefreshing()
+                    self.delegate?.showEmptyState(with: .error(error))
+                }
+            }
+        }
+        
+    }
+    
+    private func assignData() {
+        
+        delegate?.addAddAdButtonNavigationItem()
+        
+        guard !ads.isEmpty else {
+            emptyState = .noAds
+            delegate?.showEmptyState(with: .noAds)
+            return
+        }
+        
+        delegate?.prepareTableView()
+        delegate?.reloadTableView()
+        
+    }
+    
+    func refresh() {
+        fetchMyAds()
     }
     
 }
