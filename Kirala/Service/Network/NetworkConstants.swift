@@ -29,6 +29,7 @@ enum NetworkConstants {
             static let logout = "/auth/logout"
             static let forgotPassword = "/auth/send-reset-password-token"
             static let resetPassword = "/auth/reset-password"
+            static let resendVerificationEmail = "/auth/send-email-verification-token"
         }
         
         enum Category {
