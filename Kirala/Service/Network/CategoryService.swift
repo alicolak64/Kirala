@@ -8,13 +8,27 @@
 import Foundation
 
 protocol CategoryService {
+    func getCampaignList(completion: @escaping (Result<BaseResponseArray<CampaignResponse>, ErrorResponse>) -> Void)
     func getCategoryList(completion: @escaping (Result<BaseResponseArray<CategoryResponse>, ErrorResponse>) -> Void)
+    func getCategoryListWithSubcategories(completion: @escaping (Result<BaseResponseArray<CategoryWithSubcategoryResponse>, ErrorResponse>) -> Void)
     func getSubcategoryList(categoryId: String, completion: @escaping (Result<BaseResponseArray<SubcategoryResponse>, ErrorResponse>) -> Void)
     func getBrandList(completion: @escaping (Result<BaseResponseArray<BrandResponse>, ErrorResponse>) -> Void)
     func getCityList(completion: @escaping (Result<BaseResponseArray<CityResponse>, ErrorResponse>) -> Void)
 }
 
 final class CategoryManager: CategoryService {
+    
+    func getCampaignList(completion: @escaping (Result<BaseResponseArray<CampaignResponse>, ErrorResponse>) -> Void) {
+        let provider = ApiServiceProvider<[String:String]>(method: .get, baseUrl: NetworkConstants.baseUrl, path: NetworkConstants.Endpoints.Category.getCampaigns, data: [:])
+
+        try? APIManager.shared.executeRequest(urlRequest: provider.returnUrlRequest(), completion: completion)
+    }
+    
+    func getCategoryListWithSubcategories(completion: @escaping (Result<BaseResponseArray<CategoryWithSubcategoryResponse>, ErrorResponse>) -> Void) {
+        let provider = ApiServiceProvider<[String:String]>(method: .get, baseUrl: NetworkConstants.baseUrl, path: NetworkConstants.Endpoints.Category.getCategoryListWithSubcategories, data: [:])
+
+        try? APIManager.shared.executeRequest(urlRequest: provider.returnUrlRequest(), completion: completion)
+    }
 
     func getCategoryList(completion: @escaping (Result<BaseResponseArray<CategoryResponse>, ErrorResponse>) -> Void) {
 
