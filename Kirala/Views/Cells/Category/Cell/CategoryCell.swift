@@ -27,7 +27,7 @@ final class CategoryCell: UICollectionViewCell, ReusableView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = ColorText.primary.dynamicColor
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         return label
     }()
     
@@ -123,7 +123,7 @@ extension CategoryCell: CategoryCellViewProtocol {
         contentView.backgroundColor = ColorBackground.primary.dynamicColor
         categoryLabel.textColor = ColorPalette.appPrimary.dynamicColor
         verticalSeparator.backgroundColor = ColorPalette.appPrimary.dynamicColor
-        categoryLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        categoryLabel.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
     }
     
 }
