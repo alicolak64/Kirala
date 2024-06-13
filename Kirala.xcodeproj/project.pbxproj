@@ -255,6 +255,8 @@
 		E6A939BF2C08F3FF0015B6F3 /* FilterPopupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A939BE2C08F3FF0015B6F3 /* FilterPopupPresenter.swift */; };
 		E6A939C22C08F4780015B6F3 /* FilterCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A939C12C08F4780015B6F3 /* FilterCellPresenter.swift */; };
 		E6A939C42C08F47E0015B6F3 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A939C32C08F47E0015B6F3 /* FilterCell.swift */; };
+		E6AB5E482C1A7A01007C2266 /* CampaignResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB5E472C1A7A01007C2266 /* CampaignResponse.swift */; };
+		E6AB5E4A2C1A8379007C2266 /* CategoryWithSubcategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB5E492C1A8379007C2266 /* CategoryWithSubcategoryResponse.swift */; };
 		E6B294B02BF752C000BBC20F /* EmptyStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B294AF2BF752C000BBC20F /* EmptyStates.swift */; };
 		E6B294B22BF7530000BBC20F /* EmptyStateContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B294B12BF7530000BBC20F /* EmptyStateContracts.swift */; };
 		E6B294B52BF7534800BBC20F /* LoadingContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B294B42BF7534800BBC20F /* LoadingContracts.swift */; };
@@ -370,9 +372,6 @@
 		E62ADF0F2C0D638200422933 /* FilterHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHeaderCell.swift; sourceTree = "<group>"; };
 		E62ADF112C0DFD7300422933 /* Expandable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expandable.swift; sourceTree = "<group>"; };
 		E62ADF132C0DFDB000422933 /* ExpandState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandState.swift; sourceTree = "<group>"; };
-		E62FFDD02C19E3260019B09F /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
-		E62FFDD12C19E3260019B09F /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
-		E62FFDD22C19E3260019B09F /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
 		E62FFDD32C1A02BF0019B09F /* UpdateAdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAdRequest.swift; sourceTree = "<group>"; };
 		E62FFDD52C1A53030019B09F /* ResendEmailVerificationTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendEmailVerificationTokenRequest.swift; sourceTree = "<group>"; };
 		E630537D2C08773D007FE3A4 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
@@ -573,6 +572,11 @@
 		E6A939BE2C08F3FF0015B6F3 /* FilterPopupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPopupPresenter.swift; sourceTree = "<group>"; };
 		E6A939C12C08F4780015B6F3 /* FilterCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCellPresenter.swift; sourceTree = "<group>"; };
 		E6A939C32C08F47E0015B6F3 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
+		E6AB5E442C1A62F9007C2266 /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
+		E6AB5E452C1A62F9007C2266 /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
+		E6AB5E462C1A62F9007C2266 /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
+		E6AB5E472C1A7A01007C2266 /* CampaignResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignResponse.swift; sourceTree = "<group>"; };
+		E6AB5E492C1A8379007C2266 /* CategoryWithSubcategoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryWithSubcategoryResponse.swift; sourceTree = "<group>"; };
 		E6B294AF2BF752C000BBC20F /* EmptyStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStates.swift; sourceTree = "<group>"; };
 		E6B294B12BF7530000BBC20F /* EmptyStateContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateContracts.swift; sourceTree = "<group>"; };
 		E6B294B42BF7534800BBC20F /* LoadingContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingContracts.swift; sourceTree = "<group>"; };
@@ -1729,6 +1733,8 @@
 				E661498B2C18EA7C00BE5659 /* BrandResponse.swift */,
 				E661498D2C18F3AD00BE5659 /* MyProductResponse.swift */,
 				E661498F2C19023800BE5659 /* MyProductDetailResponse.swift */,
+				E6AB5E472C1A7A01007C2266 /* CampaignResponse.swift */,
+				E6AB5E492C1A8379007C2266 /* CategoryWithSubcategoryResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1795,7 +1801,7 @@
 				E60816C62C15A026005346D2 /* BSImagePicker */,
 			);
 			productName = Kirala;
-			productReference = E62FFDD02C19E3260019B09F /* Kirala.app */;
+			productReference = E6AB5E442C1A62F9007C2266 /* Kirala.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E645F1282BE6CE4B0038075F /* KiralaTests */ = {
@@ -1813,7 +1819,7 @@
 			);
 			name = KiralaTests;
 			productName = KiralaTests;
-			productReference = E62FFDD12C19E3260019B09F /* KiralaTests.xctest */;
+			productReference = E6AB5E452C1A62F9007C2266 /* KiralaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		E645F1322BE6CE4B0038075F /* KiralaUITests */ = {
@@ -1831,7 +1837,7 @@
 			);
 			name = KiralaUITests;
 			productName = KiralaUITests;
-			productReference = E62FFDD22C19E3260019B09F /* KiralaUITests.xctest */;
+			productReference = E6AB5E462C1A62F9007C2266 /* KiralaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -2017,12 +2023,14 @@
 				E631A7532C11ED380070BDEE /* AddAdRouter.swift in Sources */,
 				E632A56C2BFFB87200727DFF /* Selectable.swift in Sources */,
 				E6B294B02BF752C000BBC20F /* EmptyStates.swift in Sources */,
+				E6AB5E4A2C1A8379007C2266 /* CategoryWithSubcategoryResponse.swift in Sources */,
 				E66CDB8A2C05F86B00E94F1B /* CurrentValueView.swift in Sources */,
 				E66149802C18E57400BE5659 /* ProductService.swift in Sources */,
 				E675636B2BE8493D00959F1A /* TabBarController.swift in Sources */,
 				E62760582C10C7010043039F /* ProgressHUD+TriangleDotShift.swift in Sources */,
 				E6350DAB2C01110B0026D72F /* EmailContainer.swift in Sources */,
 				E645F1642BE6D3AF0038075F /* AlertMessage.swift in Sources */,
+				E6AB5E482C1A7A01007C2266 /* CampaignResponse.swift in Sources */,
 				E652DCF32BF7DA0400CD4866 /* SearchBuilder.swift in Sources */,
 				E690FE122C092DAB006FE877 /* SearchablePopupPresenter.swift in Sources */,
 				E62760492C10C7010043039F /* ProgressHUD+CircleDotSpinFade.swift in Sources */,
