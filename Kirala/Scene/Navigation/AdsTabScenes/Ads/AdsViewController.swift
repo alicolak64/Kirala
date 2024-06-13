@@ -137,7 +137,7 @@ extension AdsViewController: AdsViewProtocol {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        
+        tableView.isHidden = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(AdCell.self)
@@ -145,6 +145,7 @@ extension AdsViewController: AdsViewProtocol {
     }
     
     func showEmptyState(with state: EmptyState) {
+        tableView.isHidden = true
         emptyCardView.configure(with: state)
         emptyCardView.show()
     }
