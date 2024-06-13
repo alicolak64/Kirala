@@ -11,7 +11,8 @@ final class CategoriesBuilder: CategoriesBuilderProtocol {
     
     static func build(navigationController: UINavigationController?) -> UIViewController {
         let router = CategoriesRouter(navigationController: navigationController)
-        let viewModel = CategoriesViewModel(router: router)
+        let dependencies = app.resolveDependencyArray(dependencies: [.categoryService])
+        let viewModel = CategoriesViewModel(router: router, dependencies: dependencies)
         let viewController = CategoriesViewController(viewModel: viewModel)
         return viewController
     }
