@@ -41,6 +41,7 @@ protocol CategoriesViewModelProtocol {
     // MARK: Actions
     func didTapCancelButton()
     func didTapSearchButton()
+    func didTapEmptyStateActionButton()
     
     // MARK: Data Source Methods
     func numberOfItems(in type: CategoriesCollectionViewTag) -> Int
@@ -61,6 +62,10 @@ protocol CategoriesViewProtocol: AnyObject {
     func prepareSubCategoriesCollectionView()
     func addSwipeGesture()
     func removeSwipeGesture()
+    
+    func showLoading()
+    func hideLoading(loadResult: LoadingResult)
+    func showEmptyState(with state: EmptyState)
     
     func reloadData(type: CategoriesCollectionViewTag)
     func reloadItems(type: CategoriesCollectionViewTag, at indexPaths: [IndexPath])
