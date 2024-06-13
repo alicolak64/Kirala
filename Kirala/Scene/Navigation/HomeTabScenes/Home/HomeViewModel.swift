@@ -8,7 +8,6 @@
 import Foundation
 
 struct Category: Selectable {
-    
     let name: String
     let id: String
     var selectionState: SelectionState = .unselected
@@ -31,37 +30,11 @@ struct Category: Selectable {
         Category(name: "Süpermarket", id: "15")
     ]
     
-    static let otherWithMockCategories = [
-        Category(name: "Kıyafet", id: "1"),
-        Category(name: "Ayakkabı", id: "2"),
-        Category(name: "Aksesuar", id: "3"),
-        Category(name: "Çanta", id: "4"),
-        Category(name: "Saat", id: "5"),
-        Category(name: "Giyim", id: "6"),
-        Category(name: "Elektronik", id: "7"),
-        Category(name: "Kozmetik", id: "8"),
-        Category(name: "Spor", id: "9"),
-        Category(name: "Ev", id: "10"),
-        Category(name: "Oyuncak", id: "11"),
-        Category(name: "Kitap", id: "12"),
-        Category(name: "Hediye", id: "13"),
-        Category(name: "Ofis", id: "14"),
-        Category(name: "Süpermarket", id: "15"),
-        Category(name: "Other", id: "0")
-    ]
-    
 }
 
 struct Campaign {
+    let id: String
     let url: String
-    
-    static let mockCampaigns = [
-        Campaign(url: "https://images.unsplash.com/photo-1505533321630-975218a5f66f?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
-        Campaign(url: "https://images.unsplash.com/photo-1591779051696-1c3fa1469a79?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
-        Campaign(url: "https://images.unsplash.com/photo-1526779259212-939e64788e3c?q=80&w=2948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
-        Campaign(url: "https://images.unsplash.com/photo-1505968409348-bd000797c92e?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
-    ]
-    
 }
 
 struct Product: Favoritable {
@@ -92,14 +65,16 @@ final class HomeViewModel {
     
     private let router: HomeRouterProtocol
     private let authService: AuthService
+    private let categoryService: CategoryService
+    private let productService: ProductService
     
     // MARK: - Properties
     
-    private var categories: [Category] = Category.mockCategories
+    private var categories = [Category]()
     
     private var selectedCategoryIndex: Int = 0
     
-    private var campaigns: [Campaign] = Campaign.mockCampaigns
+    private var campaigns = [Campaign]()
         
     private var campaignTimer: Timer?
     
@@ -111,16 +86,34 @@ final class HomeViewModel {
     
     private var mostRatedProducts: [Product] = Product.mockProducts.shuffled()
     
+    private let dispatchGroup = DispatchGroup()
+    
+    private var loadingState: LoadingState = .loading {
+        didSet {
+            switch loadingState {
+            case .loading:
+                delegate?.showLoading()
+            case .loaded(let result):
+                self.delegate?.hideLoading(loadResult: result)
+            }
+        }
+    }
+    
     // MARK: - Initializers
     
     init(router: HomeRouterProtocol, dependencies: [Dependency: Any]) {
        
-        guard let authService = dependencies[.authService] as? AuthService else {
-            fatalError("AuthService not found")
+        guard let authService = dependencies[.authService] as? AuthService,
+              let categoryService = dependencies[.categoryService] as? CategoryService,
+              let productService = dependencies[.productService] as? ProductService
+        else {
+            fatalError("Dependencies could not be resolved")
         }
         
         self.router = router
         self.authService = authService
+        self.categoryService = categoryService
+        self.productService = productService
         
     }
     
@@ -145,12 +138,16 @@ extension HomeViewModel: HomeViewModelProtocol {
     // MARK: - Lifecycle Methods
     
     func viewDidLoad() {
+        
         delegate?.prepareNavigationBar()
         delegate?.prepareUI()
+        
         delegate?.prepareCategoriesCollectionView()
         delegate?.prepareContentCompositinalLayoutCollectionView()
         delegate?.configureContentCompositionalLayout()
-        startTimer()
+        
+        fetchInitialData()
+        
     }
     
     func viewWillAppear() {
@@ -159,6 +156,60 @@ extension HomeViewModel: HomeViewModelProtocol {
     
     func viewDidLayoutSubviews() {
         delegate?.prepareConstraints()
+    }
+    
+    // MARK: - Setups
+    
+    private func fetchInitialData() {
+        
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            self.fetchCampaigns()
+            self.fetchCategories()
+            
+            self.dispatchGroup.notify(queue: .main) {
+                self.prepareInitialConfig()
+                self.loadingState = .loaded(.none)
+            }
+        }
+        
+    }
+    
+    private func fetchCampaigns() {
+        dispatchGroup.enter()
+        categoryService.getCampaignList { [weak self] result in
+            defer { self?.dispatchGroup.leave() }
+            guard let self = self else { return }
+            switch result {
+            case .success(let campaigns):
+                guard let campaigns = campaigns.data else { return }
+                self.campaigns = campaigns.map { Campaign(id: $0.id, url: $0.imageUrl) }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func fetchCategories() {
+        dispatchGroup.enter()
+        categoryService.getCategoryList { [weak self] result in
+            defer { self?.dispatchGroup.leave() }
+            guard let self = self else { return }
+            switch result {
+            case .success(let categories):
+                guard let categories = categories.data else { return }
+                self.categories = categories.map { Category(name: $0.name, id: $0.id) }
+                self.categories.insert(Category(name: Strings.Ad.all.localized, id: "0", selectionState: .selected), at: 0)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func prepareInitialConfig() {
+        delegate?.reloadCollectionView(type: .categories)
+        delegate?.reloadCollectionView(type: .compositionalLayout)
+        startTimer()
     }
     
     // MARK: - Actions
