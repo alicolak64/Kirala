@@ -12,10 +12,10 @@ enum NetworkConstants {
     #if DEBUG
         //return "http://localhost:8080"
         //return "http://192.168.1.26:8080"
-        //return "https://kirala-dev.onrender.com"
+        return "https://kirala-dev.onrender.com"
         //return "http://172.16.34.221:8080"
         //return "http://192.168.1.111:8080"
-        return "http://172.16.35.37:8080"
+        //return "http://172.16.35.37:8080"
     #else
         return "https://example.com/api"
     #endif
@@ -37,6 +37,8 @@ enum NetworkConstants {
             static let getSubcategories = "/subcategories/category/"
             static let getBrands = "/brands"
             static let getCities = "/cities"
+            static let getCampaigns = "/campaigns"
+            static let getCategoryListWithSubcategories = "/categories/subcategories"
         }
         
         enum Product {
