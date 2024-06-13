@@ -16,6 +16,19 @@ final class CategoriesViewController: UIViewController, SwipePerformable, BackNa
     
     private lazy var searchBarView = searchBar
     
+    private lazy var emptyCardView: EmptyStateView = {
+        let view = EmptyStateView()
+        view.delegate = self
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var loadingView: LoadingView = {
+        let view = LoadingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var categoriesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -105,37 +118,71 @@ extension CategoriesViewController: CategoriesViewProtocol {
     func prepareUI() {
         view.backgroundColor = ColorBackground.primary.dynamicColor
         view.addSubviews([
+            loadingView,
+            emptyCardView,
             categoriesCollectionView,
-            subCategoriesCollectionView,
+            subCategoriesCollectionView
         ])
     }
     
     func prepareConstraints() {
         NSLayoutConstraint.activate([
             
-            categoriesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            categoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            categoriesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            categoriesCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
-            subCategoriesCollectionView.topAnchor.constraint(equalTo: categoriesCollectionView.topAnchor),
-            subCategoriesCollectionView.leadingAnchor.constraint(equalTo: categoriesCollectionView.trailingAnchor),
-            subCategoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            subCategoriesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            emptyCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIDevice.deviceHeight * 0.2),
+            emptyCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            emptyCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            emptyCardView.heightAnchor.constraint(equalToConstant: UIDevice.deviceHeight * 0.3)
             
         ])
     }
     
     func prepareCategoriesCollectionView() {
+        
+        view.addSubview(categoriesCollectionView)
+        
+        NSLayoutConstraint.activate([
+            categoriesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            categoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            categoriesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            categoriesCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3)
+        ])
+        
         categoriesCollectionView.register(CategoryCell.self)
         categoriesCollectionView.delegate = self
         categoriesCollectionView.dataSource = self
     }
     
     func prepareSubCategoriesCollectionView() {
+        
+        view.addSubview(subCategoriesCollectionView)
+        
+        NSLayoutConstraint.activate([
+            subCategoriesCollectionView.topAnchor.constraint(equalTo: categoriesCollectionView.topAnchor),
+            subCategoriesCollectionView.leadingAnchor.constraint(equalTo: categoriesCollectionView.trailingAnchor),
+            subCategoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            subCategoriesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
         subCategoriesCollectionView.register(SubcategoryCell.self)
         subCategoriesCollectionView.delegate = self
         subCategoriesCollectionView.dataSource = self
+    }
+    
+    func showEmptyState(with state: EmptyState) {
+        
+        emptyCardView.configure(with: state)
+        emptyCardView.show()
+    }
+    
+    func showLoading() {
+        loadingView.showLoading()
+    }
+    
+    func hideLoading(loadResult: LoadingResult) {
+        loadingView.hideLoading(loadResult: loadResult)
     }
     
     func reloadData(type: CategoriesCollectionViewTag) {
@@ -200,6 +247,15 @@ extension CategoriesViewController: UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.didSelectItem(in: getCollectionViewType(with: collectionView.tag), at: indexPath)
+    }
+    
+}
+
+
+extension CategoriesViewController: EmptyStateViewDelegate {
+    
+    func didTapActionButton() {
+        viewModel.didTapEmptyStateActionButton()
     }
     
 }
