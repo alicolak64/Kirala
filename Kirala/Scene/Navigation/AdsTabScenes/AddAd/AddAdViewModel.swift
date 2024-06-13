@@ -225,7 +225,6 @@ extension AddAdViewModel: AddAdViewModelProtocol {
                 self.loadingState = .loaded(.none)
             }
         }
-        
     }
     
     private func fetchEditAdData(with arguements: EditAddAdArguments) {
