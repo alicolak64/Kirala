@@ -63,7 +63,7 @@ final class AdCell: UITableViewCell, ReusableView {
     
     private lazy var bottomSeparator: UIView = {
         let view = UIView()
-        view.backgroundColor = ColorPalette.lightBorder.dynamicColor
+        view.backgroundColor = ColorPalette.border.dynamicColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
