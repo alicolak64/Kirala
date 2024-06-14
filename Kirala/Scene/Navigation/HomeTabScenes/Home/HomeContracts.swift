@@ -101,6 +101,7 @@ enum HomeCompositionalLayoutSection: Int, CaseIterable{
     case newAdded = 1
     case bestSellers = 2
     case mostRated = 3
+    case allProducts = 4
 }
 
 enum HeaderType {
@@ -132,6 +133,8 @@ protocol HomeViewModelProtocol {
     func cellForItem(type: HomeCollectionViewTag, at indexPath: IndexPath) -> Any?
     func headerForSection(type: HomeCollectionViewTag, section: Int) -> Any?
     func didScrollToItem(at indexPath: IndexPath)
+    func scrollViewDidScroll(contentOffset: CGPoint, contentSize: CGSize, bounds: CGRect)
+
     
     func didTapFavoriteButton(at indexPath: IndexPath)
     func didTapAllProductsButton(headerType: HeaderType)
@@ -155,6 +158,7 @@ protocol HomeViewProtocol: AnyObject {
     
     func reloadRows(type: HomeCollectionViewTag, at indexPaths: [IndexPath])
     func reloadCollectionView(type: HomeCollectionViewTag)
+    func reloadSections(type: HomeCollectionViewTag, at indexSet: IndexSet)
     func reloadFavoriteState(indexPath: IndexPath, favoriteState: FavoriteState)
         
     func showActionSheet(title: String, message: String, actionTitle: String, completion: @escaping () -> Void)
@@ -165,6 +169,9 @@ protocol HomeViewProtocol: AnyObject {
     
     func addRefreshControl()
     func endRefreshing()
+    
+    func showContentCompositionalLayoutLoading()
+    func hideContentCompositionalLayoutLoading()
     
 }
 
