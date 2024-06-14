@@ -26,9 +26,9 @@ protocol NavigationBuilderProtocol {
 /// Enum representing the different items in the Tab Bar.
 enum TabBarItem: Int, CaseIterable {
     case home
+    case favorites
     case myAds
     case myOrders
-    case cart
     case profile
 }
 
