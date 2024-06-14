@@ -14,7 +14,6 @@ protocol DetailBuilderProtocol {
 enum DetailRoute {
     case back
     case search(SearchRouteOption)
-    case cart
     case auth
 }
 
@@ -40,7 +39,6 @@ protocol DetailViewModelProtocol {
     func didTapShareButton()
     func didTapSearchButton()
     func didTapFavoriteButton()
-    func didTapCartButton()
     func didTapCalendarButton()
     func didSelectCalendarValue(with value: FastisValue?)
 
