@@ -28,13 +28,6 @@ final class DetailRouter: DetailRouterProtocol {
             let animated = SearchRouteOption.isCategorySearch(option) || SearchRouteOption.isHeaderSearch(option)
             let searchViewController = SearchBuilder.build(navigationController: navigationController, searchOption: option)
             navigationController?.pushViewController(searchViewController, animated: animated)
-        case .cart:
-            let cartViewController = CartViewController(dependencies: app.resolveDependencyArray(dependencies: [.authService]))
-            navigationController?.pushViewController(cartViewController, animated: false)
-            navigationController?.navigationBar.backIndicatorImage = Symbols.arrowLeft.symbol()
-            navigationController?.navigationBar.backIndicatorTransitionMaskImage = Symbols.arrowLeft.symbol()
-            navigationController?.navigationBar.tintColor = .black
-            navigationController?.navigationBar.backItem?.title = ""
         case .auth:
             let authNavController = UINavigationController()
             let authViewController = AuthBuilder.build(rootViewController: navigationController, navigationController: authNavController)
