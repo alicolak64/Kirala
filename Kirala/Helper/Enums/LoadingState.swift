@@ -10,4 +10,11 @@ import Foundation
 enum LoadingState {
     case loading
     case loaded(LoadingResult)
+    
+    func isLoading() -> Bool {
+        if case .loading = self {
+            return true
+        }
+        return false
+    }
 }
