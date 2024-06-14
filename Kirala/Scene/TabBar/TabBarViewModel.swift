@@ -46,13 +46,22 @@ final class TabBarViewModel: TabBarViewModelProtocol {
                         tag: 0
                     )
                 )
+            case .favorites:
+                items.append(
+                    TabBarItemArguments(
+                        title: Strings.TabBar.favorites.localized,
+                        image: Symbols.heartFill,
+                        badge: nil,
+                        tag: 1
+                    )
+                )
             case .myAds:
                 items.append(
                     TabBarItemArguments(
                         title: Strings.TabBar.myAds.localized,
                         image: Symbols.newspaperFill,
                         badge: nil,
-                        tag: 1
+                        tag: 2
                     )
                 )
             case .myOrders:
@@ -61,15 +70,6 @@ final class TabBarViewModel: TabBarViewModelProtocol {
                         title: Strings.TabBar.myOrders.localized,
                         image: Symbols.shippingboxFill,
                         badge: nil,
-                        tag: 2
-                    )
-                )
-            case .cart:
-                items.append(
-                    TabBarItemArguments(
-                        title: Strings.TabBar.cart.localized,
-                        image: Symbols.cartFill,
-                        badge: 0,
                         tag: 3
                     )
                 )
@@ -92,12 +92,12 @@ final class TabBarViewModel: TabBarViewModelProtocol {
             switch item {
             case .home:
                 return HomeTabBuilder.build(arguments: items[0])
+            case .favorites:
+                return FavoritesTabBuilder.build(arguments: items[1])
             case .myAds:
-                return AdsTabBuilder.build(arguments: items[1])
+                return AdsTabBuilder.build(arguments: items[2])
             case .myOrders:
-                return MyOrdersNavigationBuilder.build(arguments: items[2])
-            case .cart:
-                return CartNavigationBuilder.build(arguments: items[3])
+                return MyOrdersNavigationBuilder.build(arguments: items[3])
             case .profile:
                 return ProfileNavigationBuilder.build(arguments: items[4])
             }
