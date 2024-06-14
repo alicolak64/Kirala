@@ -15,14 +15,13 @@ enum EmptyState {
     case noSearchResult
     case noFavorites
     case noAds
-    case emptyCart
     case noNotification
     case noOrder
-    case noLoginCart
     case noLoginNotification
     case noLoginOrder
     case noLoginAds
     case noLoginProfile
+    case noLoginFavorites
     case invalidOrExpireToken
     case unknown
     
@@ -39,18 +38,16 @@ enum EmptyState {
             return NoSearchResultState()
         case .noFavorites:
             return NoFavoritesState()
-        case .emptyCart:
-            return EmptyCartState()
         case .noAds:
             return NoAdsState()
         case .noNotification:
             return NoNotificationState()
         case .noOrder:
             return NoOrderState()
-        case .noLoginCart:
-            return NoLoginCartState()
         case .noLoginNotification:
             return NoLoginNotificationState()
+        case .noLoginFavorites:
+            return NoLoginFavoritesState()
         case .noLoginOrder:
             return NoLoginOrderState()
         case .noLoginAds:
@@ -204,4 +201,11 @@ struct ErrorEmptyState: EmptyStateProtocol {
         self.title = Strings.Common.error.localized
         self.description = error.errorDescription ?? Strings.EmptyState.unknownErrorDesc.localized
     }
+}
+
+struct NoLoginFavoritesState: EmptyStateProtocol {
+    var image: UIImage? = Symbols.starSlashFill.symbol()
+    var title: String = Strings.EmptyState.noLoginFavoritesTitle.localized
+    var description: String = Strings.EmptyState.noLoginFavoritesDesc.localized
+    var buttonTitle: String = Strings.EmptyState.noLoginFavoritesButton.localized
 }
