@@ -16,6 +16,7 @@ enum Strings {
         case newAddeds = "NewAddeds"
         case bestSellers = "BestSellers"
         case mostRated = "MostRated"
+        case allProducts = "AllProducts"
         case seeAll = "SeeAll"
         case categories = "Categories"
         case done = "Done"
@@ -37,11 +38,11 @@ enum Strings {
     }
     
     enum TabBar: String, Localizable {
-        case home = "home"
-        case myAds = "myAds"
-        case myOrders = "myOrders"
-        case cart = "cart"
-        case profile = "profile"
+        case home = "Home"
+        case favorites = "Favorites"
+        case myAds = "MyAds"
+        case myOrders = "MyOrders"
+        case profile = "Profile"
     }
     
     enum EmptyState: String, Localizable {
@@ -90,6 +91,9 @@ enum Strings {
         case noLoginAdsTitle = "NoLoginAdsTitle"
         case noLoginAdsDesc = "NoLoginAdsDesc"
         case noLoginAdsButton = "NoLoginAdsButton"
+        case noLoginFavoritesTitle = "NoLoginFavoritesTitle"
+        case noLoginFavoritesDesc = "NoLoginFavoritesDesc"
+        case noLoginFavoritesButton = "NoLoginFavoritesButton"
         case invalidOrExpireTokenTitle = "InvalidOrExpireTokenTitle"
         case invalidOrExpireTokenDesc = "InvalidOrExpireTokenDesc"
         case invalidOrExpireTokenButton = "InvalidOrExpireTokenButton"
@@ -180,6 +184,7 @@ enum Strings {
         
         case other = "Other"
         case all = "All"
+        case searchBarPlaceholder = "SearchBarPlaceholder"
         
         case myAds = "MyAds"
         
