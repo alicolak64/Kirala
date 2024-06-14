@@ -54,6 +54,16 @@ final class HomeViewController: UIViewController {
         return refreshControl
     }()
     
+    private lazy var contentCompositinalLayoutCollectionViewFooterActivityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.style = .medium
+        activityIndicator.color = ColorPalette.appPrimary.dynamicColor
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.isHidden = true
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
+    }()
+    
     private lazy var categoriesContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -200,13 +210,18 @@ extension HomeViewController: HomeViewProtocol {
     
     func prepareContentCompositinalLayoutCollectionView() {
         
-        view.addSubview(contentCompositinalLayoutCollectionView)
+        view.addSubviews([
+            contentCompositinalLayoutCollectionView,
+            contentCompositinalLayoutCollectionViewFooterActivityIndicator
+        ])
         
         NSLayoutConstraint.activate([
             contentCompositinalLayoutCollectionView.topAnchor.constraint(equalTo: categoriesContainer.bottomAnchor),
             contentCompositinalLayoutCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentCompositinalLayoutCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            contentCompositinalLayoutCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            contentCompositinalLayoutCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            contentCompositinalLayoutCollectionViewFooterActivityIndicator.centerXAnchor.constraint(equalTo: contentCompositinalLayoutCollectionView.centerXAnchor),
+            contentCompositinalLayoutCollectionViewFooterActivityIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
         ])
         
         contentCompositinalLayoutCollectionView.register(CampaignCell.self)
@@ -230,6 +245,8 @@ extension HomeViewController: HomeViewProtocol {
                 return self.layoutGenerator.getLayout(type: .bestSellers)
             case .mostRated:
                 return self.layoutGenerator.getLayout(type: .mostRated)
+            case .allProducts:
+                return self.layoutGenerator.getLayout(type: .allProducts)
             }
             
         }
@@ -253,6 +270,8 @@ extension HomeViewController: HomeViewProtocol {
                 contentCompositinalLayoutCollectionView.reloadItems(at: indexPaths)
             case .mostRated:
                 contentCompositinalLayoutCollectionView.reloadItems(at: indexPaths)
+            case .allProducts:
+                contentCompositinalLayoutCollectionView.reloadItems(at: indexPaths)
             }
             
         }
@@ -274,6 +293,15 @@ extension HomeViewController: HomeViewProtocol {
         
     }
     
+    func reloadSections(type: HomeCollectionViewTag, at indexSet: IndexSet) {
+        switch type {
+        case .categories:
+            categoriesCollectionView.reloadSections(indexSet)
+        case .compositionalLayout:
+            contentCompositinalLayoutCollectionView.reloadSections(indexSet)
+        }
+    }
+    
     func didScrollToItem(at indexPath: IndexPath) {
         viewModel.didScrollToItem(at: indexPath)
     }
@@ -289,6 +317,16 @@ extension HomeViewController: HomeViewProtocol {
     
     func hideLoading(loadResult: LoadingResult) {
         loadingView.hideLoading(loadResult: loadResult)
+    }
+    
+    func showContentCompositionalLayoutLoading() {
+        contentCompositinalLayoutCollectionViewFooterActivityIndicator.isHidden = false
+        contentCompositinalLayoutCollectionViewFooterActivityIndicator.startAnimating()
+    }
+    
+    func hideContentCompositionalLayoutLoading() {
+        contentCompositinalLayoutCollectionViewFooterActivityIndicator.isHidden = true
+        contentCompositinalLayoutCollectionViewFooterActivityIndicator.stopAnimating()
     }
     
     func addRefreshControl() {
@@ -364,6 +402,12 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 presenter.delegate = self
                 cell.presenter = presenter
                 return cell
+            case .allProducts:
+                let cell: ProductCell = collectionView.dequeueReusableCell(for: indexPath)
+                let presenter = ProductCellPresenter(view: cell, arguments: arguments as! ProductCellArguments)
+                presenter.delegate = self
+                cell.presenter = presenter
+                return cell
             }
         }
     }
@@ -433,9 +477,20 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 presenter.delegate = self
                 cell.presenter = presenter
                 return cell
+            case .allProducts:
+                let cell: ProductsHeaderCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, for: indexPath)
+                let presenter = ProductsHeaderCellPresenter(view: cell, arguments: arguments as! ProductsHeaderArguments )
+                presenter.delegate = self
+                cell.presenter = presenter
+                return cell
             }
         }
         
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView == contentCompositinalLayoutCollectionView else { return }
+        viewModel.scrollViewDidScroll(contentOffset: scrollView.contentOffset, contentSize: scrollView.contentSize, bounds: scrollView.bounds)
     }
 
 }
