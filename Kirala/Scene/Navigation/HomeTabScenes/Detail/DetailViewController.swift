@@ -74,36 +74,7 @@ final class DetailViewController: UIViewController, SwipePerformable, BackNaviga
         animation.duration = FavoriteAnimation.duration
         return animation
     }()
-    
-    private lazy var cartButton: UIView = {
-        let view = UIView()
-        view.backgroundColor = ColorBackground.primary.dynamicColor
-        view.addShadow(color: ColorPalette.appPrimary.dynamicColor, opacity: 0.5, offset: .zero, radius: 15)
-        view.addRoundedBorder(width: 2, color: ColorPalette.appPrimary.dynamicColor)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapCartButton)))
-        return view
-    }()
-    
-    private lazy var cartIcon: UIImageView = {
-        let icon = UIImageView()
-        icon.image = Symbols.cartFill.symbol()
-        icon.tintColor = ColorPalette.appPrimary.dynamicColor
-        icon.translatesAutoresizingMaskIntoConstraints = false
-        return icon
-    }()
-    
-    private lazy var cartLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = ColorPalette.appPrimary.dynamicColor
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 10, weight: .semibold)
-        label.text = Strings.TabBar.cart.localized
-        return label
-    }()
-    
+        
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -204,11 +175,7 @@ final class DetailViewController: UIViewController, SwipePerformable, BackNaviga
     @objc func didTapFavoriteButton() {
         viewModel.didTapFavoriteButton()
     }
-    
-    @objc func didTapCartButton() {
-        viewModel.didTapCartButton()
-    }
-    
+        
     @objc func didTapRentButton() {
         viewModel.didTapCalendarButton()
     }
@@ -229,12 +196,7 @@ extension DetailViewController: DetailViewProtocol {
         view.backgroundColor = ColorBackground.primary.dynamicColor
         
         favoriteButton.addSubview(favoriteIcon)
-        
-        cartButton.addSubviews([
-            cartIcon,
-            cartLabel
-        ])
-        
+                
         footerView.addSubviews([
             priceLabel,
             dateLabel,
@@ -248,7 +210,6 @@ extension DetailViewController: DetailViewProtocol {
         contentView.addSubviews([
             imageSliderView,
             favoriteButton,
-            cartButton,
             nameLabel,
             ratingView,
         ])
@@ -290,20 +251,6 @@ extension DetailViewController: DetailViewProtocol {
             favoriteIcon.centerYAnchor.constraint(equalTo: favoriteButton.centerYAnchor),
             favoriteIcon.widthAnchor.constraint(equalToConstant: 20),
             favoriteIcon.heightAnchor.constraint(equalToConstant: 20),
-            
-            cartButton.widthAnchor.constraint(equalToConstant: 40),
-            cartButton.heightAnchor.constraint(equalToConstant: 45),
-            cartButton.centerYAnchor.constraint(equalTo: imageSliderView.centerYAnchor),
-            cartButton.trailingAnchor.constraint(equalTo: imageSliderView.trailingAnchor, constant: -15),
-            
-            cartIcon.leadingAnchor.constraint(equalTo: cartButton.leadingAnchor, constant: 7),
-            cartIcon.trailingAnchor.constraint(equalTo: cartButton.trailingAnchor, constant: -10),
-            cartIcon.topAnchor.constraint(equalTo: cartButton.topAnchor,constant: 5),
-            cartIcon.heightAnchor.constraint(equalToConstant: 20),
-            
-            cartLabel.topAnchor.constraint(equalTo: cartIcon.bottomAnchor, constant: 2),
-            cartLabel.centerXAnchor.constraint(equalTo: cartButton.centerXAnchor),
-            cartLabel.bottomAnchor.constraint(equalTo: cartButton.bottomAnchor, constant: -2),
             
             nameLabel.topAnchor.constraint(equalTo: imageSliderView.bottomAnchor, constant: 10),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
