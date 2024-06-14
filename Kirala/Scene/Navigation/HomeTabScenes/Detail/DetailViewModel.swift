@@ -156,11 +156,7 @@ extension DetailViewModel: DetailViewModelProtocol {
     func didTapSearchButton() {
         router.navigate(to: .search(.noneSearch))
     }
-    
-    func didTapCartButton() {
-        router.navigate(to: .cart)
-    }
-    
+        
     func didTapCalendarButton() {
         delegate?.showCalendar(with: currentValue)
     }
