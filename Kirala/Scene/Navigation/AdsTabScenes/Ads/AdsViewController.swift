@@ -38,6 +38,8 @@ final class AdsViewController: UIViewController {
         return button
     }()
     
+    private lazy var searchBarView = searchBar
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
@@ -49,6 +51,12 @@ final class AdsViewController: UIViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = ColorPalette.appPrimary.dynamicColor
         return refreshControl
+    }()
+    
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        gesture.cancelsTouchesInView = false
+        return gesture
     }()
     
     // MARK: - Initializers
@@ -85,6 +93,7 @@ final class AdsViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        dismissKeyboard()
         viewModel.viewDidDisappear()
     }
     
@@ -92,6 +101,10 @@ final class AdsViewController: UIViewController {
     
     @objc private func refreshControlPulled() {
         viewModel.refresh()
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
     
 }
@@ -130,22 +143,44 @@ extension AdsViewController: AdsViewProtocol {
     }
     
     func prepareTableView() {
-        view.addSubview(tableView)
+        
+        view.addSubviews([
+            tableView,
+            searchBarView
+        ])
+        
+        searchBarView.translatesAutoresizingMaskIntoConstraints = false
+        searchBarView.placeholder = Strings.Ad.searchBarPlaceholder.localized
+        searchBarView.searchTextField.font = .systemFont(ofSize: 14)
+        
+        
+        view.addGestureRecognizer(tapGesture)
+        
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            
+            searchBarView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            searchBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            searchBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+            searchBarView.heightAnchor.constraint(equalToConstant: 40),
+            
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        
+        searchBar.isHidden = false
         tableView.isHidden = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(AdCell.self)
         
+        
     }
     
     func showEmptyState(with state: EmptyState) {
         tableView.isHidden = true
+        searchBar.isHidden = true
         emptyCardView.configure(with: state)
         emptyCardView.show()
     }
@@ -179,7 +214,7 @@ extension AdsViewController: AdsViewProtocol {
     func endRefreshing() {
         refreshControl.endRefreshing()
     }
-    
+        
 }
 
 extension AdsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -222,5 +257,11 @@ extension AdsViewController: EmptyStateViewDelegate {
         viewModel.didTapEmptyStateActionButton()
     }
     
+}
+
+extension AdsViewController: Searchable {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.searchTextDidChange(searchText)
+    }
 }
 
