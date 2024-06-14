@@ -22,6 +22,12 @@ final class SearchViewController: UIViewController, SwipePerformable, BackNaviga
         return view
     }()
     
+    private lazy var loadingView: LoadingView = {
+        let view = LoadingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var cancelNavigationButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: Strings.Common.cancel.localized, style: .plain, target: self, action: #selector(didTapCancelButton))
         button.tintColor = ColorPalette.appPrimary.dynamicColor
@@ -133,6 +139,7 @@ extension SearchViewController: SearchViewProtocol {
         view.backgroundColor = ColorBackground.primary.dynamicColor
         view.addSubviews([
             emptyCardView,
+            loadingView,
             filterView,
             produstsCollectionView
         ])
@@ -140,6 +147,9 @@ extension SearchViewController: SearchViewProtocol {
     
     func prepareConstraints() {
         NSLayoutConstraint.activate([
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
             emptyCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIDevice.deviceHeight * 0.2),
             emptyCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             emptyCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
@@ -149,6 +159,7 @@ extension SearchViewController: SearchViewProtocol {
             filterView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             filterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             filterView.heightAnchor.constraint(equalToConstant: 50),
+            
             
             
             produstsCollectionView.topAnchor.constraint(equalTo: filterView.bottomAnchor),
@@ -171,6 +182,14 @@ extension SearchViewController: SearchViewProtocol {
     
     func showFilterView() {
         filterView.isHidden = false
+    }
+    
+    func showLoading() {
+        loadingView.showLoading()
+    }
+    
+    func hideLoading(loadResult: LoadingResult) {
+        loadingView.hideLoading(loadResult: loadResult)
     }
     
     func openSearchBar() {

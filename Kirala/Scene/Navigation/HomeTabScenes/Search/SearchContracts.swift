@@ -108,6 +108,9 @@ protocol SearchViewProtocol: AnyObject {
     func removeSwipeGesture()
     func showEmptyState(with state: EmptyState)
     
+    func showLoading()
+    func hideLoading(loadResult: LoadingResult)
+    
     func reloadRows(at indexPaths: [IndexPath])
     func reloadCollectionView()
     func reloadFavoriteState(indexPath: IndexPath, favoriteState: FavoriteState)

@@ -283,6 +283,7 @@
 		E6BF172A2C080F7600C6EA2D /* SelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BF17292C080F7600C6EA2D /* SelectCell.swift */; };
 		E6BF172D2C08218700C6EA2D /* SortPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BF172C2C08218700C6EA2D /* SortPopupView.swift */; };
 		E6BF172F2C0821AE00C6EA2D /* SortPopupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BF172E2C0821AE00C6EA2D /* SortPopupPresenter.swift */; };
+		E6C3BDF52C1C2493005B3C6F /* ProductDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C3BDF42C1C2492005B3C6F /* ProductDetailResponse.swift */; };
 		E6C7742A2C111BA600846EFE /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C774292C111BA600846EFE /* Localizable.swift */; };
 		E6C7742E2C111E0300846EFE /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C7742D2C111E0300846EFE /* Strings.swift */; };
 		E6D0292E2C0B7C8F005E77BE /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E6D0292D2C0B7C8F005E77BE /* Lottie */; };
@@ -307,6 +308,7 @@
 		E6E5E1E42BF54B5500B12BD7 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E5E1E32BF54B5500B12BD7 /* LoadingView.swift */; };
 		E6E5E1E82BF54BB300B12BD7 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E5E1E72BF54BB300B12BD7 /* EmptyStateView.swift */; };
 		E6E5E1EB2BF562EF00B12BD7 /* EmptyState.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6E5E1E92BF562EF00B12BD7 /* EmptyState.strings */; };
+		E6E8E4F62C1BD4FE003415C1 /* SearchProductPageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E8E4F52C1BD4FE003415C1 /* SearchProductPageResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -608,6 +610,10 @@
 		E6BF17292C080F7600C6EA2D /* SelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCell.swift; sourceTree = "<group>"; };
 		E6BF172C2C08218700C6EA2D /* SortPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortPopupView.swift; sourceTree = "<group>"; };
 		E6BF172E2C0821AE00C6EA2D /* SortPopupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortPopupPresenter.swift; sourceTree = "<group>"; };
+		E6C3BDF12C1C214A005B3C6F /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kirala.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6C3BDF22C1C214A005B3C6F /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiralaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6C3BDF32C1C214A005B3C6F /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiralaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6C3BDF42C1C2492005B3C6F /* ProductDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailResponse.swift; sourceTree = "<group>"; };
 		E6C774292C111BA600846EFE /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		E6C7742D2C111E0300846EFE /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		E6D029322C0B80AE005E77BE /* Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lottie.swift; sourceTree = "<group>"; };
@@ -631,9 +637,7 @@
 		E6E5E1E72BF54BB300B12BD7 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		E6E5E1EA2BF562EF00B12BD7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EmptyState.strings; sourceTree = "<group>"; };
 		E6E5E1EC2BF562F600B12BD7 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/EmptyState.strings; sourceTree = "<group>"; };
-		E6E8E4F22C1BB117003415C1 /* Kirala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Kirala.app; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app"; sourceTree = "<absolute>"; };
-		E6E8E4F32C1BB117003415C1 /* KiralaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaTests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/Kirala.app/PlugIns/KiralaTests.xctest"; sourceTree = "<absolute>"; };
-		E6E8E4F42C1BB117003415C1 /* KiralaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KiralaUITests.xctest; path = "/Users/alicolak/Projects/iOS Projects/Kirala/build/Debug-iphoneos/KiralaUITests-Runner.app/PlugIns/KiralaUITests.xctest"; sourceTree = "<absolute>"; };
+		E6E8E4F52C1BD4FE003415C1 /* SearchProductPageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductPageResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1023,6 +1027,9 @@
 				E645F1152BE6CE4A0038075F /* Kirala */,
 				E645F12C2BE6CE4B0038075F /* KiralaTests */,
 				E645F1362BE6CE4B0038075F /* KiralaUITests */,
+				E6C3BDF12C1C214A005B3C6F /* Kirala.app */,
+				E6C3BDF22C1C214A005B3C6F /* KiralaTests.xctest */,
+				E6C3BDF32C1C214A005B3C6F /* KiralaUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1767,6 +1774,8 @@
 				E6AB5E472C1A7A01007C2266 /* CampaignResponse.swift */,
 				E6AB5E492C1A8379007C2266 /* CategoryWithSubcategoryResponse.swift */,
 				E63E3AB62C1B49B300084F97 /* ProductResponse.swift */,
+				E6E8E4F52C1BD4FE003415C1 /* SearchProductPageResponse.swift */,
+				E6C3BDF42C1C2492005B3C6F /* ProductDetailResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1833,7 +1842,7 @@
 				E60816C62C15A026005346D2 /* BSImagePicker */,
 			);
 			productName = Kirala;
-			productReference = E6E8E4F22C1BB117003415C1 /* Kirala.app */;
+			productReference = E6C3BDF12C1C214A005B3C6F /* Kirala.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E645F1282BE6CE4B0038075F /* KiralaTests */ = {
@@ -1851,7 +1860,7 @@
 			);
 			name = KiralaTests;
 			productName = KiralaTests;
-			productReference = E6E8E4F32C1BB117003415C1 /* KiralaTests.xctest */;
+			productReference = E6C3BDF22C1C214A005B3C6F /* KiralaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		E645F1322BE6CE4B0038075F /* KiralaUITests */ = {
@@ -1869,7 +1878,7 @@
 			);
 			name = KiralaUITests;
 			productName = KiralaUITests;
-			productReference = E6E8E4F42C1BB117003415C1 /* KiralaUITests.xctest */;
+			productReference = E6C3BDF32C1C214A005B3C6F /* KiralaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -2049,6 +2058,7 @@
 				E645F17A2BE6D7AA0038075F /* ActionSheetPresentable.swift in Sources */,
 				E67563692BE8493200959F1A /* TabBarViewModel.swift in Sources */,
 				E60816D02C15A063005346D2 /* TextFieldWithTitle.swift in Sources */,
+				E6E8E4F62C1BD4FE003415C1 /* SearchProductPageResponse.swift in Sources */,
 				E646EE672BE794D20024269E /* String+Extensions.swift in Sources */,
 				E646EE722BE794D30024269E /* APIManager.swift in Sources */,
 				E645F16A2BE6D3AF0038075F /* UIColor+Extension.swift in Sources */,
@@ -2226,6 +2236,7 @@
 				E631A74B2C11DCE00070BDEE /* AdCellPresenter.swift in Sources */,
 				E66CDB912C05F86B00E94F1B /* WeekView.swift in Sources */,
 				E62760562C10C7010043039F /* ProgressHUD+SFSymbolBounce.swift in Sources */,
+				E6C3BDF52C1C2493005B3C6F /* ProductDetailResponse.swift in Sources */,
 				E64C030A2BFC0F76007771C6 /* CategoriesViewModel.swift in Sources */,
 				E6E55D7C2C1002E60036C814 /* ResetPasswordCard.swift in Sources */,
 				E689FE422BF27657001884D6 /* Images.swift in Sources */,

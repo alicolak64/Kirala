@@ -94,7 +94,6 @@ final class HomeViewModel {
     
     private var error: ErrorResponse?
     
-    
     private let dispatchGroup = DispatchGroup()
     
     private var loadingState: LoadingState = .loading {
@@ -221,9 +220,14 @@ extension HomeViewModel: HomeViewModelProtocol {
             
             self.dispatchGroup.notify(queue: .main) {
                 self.loadingState = .loaded(.none)
-                guard self.error == nil else { return }
-
-                self.prepareInitialConfig()
+                
+                guard let error = self.error else {
+                    self.prepareInitialConfig()
+                    return
+                }
+                
+                self.delegate?.showEmptyState(with: .error(error))
+                
             }
         }
         
@@ -264,13 +268,19 @@ extension HomeViewModel: HomeViewModelProtocol {
     
     private func fetchAllProducts() {
         dispatchGroup.enter()
-        productService.getProducts(pageIndex: allProductsPage, pageSize: NetworkConstants.Constraints.paginationSize, token: authService.getAuthToken()){ [weak self] result in
+        productService.getProducts(
+            pageIndex: allProductsPage,
+            pageSize: NetworkConstants.Constraints.paginationSize,
+            token: authService.getAuthToken(),
+            categoryId: selectedCategoryIndex == 0 ? nil : categories[selectedCategoryIndex].id
+        ) { [weak self] result in
             defer { self?.dispatchGroup.leave() }
             guard let self = self else { return }
             switch result {
             case .success(let response):
                 guard let data = response.data else { return }
                 let products = data.content
+                print(products.count)
                 self.allProducts.append(contentsOf: products.map { Product(brand: $0.brand, name: $0.name, price: $0.price.toCurrencyString(), imageUrl: $0.imageUrl ?? String.noImageURLString, id: $0.id, favoriteState: $0.isFavorite ? .favorited : .nonFavorited) })
                 self.allProductsPage = data.pageable.pageNumber
                 self.allProductIsLastPage = data.isLast
@@ -317,8 +327,9 @@ extension HomeViewModel: HomeViewModelProtocol {
         productService.getProducts(
             pageIndex: allProductsPage + 1,
             pageSize: NetworkConstants.Constraints.paginationSize,
-            token: authService.getAuthToken())
-        { [weak self] result in
+            token: authService.getAuthToken(),
+            categoryId: selectedCategoryIndex == 0 ? nil : categories[selectedCategoryIndex].id
+        ) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let response):
@@ -385,6 +396,10 @@ extension HomeViewModel: HomeViewModelProtocol {
             categories[indexPath.row].selectionState.toggle()
             selectedCategoryIndex = indexPath.row
             delegate?.reloadRows(type: .categories, at: [IndexPath(row: oldIndex, section: 0), indexPath])
+            allProducts.removeAll()
+            allProductsPage = -1
+            allProductIsLastPage = false
+            fetchNewAllProducts()
         case .compositionalLayout:
             switch HomeCompositionalLayoutSection(rawValue: indexPath.section) {
             case .campaign:
@@ -396,7 +411,8 @@ extension HomeViewModel: HomeViewModelProtocol {
             case .mostRated:
                 router.navigate(to: .detail(DetailArguments(id: "1")))
             case .allProducts:
-                router.navigate(to: .detail(DetailArguments(id: "1")))
+                let id = allProducts[indexPath.row].id
+                router.navigate(to: .detail(DetailArguments(id: id)))
             case .none:
                 break
             }
@@ -623,7 +639,7 @@ extension HomeViewModel: HomeViewModelProtocol {
     }
     
     func didTapEmptyStateActionButton() {
-        print("didTapEmptyStateActionButton")
+        fetchInitialData()
     }
     
 }

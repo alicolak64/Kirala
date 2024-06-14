@@ -17,6 +17,7 @@ final class FavoritesViewController: UIViewController {
     private lazy var emptyCardView: EmptyStateView = {
         let view = EmptyStateView()
         view.delegate = self
+        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -134,6 +135,8 @@ extension FavoritesViewController: FavoritesViewProtocol {
             searchBarView
         ])
         
+        emptyCardView.hide()
+        
         searchBarView.translatesAutoresizingMaskIntoConstraints = false
         searchBarView.placeholder = Strings.Ad.searchBarPlaceholder.localized
         searchBarView.searchTextField.font = .systemFont(ofSize: 14)
@@ -171,6 +174,8 @@ extension FavoritesViewController: FavoritesViewProtocol {
     }
         
     func reloadTableView() {
+        tableView.isHidden = false
+        searchBarView.isHidden = false
         tableView.reloadData()
     }
     

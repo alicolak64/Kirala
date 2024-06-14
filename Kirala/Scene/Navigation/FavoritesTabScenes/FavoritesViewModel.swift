@@ -85,11 +85,16 @@ final class FavoritesViewModel {
                 }
                 filteredFavorites.remove(at: index)
                 delegate?.deleteRows(at: [IndexPath(row: index, section: 0)])
+                if filteredFavorites.isEmpty {
+                    delegate?.showEmptyState(with: .noFavorites)
+                }
             } else {
                 delegate?.deleteRows(at: [IndexPath(row: index, section: 0)])
+                if favorites.isEmpty {
+                    delegate?.showEmptyState(with: .noFavorites)
+                }
             }
         }
-        
         
     }
     
@@ -223,6 +228,9 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
         notifyFavoriteProductChanged(id: id, isFavorite: false)
         delegate?.deleteRows(at: [indexPath])
         
+        if getItems().isEmpty {
+            delegate?.showEmptyState(with: .noFavorites)
+        }
         
         favoriteService.toggleFavorite(productId: id, token: token) { result in
             switch result {

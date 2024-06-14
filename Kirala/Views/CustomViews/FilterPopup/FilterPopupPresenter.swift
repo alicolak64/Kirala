@@ -49,6 +49,7 @@ struct FilterOption {
     let title: String
     let type: FilterType
     var selectedItems: [String]
+    var selectedIds = [String]()
     static func makeFilterOptions() -> [FilterOption] {
         return FilterType.allCases.map { type in
             switch type {

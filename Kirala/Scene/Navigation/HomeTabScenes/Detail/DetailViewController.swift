@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 
 final class DetailViewController: UIViewController, SwipePerformable, BackNavigatable, Shareable {
     
@@ -20,6 +21,12 @@ final class DetailViewController: UIViewController, SwipePerformable, BackNaviga
         let button = UIBarButtonItem(image: Symbols.squareAndArrowUp.symbol(), style: .plain, target: self, action: #selector(shareButtonTapped))
         button.tintColor = ColorText.quaternary.dynamicColor
         return button
+    }()
+    
+    private lazy var loadingView: LoadingView = {
+        let view = LoadingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     private lazy var contentScrollView: UIScrollView = {
@@ -108,21 +115,67 @@ final class DetailViewController: UIViewController, SwipePerformable, BackNaviga
         return label
     }()
     
-    private lazy var rentButton: UIButton = {
+    private lazy var chooseDateButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(Strings.Common.rent.localized, for: .normal)
+        button.setTitle(Strings.Common.chooseDate.localized, for: .normal)
         button.setTitleColor(ColorText.white.dynamicColor, for: .normal)
         button.backgroundColor = ColorPalette.appPrimary.dynamicColor
         button.addRoundedBorder(width: 0.5, color: ColorPalette.border.dynamicColor)
         button.addShadow(color: ColorPalette.border.dynamicColor, opacity: 0.5, offset: .zero, radius: 15)
-        button.addTarget(self, action: #selector(didTapRentButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapChooseDateButton), for: .touchUpInside)
         return button
+    }()
+    
+    private lazy var cartButton: UIView = {
+        let view = UIView()
+        view.backgroundColor = ColorBackground.primary.dynamicColor
+        view.addShadow(color: ColorPalette.appPrimary.dynamicColor, opacity: 0.5, offset: .zero, radius: 15)
+        view.addRoundedBorder(width: 2, color: ColorPalette.appPrimary.dynamicColor)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapRentButton)))
+        view.isHidden = true
+        return view
+    }()
+
+    private lazy var cartIcon: UIImageView = {
+        let icon = UIImageView()
+        icon.image = Symbols.cartFill.symbol(size: 22)
+        icon.tintColor = ColorPalette.appPrimary.dynamicColor
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        return icon
+    }()
+
+    private lazy var cartLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = ColorPalette.appPrimary.dynamicColor
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        label.text = Strings.Common.rent.localized
+        return label
     }()
     
     private lazy var calendar: FastisController = {
         let calendar = FastisController(mode: .range)
         return calendar
+    }()
+    
+    private lazy var mapView: MKMapView = {
+        let mapView = MKMapView()
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        mapView.isHidden = true
+        return mapView
+    }()
+    
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = ColorText.primary.dynamicColor
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.numberOfLines = 0
+        return label
     }()
     
     // MARK: - Initializers
@@ -140,6 +193,7 @@ final class DetailViewController: UIViewController, SwipePerformable, BackNaviga
         super.viewDidLoad()
         viewModel.delegate = self
         viewModel.viewDidLoad()
+        view.backgroundColor = ColorBackground.primary.dynamicColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -176,13 +230,27 @@ final class DetailViewController: UIViewController, SwipePerformable, BackNaviga
         viewModel.didTapFavoriteButton()
     }
         
-    @objc func didTapRentButton() {
+    @objc func didTapChooseDateButton() {
         viewModel.didTapCalendarButton()
+    }
+    
+    @objc func didTapRentButton() {
+        viewModel.didTapRentButton()
     }
     
 }
 
 extension DetailViewController: DetailViewProtocol {
+    
+    
+    func showLoading() {
+        loadingView.showLoading()
+    }
+    
+    func hideLoading(loadResult: LoadingResult) {
+        loadingView.hideLoading()
+    }
+    
     
     func prepareNavigationBar() {
         navigationItem.hidesBackButton = true
@@ -192,15 +260,30 @@ extension DetailViewController: DetailViewProtocol {
         navigationItem.rightBarButtonItem = shareButtonNavigationItem
     }
     
+    func prepareLoadingView() {
+        view.addSubview(loadingView)
+        NSLayoutConstraint.activate([
+            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
+            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
     func prepareUI() {
         view.backgroundColor = ColorBackground.primary.dynamicColor
         
         favoriteButton.addSubview(favoriteIcon)
+        
+        cartButton.addSubviews([
+            cartIcon,
+            cartLabel
+        ])
                 
         footerView.addSubviews([
             priceLabel,
             dateLabel,
-            rentButton
+            chooseDateButton,
         ])
         
         contentScrollView.addSubviews([
@@ -211,7 +294,10 @@ extension DetailViewController: DetailViewProtocol {
             imageSliderView,
             favoriteButton,
             nameLabel,
+            cartButton,
             ratingView,
+            mapView,
+            descriptionLabel
         ])
         
         view.addSubviews([
@@ -252,12 +338,36 @@ extension DetailViewController: DetailViewProtocol {
             favoriteIcon.widthAnchor.constraint(equalToConstant: 20),
             favoriteIcon.heightAnchor.constraint(equalToConstant: 20),
             
+            cartButton.widthAnchor.constraint(equalToConstant: 60),
+            cartButton.heightAnchor.constraint(equalToConstant: 77),
+            cartButton.centerYAnchor.constraint(equalTo: imageSliderView.centerYAnchor),
+            cartButton.trailingAnchor.constraint(equalTo: imageSliderView.trailingAnchor, constant: -15),
+
+            cartIcon.leadingAnchor.constraint(equalTo: cartButton.leadingAnchor, constant: 7),
+            cartIcon.trailingAnchor.constraint(equalTo: cartButton.trailingAnchor, constant: -10),
+            cartIcon.topAnchor.constraint(equalTo: cartButton.topAnchor,constant: 5),
+            cartIcon.heightAnchor.constraint(equalToConstant: 40),
+
+            cartLabel.topAnchor.constraint(equalTo: cartIcon.bottomAnchor, constant: 2),
+            cartLabel.centerXAnchor.constraint(equalTo: cartButton.centerXAnchor),
+            cartLabel.bottomAnchor.constraint(equalTo: cartButton.bottomAnchor, constant: -2),
+            
             nameLabel.topAnchor.constraint(equalTo: imageSliderView.bottomAnchor, constant: 10),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
             ratingView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
             ratingView.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            
+            mapView.topAnchor.constraint(equalTo: ratingView.bottomAnchor, constant: 10),
+            mapView.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            mapView.heightAnchor.constraint(equalToConstant: 500),
+            
+            descriptionLabel.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 10),
+            descriptionLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
             
             footerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -271,10 +381,10 @@ extension DetailViewController: DetailViewProtocol {
             dateLabel.leadingAnchor.constraint(equalTo: priceLabel.leadingAnchor),
             dateLabel.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -10),
             
-            rentButton.topAnchor.constraint(equalTo: priceLabel.topAnchor),
-            rentButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -20),
-            rentButton.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor),
-            rentButton.widthAnchor.constraint(equalToConstant: 80)
+            chooseDateButton.topAnchor.constraint(equalTo: priceLabel.topAnchor),
+            chooseDateButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -20),
+            chooseDateButton.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor),
+            chooseDateButton.widthAnchor.constraint(equalToConstant: 120)
             
         ])
     }
@@ -318,6 +428,10 @@ extension DetailViewController: DetailViewProtocol {
     
     func setDateLabel(with text: String) {
         dateLabel.text = text
+    }
+    
+    func showRentButton() {
+        cartButton.isHidden = false
     }
     
     func setPriceLabelWithTotal(with text: String, totalPrice: String, total: String, perDay: String, price: String) {
@@ -383,6 +497,26 @@ extension DetailViewController: DetailViewProtocol {
         }
     }
     
+    func showMapView(with cgLocation: CLLocationCoordinate2D, annotationTitle: String) {
+        mapView.isHidden = false
+        mapView.setRegion(MKCoordinateRegion(center: cgLocation, latitudinalMeters: 1000, longitudinalMeters: 1000), animated: true)
+        
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = cgLocation
+        annotation.title = annotationTitle
+        mapView.addAnnotation(annotation)
+    }
+    
+    func setDescriptionLabel(with text: String) {
+        descriptionLabel.text = text
+    }
+    
+    func setRentButtonTitle(with text: String) {
+        chooseDateButton.setTitle(text, for: .normal)
+    }
+    
 }
 
 extension DetailViewController: UISearchBarDelegate, Searchable {
@@ -394,6 +528,12 @@ extension DetailViewController: UISearchBarDelegate, Searchable {
     
 }
 
-extension DetailViewController: ActionSheetable {
-    
+extension DetailViewController: ActionSheetable, Alertable {
+    func showAlert(with alertMessage: AlertMessage) {
+        showAlert(
+            title: alertMessage.title,
+            message: alertMessage.message,
+            actions: [UIAlertAction(title: alertMessage.actionTitle, style: .default)]
+        )
+    }
 }

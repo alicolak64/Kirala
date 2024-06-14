@@ -54,14 +54,28 @@ final class SearchViewModel {
     weak var delegate: SearchViewProtocol?
     private var searchOption: SearchRouteOption
     private var searchQuery: String?
+    private var categorySearchArguments: CategorySearchArguments?
     
     private let router: SearchRouterProtocol
     private let filterRouter: FilterRouterProtocol
     private let authService: AuthService
+    private let productService: ProductService
+    private let favoriteService: FavoriteService
     
-    private var products: [SearchProduct] = SearchProduct.mockSearchProducts
+    private var products = [SearchProduct]()
     
-    private var searchCount: Int = Int.random(in: 1...100)
+    private var searchCount = 0
+    
+    private var loadingState: LoadingState = .loading {
+        didSet {
+            switch loadingState {
+            case .loading:
+                delegate?.showLoading()
+            case .loaded(let result):
+                self.delegate?.hideLoading(loadResult: result)
+            }
+        }
+    }
     
     private var sortOptions: [SortOption] = SortOption.makeSortOptions()
     private var filterOptions: [FilterOption] = FilterOption.makeFilterOptions()
@@ -72,7 +86,10 @@ final class SearchViewModel {
     
     init(router: SearchRouterProtocol, searchOption: SearchRouteOption, filterRouter: FilterRouterProtocol, dependencies: [Dependency: Any]) {
         
-        guard let authService = dependencies[.authService] as? AuthService else {
+        guard let authService = dependencies[.authService] as? AuthService,
+              let productService = dependencies[.productService] as? ProductService,
+              let favoriteService = dependencies[.favoriteService] as? FavoriteService
+        else {
             fatalError("AuthService not found")
         }
         
@@ -80,17 +97,46 @@ final class SearchViewModel {
         self.searchOption = searchOption
         self.filterRouter = filterRouter
         self.authService = authService
+        self.productService = productService
+        self.favoriteService = favoriteService
         self.searchbalePopupOptions = Dictionary(uniqueKeysWithValues: SearchablePopupType.allCases.map { ($0, []) })
         self.minMaxPopupOptions = Dictionary(uniqueKeysWithValues: MinMaxPopupType.allCases.map { ($0, []) })
-        addInitialSearchableFilterOptions()
         addInitialMinMaxPopupOptions()
+    }
+    
+    deinit {
+        removeObserver()
+    }
+    
+    private func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(favoritesChanged(_:)), name: .changedFavorite, object: nil)
+    }
+    
+    private func removeObserver() {
+        NotificationCenter.default.removeObserver(self, name: .changedFavorite, object: nil)
+    }
+    
+    @objc private func favoritesChanged(_ notification: Notification) {
+        
+        
+        guard let userInfo = notification.userInfo,
+              let productId = userInfo[NotificationCenterOutputs.productId.rawValue] as? String,
+              let isFavorite = userInfo[NotificationCenterOutputs.isFavorite.rawValue] as? Bool,
+              let index = products.firstIndex(where: { $0.id == productId })
+        else {
+            return
+        }
+                
+        products[index].favoriteState = isFavorite ? .favorited : .nonFavorited
+        delegate?.reloadFavoriteState(indexPath: IndexPath(row: index, section: 0), favoriteState: products[index].favoriteState)
+        
     }
     
     private func addInitialSearchableFilterOptions() {
         SearchablePopupType.allCases.forEach { type in
             searchbalePopupOptions[type] = SearchablePopupArguments.mockData(type: type).items
         }
-        let categories = Category.mockCategories.map { SearchablePopupItem(name: $0.name, selectionState: .unselected) }
+        let categories = Category.mockCategories.map { SearchablePopupItem(id: $0.id, name: $0.name, selectionState: .unselected) }
         searchbalePopupOptions[.category] = SearchablePopupArguments(
             title: Strings.Filter.category.localized,
             type: .category,
@@ -103,6 +149,8 @@ final class SearchViewModel {
             minMaxPopupOptions[type] = MinMaxPopupArguments.mockData(type: type).items
         }
     }
+    
+    
     
 }
 
@@ -131,6 +179,7 @@ extension SearchViewModel: SearchViewModelProtocol {
     }
     
     func didTapFavoriteButton(at indexPath: IndexPath) {
+        
         guard authService.isLoggedIn else {
             
             delegate?.showActionSheet(
@@ -143,7 +192,7 @@ extension SearchViewModel: SearchViewModelProtocol {
             )
             
             return
-        
+            
         }
         
         delegate?.reloadFavoriteState(indexPath: indexPath, favoriteState: products[indexPath.row].favoriteState)
@@ -154,7 +203,7 @@ extension SearchViewModel: SearchViewModelProtocol {
         router.navigate(to: .detail(DetailArguments(id: products[indexPath.row].id)))
     }
     
-
+    
     // MARK: - Lifecycle Methods
     
     func viewDidLoad() {
@@ -181,18 +230,26 @@ extension SearchViewModel: SearchViewModelProtocol {
         
         delegate?.prepareUI()
         
+        
         switch searchOption {
         case .noneSearch:
             delegate?.prepareBackNavigation(type: .right)
         case .searchEdtiting:
             delegate?.prepareBackNavigation(type: .right)
             delegate?.prepareBackNavigation(type: .left)
-        case .categorySearch, .headerSearch, .textSearch:
+        case .categorySearch, .textSearch:
+            delegate?.prepareBackNavigation(type: .left)
+        case .headerSearch:
+            products = SearchProduct.getMockSearchProducts()
+            addInitialSearchableFilterOptions()
             delegate?.prepareBackNavigation(type: .left)
             delegate?.prepareProductsCollectionView()
             delegate?.showProductsCollectionView()
+            delegate?.reloadCollectionView()
             delegate?.showFilterView()
         }
+        
+        addObserver()
         
     }
     
@@ -208,15 +265,10 @@ extension SearchViewModel: SearchViewModelProtocol {
             delegate?.addTapGesture()
         case .textSearch(let query):
             searchQuery = query
-            delegate?.setSearchBarPlaceHolder(with: query + " | " + searchCount.description + " " + Strings.Common.product.localized)
+            getFilteredProducts(searhText: query)
         case .categorySearch(let arguments):
-            searchQuery = arguments.name
-            let items = [SearchablePopupItem(name: arguments.name, selectionState: .selected)]
-            changeSearchableFilterOptions(with: items, type: .category)
-            changeBadgeCount()
-            delegate?.closeExpandedCell(type: .category)
-            delegate?.reloadFilterCell(type: .category)
-            delegate?.setSearchBarPlaceHolder(with: arguments.name + " | " + searchCount.description + " " + Strings.Common.product.localized)
+            categorySearchArguments = arguments
+            getFilteredProducts(categoryIds: [arguments.id])
         case .searchEdtiting(let query):
             delegate?.openSearchBar(with: query)
             delegate?.addTapGesture()
@@ -235,7 +287,7 @@ extension SearchViewModel: SearchViewModelProtocol {
     }
     
     // MARK: - Actions
-        
+    
     func searchBarShouldBeginEditing() -> Bool {
         switch searchOption {
         case .noneSearch:
@@ -313,6 +365,76 @@ extension SearchViewModel: SearchViewModelProtocol {
         }
     }
     
+    private func getFilteredProducts(
+        searhText: String? = nil,
+        categoryIds: [String] = [],
+        brandIds: [String] = [],
+        cityIds: [String] = [],
+        renterIds: [String] = [],
+        minPrice: Double? = nil,
+        maxPrice: Double? = nil,
+        minRating: Double? = nil,
+        minRentalPeriod: Int? = nil,
+        maxRentalPeriod: Int? = nil
+    ) {
+        
+        loadingState = .loading
+        
+        productService.getFilteredProducts(
+            searhText: searhText,
+            categoryIds: categoryIds,
+            brandIds: brandIds,
+            cityIds: cityIds,
+            renterIds: renterIds,
+            minPrice: minPrice,
+            maxPrice: maxPrice,
+            minRentPeriod: minRentalPeriod,
+            maxRentPeriod: maxRentalPeriod,
+            pageIndex: 0,
+            pageSize: 10,
+            token: authService.getAuthToken()
+        ) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                guard let data = response.data else { return }
+                self.searchCount = data.numberOfElements
+                self.products = data.content.products.map {
+                    let imageUrls = $0.imageUrls.map { $0 ?? String.noImageURLString }
+                    let review = ReviewProduct (count: Int.random(in: 1...100), rating: Double.random(in: 1...5))
+                    return SearchProduct(id: $0.id, brand: $0.brand, name: $0.name, price: $0.price, imageUrls: imageUrls, review: review, favoriteState: FavoriteState(isFavorite: $0.isFavorite))
+                }
+                
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.loadingState = .loaded(.none)
+                    self.delegate?.prepareProductsCollectionView()
+                    self.delegate?.showProductsCollectionView()
+                    self.delegate?.reloadCollectionView()
+                    self.delegate?.showFilterView()
+                    self.delegate?.setSearchBarPlaceHolder(with: data.numberOfElements.description + " " + Strings.Common.product.localized)
+                    self.changeBadgeCount()
+                    self.changeSearchableFilterOptions(with: data.content.subcategories.map { SearchablePopupItem(id: $0.id, name: $0.name, selectionState: SelectionState(isSelected: $0.isSelected)) }, type: .category)
+                    self.changeSearchableFilterOptions(with: data.content.brands.map { SearchablePopupItem(id: $0.id, name: $0.name, selectionState: SelectionState(isSelected: $0.isSelected)) }, type: .brand)
+                    self.changeSearchableFilterOptions(with: data.content.cities.map { SearchablePopupItem(id: String($0.id), name: $0.name, selectionState: SelectionState(isSelected: $0.isSelected)) }, type: .city)
+                    self.changeSearchableFilterOptions(with: data.content.renters.map { SearchablePopupItem(id: $0.id, name: $0.name, selectionState: SelectionState(isSelected: $0.isSelected)) }, type: .renter)
+                    self.delegate?.closeExpandedCell(type: .category)
+                    self.delegate?.reloadFilterCell(type: .category)
+                    self.delegate?.closeExpandedCell(type: .brand)
+                    self.delegate?.reloadFilterCell(type: .brand)
+                    self.delegate?.closeExpandedCell(type: .renter)
+                    self.delegate?.reloadFilterCell(type: .renter)
+                    self.delegate?.closeExpandedCell(type: .city)
+                    self.delegate?.reloadFilterCell(type: .city)
+                    self.changeBadgeCount()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+    }
+    
 }
 
 extension SearchViewModel: SortPopupDelegate {
@@ -347,6 +469,7 @@ extension SearchViewModel: FilterPopupDelegate {
             return Strings.Filter.renter.localized
         }
     }
+    
     private func getMinMaxItemTitle(with type: MinMaxPopupType) -> String {
         switch type {
         case .price:
@@ -357,7 +480,7 @@ extension SearchViewModel: FilterPopupDelegate {
             return Strings.Filter.rentalPeriod.localized
         }
     }
-        
+    
     func didSelectFilterOption(_ option: FilterType) {
         switch option {
         case .category, .brand, .city, .renter:
@@ -430,7 +553,7 @@ extension SearchViewModel: FilterPopupDelegate {
         FilterType.allCases.forEach { type in
             delegate?.reloadFilterCell(type: type)
         }
-            
+        
     }
     
     func didTapDismissButton() {
@@ -450,6 +573,15 @@ extension SearchViewModel: SearchablePopupDelegate {
         changeBadgeCount()
         delegate?.closeExpandedCell(type: type.convertFilterType())
         delegate?.reloadFilterCell(type: type.convertFilterType())
+        
+        getFilteredProducts(
+            searhText: searchQuery,
+            categoryIds: filterOptions[FilterType.category.rawValue].selectedIds,
+            brandIds: filterOptions[FilterType.brand.rawValue].selectedIds,
+            cityIds: filterOptions[FilterType.city.rawValue].selectedIds,
+            renterIds: filterOptions[FilterType.renter.rawValue].selectedIds
+        )
+        
     }
     
     
@@ -461,7 +593,7 @@ extension SearchViewModel: SearchablePopupDelegate {
         let badgeCount = filterOptions.reduce(0) { result, option in
             result + (option.type == .price || option.type == .rating || option.type == .rentalPeriod ? (option.selectedItems.isEmpty ? 0 : 1) : option.selectedItems.count)
         }
-
+        
         if badgeCount == 0 {
             delegate?.removeBadgeCountFilterView()
         } else {
@@ -472,13 +604,17 @@ extension SearchViewModel: SearchablePopupDelegate {
     private func changeSearchableFilterOptions(with items: [SearchablePopupItem], type: SearchablePopupType) {
         searchbalePopupOptions[type] = items
         let selectedItems = items.filter { $0.selectionState == .selected }
+        
         filterOptions = filterOptions.map { option in
             var updatedOption = option
             if option.type == type.convertFilterType() {
                 updatedOption.selectedItems = selectedItems.map { $0.name }
+                updatedOption.selectedIds = selectedItems.map { $0.id }
             }
             return updatedOption
         }
+        
+        
         notifySearchableFilterOptionsDidChange(type: type, items: selectedItems.map { $0.name })
     }
     
@@ -492,7 +628,7 @@ extension SearchViewModel: SearchablePopupDelegate {
             ]
         )
     }
-        
+    
 }
 
 extension SearchViewModel: MinMaxPopupDelegate {
@@ -507,7 +643,7 @@ extension SearchViewModel: MinMaxPopupDelegate {
         delegate?.closeExpandedCell(type: type.convertFilterType())
         delegate?.reloadFilterCell(type: type.convertFilterType())
     }
-
+    
     
     private func changeMinMaxPopupOptions(with items: [MinMaxPopupItem], type: MinMaxPopupType) {
         
@@ -535,11 +671,11 @@ extension SearchViewModel: MinMaxPopupDelegate {
         case .price, .rentalPeriod:
             if item.isCustom {
                 if item.min != nil && item.max == nil {
-                    filterOptions[type.convertFilterType().rawValue].selectedItems = [ 
+                    filterOptions[type.convertFilterType().rawValue].selectedItems = [
                         Strings.Filter.min.localized,
                         item.min?.formatIntAndString ?? ""]
                 } else if item.min == nil && item.max != nil {
-                    filterOptions[type.convertFilterType().rawValue].selectedItems = [ 
+                    filterOptions[type.convertFilterType().rawValue].selectedItems = [
                         Strings.Filter.max.localized,
                         item.max?.formatIntAndString ?? ""]
                 } else {

@@ -16,6 +16,7 @@ enum NetworkConstants {
         //return "http://172.16.34.221:8080"
         //return "http://192.168.1.111:8080"
         //return "http://172.16.35.37:8080"
+        //return "http://192.168.214.230:8080"
     #else
         return "https://example.com/api"
     #endif
@@ -48,6 +49,9 @@ enum NetworkConstants {
             static let updateProduct = "/products"
             static let deleteProduct = "/products/"
             static let getProducts = "/products"
+            static let getSearchedProducts = "/products/search"
+            static let getProductDetail = "/products/details"
+            static let rentProduct = "/orders"
         }
         
         enum Favorite {

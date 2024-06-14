@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import MapKit
+
 
 protocol DetailBuilderProtocol {
-    static func build(rootNavigationController: UINavigationController?, navigationController: UINavigationController?) -> UIViewController
+    static func build(rootNavigationController: UINavigationController?, navigationController: UINavigationController?, arguments: DetailArguments) -> UIViewController
 }
 
 enum DetailRoute {
@@ -40,6 +42,7 @@ protocol DetailViewModelProtocol {
     func didTapSearchButton()
     func didTapFavoriteButton()
     func didTapCalendarButton()
+    func didTapRentButton()
     func didSelectCalendarValue(with value: FastisValue?)
 
 }
@@ -49,6 +52,7 @@ protocol DetailViewProtocol: AnyObject {
     
     // MARK: Methods
     
+    func prepareLoadingView()
     func prepareNavigationBar()
     func prepareUI()
     func prepareConstraints()
@@ -73,9 +77,19 @@ protocol DetailViewProtocol: AnyObject {
     func setPriceLabel(with text: String, perDay: String, price: String)
     func setRatingViewValues(rating: Double, totalRatingCount: Int)
     func setNameLabel(with totalString: String, brand: String, name: String)
+    func setRentButtonTitle(with text: String)
     
     
     func showActionSheet(title: String, message: String, actionTitle: String, completion: @escaping () -> Void)
-
     
+    func showLoading()
+    func hideLoading(loadResult: LoadingResult)
+    
+    func showMapView(with cgLocation: CLLocationCoordinate2D, annotationTitle: String)
+    func setDescriptionLabel(with text: String)
+    
+    func showRentButton()
+    
+    func showAlert(with alertMessage: AlertMessage)
+
 }

@@ -9,10 +9,10 @@ import UIKit
 
 final class DetailBuilder: DetailBuilderProtocol {
     
-    static func build(rootNavigationController: UINavigationController?, navigationController: UINavigationController?) -> UIViewController {
+    static func build(rootNavigationController: UINavigationController?, navigationController: UINavigationController?, arguments: DetailArguments) -> UIViewController {
         let router = DetailRouter(rootNavigationController: rootNavigationController, navigationController: navigationController)
-        let dependencies = app.resolveDependencyArray(dependencies: [.authService])
-        let viewModel = DetailViewModel(router: router, dependencies: dependencies)
+        let dependencies = app.resolveDependencyArray(dependencies: [.authService, .productService])
+        let viewModel = DetailViewModel(router: router, dependencies: dependencies, arguments: arguments)
         let viewController = DetailViewController(viewModel: viewModel)
         return viewController
     }

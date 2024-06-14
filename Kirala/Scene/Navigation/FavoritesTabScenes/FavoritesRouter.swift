@@ -22,7 +22,7 @@ final class FavoritesRouter: FavoritesRouterProtocol {
         switch route {
         case .detail(_):
             let detailNavController = UINavigationController()
-            let detailViewController = DetailBuilder.build(rootNavigationController: navigationController, navigationController: detailNavController)
+            let detailViewController = DetailBuilder.build(rootNavigationController: navigationController, navigationController: detailNavController, arguments: DetailArguments(id: "1"))
             detailNavController.viewControllers = [detailViewController]
             detailNavController.modalPresentationStyle = .fullScreen
             navigationController?.present(detailNavController, animated: true, completion: nil)

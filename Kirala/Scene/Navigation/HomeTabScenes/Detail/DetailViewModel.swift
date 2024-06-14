@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 
 final class DetailViewModel {
     
@@ -17,10 +18,24 @@ final class DetailViewModel {
     
     private let router: DetailRouterProtocol
     private let authService: AuthService
+    private let productService: ProductService
+    private let arguments: DetailArguments
     
-    private var detailProduct: SearchProduct = SearchProduct.mockSearchProducts.randomElement()!
+    private var detailProduct: ProductDetailResponse?
+    private var detailProductMock: SearchProduct = SearchProduct.mockSearchProducts.randomElement()!
     
     private let calendar: Calendar = .current
+    
+    private var loadingState: LoadingState = .loading {
+        didSet {
+            switch loadingState {
+            case .loading:
+                delegate?.showLoading()
+            case .loaded(let _):
+                delegate?.hideLoading(loadResult: .none)
+            }
+        }
+    }
     
     private var currentValue: FastisValue? {
         didSet {
@@ -31,7 +46,7 @@ final class DetailViewModel {
                 let combinedDateString = dateString + " / " + numberOfDaysString
                 delegate?.setDateLabel(with: combinedDateString)
                 
-                let price = Double(detailProduct.price)
+                let price = Double(detailProduct?.price ?? 0)
                 let totalPrice = price * Double(numberOfDays)
                 let totalPriceString = totalPrice.toCurrencyString() + " " + Strings.Common.total.localized
                 let pricePerDayString = price.toCurrencyString() + " " + Strings.Common.perDay.localized
@@ -45,6 +60,9 @@ final class DetailViewModel {
                     perDay: Strings.Common.perDay.localized,
                     price: price.toCurrencyString()
                 )
+                
+                delegate?.showRentButton()
+                
             } else if let date = self.currentValue as? Date {
                 print(date)
             } else {
@@ -52,7 +70,7 @@ final class DetailViewModel {
             }
         }
     }
-
+    
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -81,12 +99,16 @@ final class DetailViewModel {
     
     // MARK: - Initializers
     
-    init(router: DetailRouterProtocol, dependencies: [Dependency: Any]) {
-        guard let authService = dependencies[.authService] as? AuthService else {
-            fatalError("AuthService not found")
+    init(router: DetailRouterProtocol, dependencies: [Dependency: Any], arguments: DetailArguments) {
+        guard let authService = dependencies[.authService] as? AuthService,
+              let productService = dependencies[.productService] as? ProductService
+        else {
+            fatalError("AuthService or ProductService not found")
         }
         self.router = router
         self.authService = authService
+        self.productService = productService
+        self.arguments = arguments
     }
     
 }
@@ -96,34 +118,100 @@ extension DetailViewModel: DetailViewModelProtocol {
     // MARK: - Lifecycle Methods
     
     func viewDidLoad() {
-        dateFormatter.calendar = calendar
-        delegate?.prepareNavigationBar()
-        delegate?.prepareUI()
-        delegate?.prepareImageSlider(imageURLs: detailProduct.imageUrls, loopingEnabled: SearchProduct.imageUrls.count > 1)
         
-        delegate?.setPriceLabel(
-            with: detailProduct.price.toCurrencyString() + " " + Strings.Common.perDay.localized,
-            perDay: Strings.Common.perDay.localized,
-            price: detailProduct.price.toCurrencyString()
-        )
+        if arguments.id == "1" {
+            dateFormatter.calendar = calendar
+            delegate?.prepareNavigationBar()
+            delegate?.prepareUI()
+            delegate?.prepareImageSlider(imageURLs: detailProductMock.imageUrls, loopingEnabled: SearchProduct.imageUrls.count > 1)
+            
+            delegate?.setPriceLabel(
+                with: detailProductMock.price.toCurrencyString() + " " + Strings.Common.perDay.localized,
+                perDay: Strings.Common.perDay.localized,
+                price: detailProductMock.price.toCurrencyString()
+            )
+            
+            delegate?.setNameLabel(with: detailProductMock.brand + " " + detailProductMock.name, brand: detailProductMock.brand, name: detailProductMock.name)
+            
+            delegate?.setRatingViewValues(rating: detailProductMock.review.rating, totalRatingCount: detailProductMock.review.count)
+            
+            
+            
+            delegate?.prepareCalendar(
+                minDate: minDate,
+                maxDate: maxDate,
+                selectMonthOnHeaderTap: true,
+                allowToChooseNilDate: true,
+                shortcuts: shortcuts,
+                closedRanges: closedRanges
+            )
+            switch detailProductMock.favoriteState {
+            case .favorited:
+                delegate?.setFavoritedIcon(animated: false)
+            case .nonFavorited:
+                delegate?.setNonfavoritedIcon(animated: false)
+            }
+        } else {
+            dateFormatter.calendar = calendar
+            delegate?.prepareLoadingView()
+            fetchProductDetail()
+        }
         
-        delegate?.setNameLabel(with: detailProduct.brand + " " + detailProduct.name, brand: detailProduct.brand, name: detailProduct.name)
         
-        delegate?.setRatingViewValues(rating: detailProduct.review.rating, totalRatingCount: detailProduct.review.count)
-        
-        delegate?.prepareCalendar(
-            minDate: minDate,
-            maxDate: maxDate,
-            selectMonthOnHeaderTap: true,
-            allowToChooseNilDate: true,
-            shortcuts: shortcuts,
-            closedRanges: closedRanges
-        )
-        switch detailProduct.favoriteState {
-        case .favorited:
-            delegate?.setFavoritedIcon(animated: false)
-        case .nonFavorited:
-            delegate?.setNonfavoritedIcon(animated: false)
+    }
+    
+    private func fetchProductDetail() {
+        loadingState = .loading
+        productService.getProductDetail(id: arguments.id, token: authService.getAuthToken()) { [weak self] result in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    guard let product = response.data else { return }
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.detailProduct = product
+                        self.loadingState = .loaded(.none)
+                        delegate?.prepareNavigationBar()
+                        delegate?.prepareUI()
+                        delegate?.prepareConstraints()
+                        delegate?.prepareImageSlider(imageURLs: product.imageUrls, loopingEnabled: SearchProduct.imageUrls.count > 1)
+                        
+                        delegate?.setPriceLabel(
+                            with: product.price.toCurrencyString() + " " + Strings.Common.perDay.localized,
+                            perDay: Strings.Common.perDay.localized,
+                            price: product.price.toCurrencyString()
+                        )
+                        
+                        delegate?.setNameLabel(with: product.brand + " " + product.name, brand: product.brand, name: product.name)
+                        
+                        delegate?.setRatingViewValues(rating: Double(Int.random(in: 0...5)), totalRatingCount: Int.random(in: 0...100))
+                        
+                        delegate?.setDescriptionLabel(with: product.description)
+                        delegate?.showMapView(with: CLLocationCoordinate2D(latitude: product.location.latitude, longitude: product.location.longitude), annotationTitle: product.location.annotationTitle ?? product.city)
+                        
+                        delegate?.prepareCalendar(
+                            minDate: minDate,
+                            maxDate: maxDate,
+                            selectMonthOnHeaderTap: true,
+                            allowToChooseNilDate: true,
+                            shortcuts: shortcuts,
+                            closedRanges: closedRanges
+                        )
+                        
+                        if product.isFavorite {
+                            delegate?.setFavoritedIcon(animated: false)
+                        } else {
+                            delegate?.setNonfavoritedIcon(animated: false)
+                        }
+                        
+                    }
+                    
+                case .failure(let error):
+                    self.loadingState = .loaded(.none)
+                    //                    self.delegate?.showEmptyState(with: .error(error))
+                }
+            }
         }
     }
     
@@ -140,7 +228,9 @@ extension DetailViewModel: DetailViewModelProtocol {
     }
     
     func viewDidLayoutSubviews() {
-        delegate?.prepareConstraints()
+        if arguments.id == "1" {
+            delegate?.prepareConstraints()
+        }
     }
     
     // MARK: - Actions
@@ -156,7 +246,33 @@ extension DetailViewModel: DetailViewModelProtocol {
     func didTapSearchButton() {
         router.navigate(to: .search(.noneSearch))
     }
-        
+    
+    func didTapRentButton() {
+        if let currentValue = currentValue {
+            
+            guard let authToken = authService.getAuthToken(), let id = detailProduct?.id  else { return }
+            loadingState = .loading
+            productService.rentProduct(productId: id, token: authToken) { [weak self] result in
+                switch result {
+                case .success(_):
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.delegate?.showAlert(with: AlertMessage(
+                            title: "Success",
+                            message: "Successfully mail send for your request to product owner",
+                            actionTitle: Strings.Common.ok.localized
+                        ))
+                        self.loadingState = .loaded(.none)
+                    }
+                case .failure(_):
+                    print("Failure")
+                }
+            }
+            
+            
+        }
+    }
+    
     func didTapCalendarButton() {
         delegate?.showCalendar(with: currentValue)
     }
@@ -182,13 +298,13 @@ extension DetailViewModel: DetailViewModelProtocol {
             
         }
         
-        detailProduct.favoriteState.toggle()
-        switch detailProduct.favoriteState {
-        case .favorited:
-            delegate?.setFavoritedIcon(animated: true)
-        case .nonFavorited:
-            delegate?.setNonfavoritedIcon(animated: true)
-        }
+        //        detailProduct.favoriteState.toggle()
+        //        switch detailProduct.favoriteState {
+        //        case .favorited:
+        //            delegate?.setFavoritedIcon(animated: true)
+        //        case .nonFavorited:
+        //            delegate?.setNonfavoritedIcon(animated: true)
+        //        }
     }
     
 }

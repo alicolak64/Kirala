@@ -34,10 +34,10 @@ struct SearchablePopupArguments {
     static func mockData(type: SearchablePopupType) -> SearchablePopupArguments {
         switch type {
         case .category:
-            let categories = (1...20).map { SearchablePopupItem(name: "Category \($0)", selectionState: .unselected)}
+            let categories = (1...20).map { SearchablePopupItem( id: UUID().uuidString ,name: "Category \($0)", selectionState: .unselected)}
             return SearchablePopupArguments(title: Strings.Filter.category.localized, type: .category, items: categories)
         case .brand:
-            let brands = (1...20).map { SearchablePopupItem(name: "Brand \($0)", selectionState: .unselected)}
+            let brands = (1...20).map { SearchablePopupItem( id: UUID().uuidString, name: "Brand \($0)", selectionState: .unselected)}
             return SearchablePopupArguments(title: Strings.Filter.brand.localized, type: .brand, items: brands)
         case .city:
             let cities = [
@@ -46,17 +46,17 @@ struct SearchablePopupArguments {
                 "Denizli", "Sanliurfa", "Malatya", "Erzurum", "Sakarya", "Trabzon", "Balikesir",
                 "Manisa", "Kocaeli", "Hatay", "Tekirdag", "Aydin", "Isparta", "Canakkale"
             ]
-            let items = cities.map { SearchablePopupItem(name: $0, selectionState: .unselected)}
+            let items = cities.map { SearchablePopupItem( id: UUID().uuidString, name: $0, selectionState: .unselected)}
             return SearchablePopupArguments(title: Strings.Filter.city.localized, type: .city, items: items)
         case .renter:
-            let renters = (1...20).map { SearchablePopupItem(name: "Renter \($0)", selectionState: .unselected)}
+            let renters = (1...20).map { SearchablePopupItem( id: UUID().uuidString, name: "Renter \($0)", selectionState: .unselected)}
             return SearchablePopupArguments(title: Strings.Filter.renter.localized, type: .renter, items: renters)
         }
     }
     
     static func getBrandMockData() -> SearchablePopupArguments {
-        var brands = (1...20).map { SearchablePopupItem(name: "Brand \($0)", selectionState: .unselected)}
-        brands.append(SearchablePopupItem(name: "Other", selectionState: .unselected))
+        var brands = (1...20).map { SearchablePopupItem( id: UUID().uuidString, name: "Brand \($0)", selectionState: .unselected)}
+        brands.append(SearchablePopupItem( id: UUID().uuidString, name: "Other", selectionState: .unselected))
         return SearchablePopupArguments(title: Strings.Filter.brand.localized, type: .brand, items: brands)
     }
     
@@ -68,7 +68,7 @@ struct SearchablePopupArguments {
             "Denizli", "Sanliurfa", "Malatya", "Erzurum", "Sakarya", "Trabzon", "Balikesir",
             "Manisa", "Kocaeli", "Hatay", "Tekirdag", "Aydin", "Isparta", "Canakkale"
         ]
-        let items = cities.map { SearchablePopupItem(name: $0, selectionState: .unselected)}
+        let items = cities.map { SearchablePopupItem( id: UUID().uuidString, name: $0, selectionState: .unselected)}
         return SearchablePopupArguments(title: Strings.Filter.city.localized, type: .city, items: items)
     }
 
@@ -76,9 +76,11 @@ struct SearchablePopupArguments {
 
 class SearchablePopupItem: Selectable {
     let name: String
+    let id: String
     var selectionState: SelectionState
-    init(name: String, selectionState: SelectionState) {
+    init(id: String, name: String, selectionState: SelectionState) {
         self.name = name
+        self.id = id
         self.selectionState = selectionState
     }
 }
