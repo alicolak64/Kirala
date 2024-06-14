@@ -11,11 +11,13 @@ extension Notification.Name {
     static let searchableFilterOptionsDidChange = Notification.Name("searchableFilterOptionsDidChange")
     static let minMaxFilterOptionsDidChange = Notification.Name("minMaxFilterOptionsDidChange")
     static let changedProduct = Notification.Name("changedProduct")
+    static let changedFavorite = Notification.Name("changedFavorite")
 }
 
 enum NotificationCenterOutputs: String {
     case type
     case items
     case productId
+    case isFavorite
 }
 
