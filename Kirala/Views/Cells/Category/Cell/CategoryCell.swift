@@ -49,6 +49,13 @@ final class CategoryCell: UICollectionViewCell, ReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        categoryLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        categoryLabel.text = nil
+        categoryLabel.textColor = ColorText.primary.dynamicColor
+        leadingConstraints?.constant = 2
+    }
+    
     // MARK: - Setup UI
     
     private func setupUI() {
