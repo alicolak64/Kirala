@@ -4,6 +4,7 @@ protocol ProductService {
     func createProduct(product: Ad, token: String, completion: @escaping (Result<BaseResponse<NoData>, ErrorResponse>) -> Void)
     func updateProduct(product: Ad, token: String, completion: @escaping (Result<BaseResponse<NoData>, ErrorResponse>) -> Void)
     func deleteProduct(id: String, token: String, completion: @escaping (Result<BaseResponse<NoData>, ErrorResponse>) -> Void)
+    func getProducts(pageIndex: Int, pageSize: Int, token: String?, completion: @escaping (Result<BaseResponse<ProductPageResponse>, ErrorResponse>) -> Void)
     func getProductListByUser(token: String, completion: @escaping (Result<BaseResponseArray<MyProductResponse>, ErrorResponse>) -> Void)
     func getProductById(id: String, token: String, completion: @escaping (Result<BaseResponse<MyProductDetailResponse>, ErrorResponse>) -> Void)
 }
@@ -21,6 +22,19 @@ final class ProductManager: ProductService {
         let provider = ApiServiceProvider<[String:String]>(method: .get, baseUrl: NetworkConstants.baseUrl, path: NetworkConstants.Endpoints.Product.getProductById + id, data: [:])
         
         try? APIManager.shared.executeRequest(urlRequest: provider.returnUrlRequest(with: [.authorization(token)]), completion: completion)
+    }
+    
+    func getProducts(pageIndex: Int, pageSize: Int, token: String?, completion: @escaping (Result<BaseResponse<ProductPageResponse>, ErrorResponse>) -> Void) {
+            
+            let provider = ApiServiceProvider<[String:String]>(method: .get, baseUrl: NetworkConstants.baseUrl, path: NetworkConstants.Endpoints.Product.getProducts, data: ["pageIndex": "\(pageIndex)", "pageSize": "\(pageSize)"])
+            
+        if let token = token {
+            try? APIManager.shared.executeRequest(urlRequest: provider.returnUrlRequest(with: [.authorization(token)]), completion: completion)
+        } else {
+            try? APIManager.shared.executeRequest(urlRequest: provider.returnUrlRequest(), completion: completion)
+        }
+        
+            
     }
     
     func deleteProduct(id: String, token: String, completion: @escaping (Result<BaseResponse<NoData>, ErrorResponse>) -> Void) {
