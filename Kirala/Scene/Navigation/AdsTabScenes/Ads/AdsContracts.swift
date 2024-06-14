@@ -44,6 +44,8 @@ protocol AdsViewModelProtocol {
     func cellForRow(at indexPath: IndexPath) -> AdCellArguments?
     func didSelectRow(at indexPath: IndexPath)
     func heightForRow(at indexPath: IndexPath) -> CGFloat
+    
+    func searchTextDidChange(_ searchText: String)
         
     // MARK: Actions
     func didTapEmptyStateActionButton()
@@ -66,7 +68,7 @@ protocol AdsViewProtocol: AnyObject {
     func prepareTableView()
     func reloadTableView()
     func reloadRows(at indexPaths: [IndexPath])
-    
+        
     func showLoading()
     func hideLoading(loadResult: LoadingResult)
     
