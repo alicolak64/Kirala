@@ -67,6 +67,7 @@ final class HomeViewModel {
     private let authService: AuthService
     private let categoryService: CategoryService
     private let productService: ProductService
+    private let favoriteService: FavoriteService
     
     // MARK: - Properties
     
@@ -86,6 +87,14 @@ final class HomeViewModel {
     
     private var mostRatedProducts: [Product] = Product.mockProducts.shuffled()
     
+    private var allProducts = [Product]()
+    private var allProductsPage = 0
+    private var allProductIsLastPage = false
+    private var allProductsLastRequestTime: Date?
+    
+    private var error: ErrorResponse?
+    
+    
     private let dispatchGroup = DispatchGroup()
     
     private var loadingState: LoadingState = .loading {
@@ -99,13 +108,25 @@ final class HomeViewModel {
         }
     }
     
+    private var paginationLoadingState: LoadingState = .loaded(.none) {
+        didSet {
+            switch paginationLoadingState {
+            case .loading:
+                delegate?.showContentCompositionalLayoutLoading()
+            case .loaded(_):
+                delegate?.hideContentCompositionalLayoutLoading()
+            }
+        }
+    }
+    
     // MARK: - Initializers
     
     init(router: HomeRouterProtocol, dependencies: [Dependency: Any]) {
        
         guard let authService = dependencies[.authService] as? AuthService,
               let categoryService = dependencies[.categoryService] as? CategoryService,
-              let productService = dependencies[.productService] as? ProductService
+              let productService = dependencies[.productService] as? ProductService,
+              let favoriteService = dependencies[.favoriteService] as? FavoriteService
         else {
             fatalError("Dependencies could not be resolved")
         }
@@ -114,7 +135,11 @@ final class HomeViewModel {
         self.authService = authService
         self.categoryService = categoryService
         self.productService = productService
-        
+        self.favoriteService = favoriteService
+    }
+    
+    deinit {
+        removeObserver()
     }
     
     private func startTimer() {
@@ -124,11 +149,38 @@ final class HomeViewModel {
     // MARK: - Actions
     
     @objc private func campaignTimerAction() {
+        guard !campaigns.isEmpty else { return }
         visibleCampaignIndexPath.row += 1
         if visibleCampaignIndexPath.row == campaigns.count {
             visibleCampaignIndexPath.row = 0
         }
         delegate?.reloadRows(type: .compositionalLayout, at: [visibleCampaignIndexPath])
+    }
+    
+    private func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(favoritesChanged(_:)), name: .changedFavorite, object: nil)
+    }
+ 
+    private func removeObserver() {
+        NotificationCenter.default.removeObserver(self, name: .changedFavorite, object: nil)
+    }
+    
+    @objc private func favoritesChanged(_ notification: Notification) {
+        
+        
+        guard let userInfo = notification.userInfo,
+              let productId = userInfo[NotificationCenterOutputs.productId.rawValue] as? String,
+              let isFavorite = userInfo[NotificationCenterOutputs.isFavorite.rawValue] as? Bool,
+              let index = allProducts.firstIndex(where: { $0.id == productId })
+        else {
+            return
+        }
+        
+        print("Home Scene Favorites changed", allProducts[index].name, isFavorite)
+        
+        allProducts[index].favoriteState = isFavorite ? .favorited : .nonFavorited
+        delegate?.reloadFavoriteState(indexPath: IndexPath(row: index, section: HomeCompositionalLayoutSection.allProducts.rawValue), favoriteState: allProducts[index].favoriteState)
+        
     }
     
 }
@@ -141,12 +193,9 @@ extension HomeViewModel: HomeViewModelProtocol {
         
         delegate?.prepareNavigationBar()
         delegate?.prepareUI()
-        
-        delegate?.prepareCategoriesCollectionView()
-        delegate?.prepareContentCompositinalLayoutCollectionView()
-        delegate?.configureContentCompositionalLayout()
-        
+                
         fetchInitialData()
+        addObserver()
         
     }
     
@@ -162,14 +211,19 @@ extension HomeViewModel: HomeViewModelProtocol {
     
     private func fetchInitialData() {
         
+        loadingState = .loading
+        
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             self.fetchCampaigns()
             self.fetchCategories()
+            self.fetchAllProducts()
             
             self.dispatchGroup.notify(queue: .main) {
-                self.prepareInitialConfig()
                 self.loadingState = .loaded(.none)
+                guard self.error == nil else { return }
+
+                self.prepareInitialConfig()
             }
         }
         
@@ -186,6 +240,7 @@ extension HomeViewModel: HomeViewModelProtocol {
                 self.campaigns = campaigns.map { Campaign(id: $0.id, url: $0.imageUrl) }
             case .failure(let error):
                 print(error)
+                self.error = error
             }
         }
     }
@@ -202,11 +257,35 @@ extension HomeViewModel: HomeViewModelProtocol {
                 self.categories.insert(Category(name: Strings.Ad.all.localized, id: "0", selectionState: .selected), at: 0)
             case .failure(let error):
                 print(error)
+                self.error = error
+            }
+        }
+    }
+    
+    private func fetchAllProducts() {
+        dispatchGroup.enter()
+        productService.getProducts(pageIndex: allProductsPage, pageSize: NetworkConstants.Constraints.paginationSize, token: authService.getAuthToken()){ [weak self] result in
+            defer { self?.dispatchGroup.leave() }
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                guard let data = response.data else { return }
+                let products = data.content
+                self.allProducts.append(contentsOf: products.map { Product(brand: $0.brand, name: $0.name, price: $0.price.toCurrencyString(), imageUrl: $0.imageUrl ?? String.noImageURLString, id: $0.id, favoriteState: $0.isFavorite ? .favorited : .nonFavorited) })
+                self.allProductsPage = data.pageable.pageNumber
+                self.allProductIsLastPage = data.isLast
+                self.allProductsLastRequestTime = Date()
+            case .failure(let error):
+                print(error)
+                self.error = error
             }
         }
     }
     
     private func prepareInitialConfig() {
+        delegate?.prepareCategoriesCollectionView()
+        delegate?.prepareContentCompositinalLayoutCollectionView()
+        delegate?.configureContentCompositionalLayout()
         delegate?.reloadCollectionView(type: .categories)
         delegate?.reloadCollectionView(type: .compositionalLayout)
         startTimer()
@@ -232,6 +311,33 @@ extension HomeViewModel: HomeViewModelProtocol {
     
     // MARK: - Category CollectionView Methods
     
+    func fetchNewAllProducts() {
+                
+        paginationLoadingState = .loading
+        productService.getProducts(
+            pageIndex: allProductsPage + 1,
+            pageSize: NetworkConstants.Constraints.paginationSize,
+            token: authService.getAuthToken())
+        { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                guard let data = response.data else { return }
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    let products = data.content
+                    self.allProducts.append(contentsOf: products.map { Product(brand: $0.brand, name: $0.name, price: $0.price.toCurrencyString(), imageUrl: $0.imageUrl ?? String.noImageURLString, id: $0.id, favoriteState: $0.isFavorite ? .favorited : .nonFavorited) })
+                    self.allProductsPage = data.pageable.pageNumber
+                    self.allProductIsLastPage = data.isLast
+                    self.paginationLoadingState = .loaded(.none)
+                    self.delegate?.reloadSections(type: .compositionalLayout, at: IndexSet(integer: HomeCompositionalLayoutSection.allProducts.rawValue))
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     func numberOfSections(type: HomeCollectionViewTag) -> Int {
         switch type {
         case .categories:
@@ -256,6 +362,8 @@ extension HomeViewModel: HomeViewModelProtocol {
                 return bestSellersProducts.count
             case .mostRated:
                 return mostRatedProducts.count
+            case .allProducts:
+                return allProducts.count
             }
         }
     }
@@ -287,6 +395,8 @@ extension HomeViewModel: HomeViewModelProtocol {
                 router.navigate(to: .detail(DetailArguments(id: "1")))
             case .mostRated:
                 router.navigate(to: .detail(DetailArguments(id: "1")))
+            case .allProducts:
+                router.navigate(to: .detail(DetailArguments(id: "1")))
             case .none:
                 break
             }
@@ -308,6 +418,8 @@ extension HomeViewModel: HomeViewModelProtocol {
                 return cellForItemBestSellersProduct(at: indexPath)
             case .mostRated:
                 return cellForItemMostRatedProduct(at: indexPath)
+            case .allProducts:
+                return cellForItemAllProducts(at: indexPath)
             case .none:
                 return nil
             }
@@ -328,6 +440,8 @@ extension HomeViewModel: HomeViewModelProtocol {
                 return headerForSectionBestSellers()
             case .mostRated:
                 return headerForSectionMostRated()
+            case .allProducts:
+                return headerForSectionAllProducts()
             case .none:
                 return nil
             }
@@ -339,6 +453,34 @@ extension HomeViewModel: HomeViewModelProtocol {
         visibleCampaignIndexPath = indexPath
         campaignTimer?.invalidate()
         startTimer()
+    }
+    
+    func scrollViewDidScroll(contentOffset: CGPoint, contentSize: CGSize, bounds: CGRect) {
+        guard !allProductIsLastPage && !paginationLoadingState.isLoading() else { return }
+        
+        
+        let contentHeight = contentSize.height
+        let visibleHeight = bounds.height
+        let scrollOffset = contentOffset.y
+        
+        let scrollPercentage = (scrollOffset + visibleHeight) / contentHeight
+        
+        if scrollPercentage >= NetworkConstants.Constraints.infinityScrollPercentage && allProducts.count > 0 {
+            
+            let now = Date()
+            
+            if let lastRequestTime = allProductsLastRequestTime,  Date().timeIntervalSince(lastRequestTime) < NetworkConstants.Constraints.infinityScrollLateLimitSecond{
+                return
+            }
+            
+            fetchNewAllProducts()
+            
+            allProductsLastRequestTime = now
+            
+        }
+        
+        
+        
     }
     
     private func cellForItemCategory(at indexPath: IndexPath) -> CategoryCellArguments? {
@@ -363,6 +505,11 @@ extension HomeViewModel: HomeViewModelProtocol {
     
     private func cellForItemMostRatedProduct(at indexPath: IndexPath) -> ProductCellArguments? {
         let product = mostRatedProducts[indexPath.row]
+        return ProductCellArguments(brand: product.brand, name: product.name, imageURL: product.imageUrl, price: product.price, favoriteState: product.favoriteState, indexPath: indexPath)
+    }
+    
+    private func cellForItemAllProducts(at indexPath: IndexPath) -> ProductCellArguments? {
+        let product = allProducts[indexPath.row]
         return ProductCellArguments(brand: product.brand, name: product.name, imageURL: product.imageUrl, price: product.price, favoriteState: product.favoriteState, indexPath: indexPath)
     }
     
@@ -397,6 +544,14 @@ extension HomeViewModel: HomeViewModelProtocol {
         )
     }
     
+    func headerForSectionAllProducts() -> ProductsHeaderArguments? {
+        ProductsHeaderArguments(
+            headerType: .bestSellers,
+            title: Strings.Common.allProducts.localized,
+            actionTitle: Strings.Common.seeAll.localized
+        )
+    }
+    
     func didTapFavoriteButton(at indexPath: IndexPath) {
         
         guard authService.isLoggedIn else {
@@ -427,9 +582,40 @@ extension HomeViewModel: HomeViewModelProtocol {
         case .mostRated:
             mostRatedProducts[indexPath.row].toggleFavorite()
             delegate?.reloadFavoriteState(indexPath: indexPath, favoriteState: mostRatedProducts[indexPath.row].favoriteState)
+        case .allProducts:
+            allProducts[indexPath.row].toggleFavorite()
+            notifyFavoriteProductChanged(id: allProducts[indexPath.row].id, isFavorite: allProducts[indexPath.row].favoriteState.isFavorite)
+            toogleProductFavoriteState(with: allProducts[indexPath.row].id)
+            delegate?.reloadFavoriteState(indexPath: indexPath, favoriteState: allProducts[indexPath.row].favoriteState)
         case .none:
             break
         }
+        
+        
+
+    }
+    
+    func toogleProductFavoriteState(with id: String) {
+        guard let token = authService.getAuthToken() else { return }
+        favoriteService.toggleFavorite(productId: id, token: token) { result in
+            switch result {
+            case .success(let response):
+                print("Success: \(response)")
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func notifyFavoriteProductChanged(id: String, isFavorite: Bool) {
+        NotificationCenter.default.post(
+            name: .changedFavorite,
+            object: nil,
+            userInfo: [
+                NotificationCenterOutputs.productId.rawValue: id,
+                NotificationCenterOutputs.isFavorite.rawValue: isFavorite
+            ]
+        )
     }
     
     func refresh() {
