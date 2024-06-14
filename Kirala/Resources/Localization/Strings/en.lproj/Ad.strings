@@ -10,6 +10,7 @@
 "AddAd" = "Add Ad";
 "Other" = "Other";
 "All" = "All";
+"SearchBarPlaceholder" = "Search Your Products With Name Or Brand";
 
 "CategoryTitle" = "Product Category";
 "CategoryPlaceholder" = "Select or enter a product category";
