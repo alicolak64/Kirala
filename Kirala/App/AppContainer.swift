@@ -12,6 +12,7 @@ enum Dependency {
     case authenticationService
     case categoryService
     case productService
+    case favoriteService
 }
 
 // MARK: - App Container Instance
@@ -42,6 +43,10 @@ final class AppContainer {
     private lazy var productService: ProductService = {
         ProductManager()
     }()
+    
+    private lazy var favoriteService: FavoriteService = {
+        FavoriteManager()
+    }()
         
     // MARK: - Initializers
     
@@ -61,6 +66,8 @@ final class AppContainer {
             return categoryService
         case .productService:
             return productService
+        case .favoriteService:
+            return favoriteService
         }
     }
     
@@ -76,6 +83,8 @@ final class AppContainer {
                 resolvedDependencies[.categoryService] = categoryService
             case .productService:
                 resolvedDependencies[.productService] = productService
+            case .favoriteService:
+                resolvedDependencies[.favoriteService] = favoriteService
             }
         }
         return resolvedDependencies
