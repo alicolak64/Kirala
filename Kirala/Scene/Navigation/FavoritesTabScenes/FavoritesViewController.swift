@@ -1,0 +1,262 @@
+//
+//  FavoritesViewController.swift
+//  Kirala
+//
+//  Created by Ali Çolak on 14.06.2024.
+//
+
+import UIKit
+
+final class FavoritesViewController: UIViewController {
+    
+    // MARK: - Properties
+    private let viewModel: FavoritesViewModel
+    
+    // MARK: - UI Properties
+    
+    private lazy var emptyCardView: EmptyStateView = {
+        let view = EmptyStateView()
+        view.delegate = self
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var loadingView: LoadingView = {
+        let view = LoadingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var searchBarView = searchBar
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = ColorPalette.appPrimary.dynamicColor
+        return refreshControl
+    }()
+    
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        gesture.cancelsTouchesInView = false
+        return gesture
+    }()
+    
+    // MARK: - Initializers
+    init(viewModel: FavoritesViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel.delegate = self
+        viewModel.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.viewWillAppear()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.viewDidAppear()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        viewModel.viewDidLayoutSubviews()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        dismissKeyboard()
+        viewModel.viewDidDisappear()
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func refreshControlPulled() {
+        viewModel.refresh()
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+}
+
+extension FavoritesViewController: FavoritesViewProtocol {
+    
+    func prepareNavigationBar() {
+        navigationItem.hidesBackButton = true
+        addBottomBorder()
+        navigationItem.title = Strings.TabBar.favorites.localized
+    }
+        
+    func prepareUI() {
+        view.backgroundColor = ColorBackground.primary.dynamicColor
+        view.addSubviews([
+            emptyCardView,
+            loadingView
+        ])
+    }
+    
+    func prepareConstraints() {
+        NSLayoutConstraint.activate([
+            
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            emptyCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIDevice.deviceHeight * 0.2),
+            emptyCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            emptyCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            emptyCardView.heightAnchor.constraint(equalToConstant: UIDevice.deviceHeight * 0.3)
+        ])
+    }
+    
+    func prepareTableView() {
+        
+        view.addSubviews([
+            tableView,
+            searchBarView
+        ])
+        
+        searchBarView.translatesAutoresizingMaskIntoConstraints = false
+        searchBarView.placeholder = Strings.Ad.searchBarPlaceholder.localized
+        searchBarView.searchTextField.font = .systemFont(ofSize: 14)
+        
+        
+        view.addGestureRecognizer(tapGesture)
+        
+        NSLayoutConstraint.activate([
+            
+            searchBarView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            searchBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            searchBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+            searchBarView.heightAnchor.constraint(equalToConstant: 40),
+            
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        searchBar.isHidden = false
+        tableView.isHidden = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(FavoriteCell.self)
+        
+        
+    }
+    
+    func showEmptyState(with state: EmptyState) {
+        tableView.isHidden = true
+        searchBarView.isHidden = true
+        emptyCardView.configure(with: state)
+        emptyCardView.show()
+    }
+        
+    func reloadTableView() {
+        tableView.reloadData()
+    }
+    
+    func reloadRows(at indexPaths: [IndexPath]) {
+        tableView.reloadRows(at: indexPaths, with: .automatic)
+    }
+    
+    func deleteRows(at indexPaths: [IndexPath]) {
+        tableView.deleteRows(at: indexPaths, with: .automatic)
+    }
+    
+    func showLoading() {
+        loadingView.showLoading()
+    }
+    
+    func hideLoading(loadResult: LoadingResult) {
+        loadingView.hideLoading(loadResult: loadResult)
+    }
+    
+    func addRefreshControl() {
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshControlPulled), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+    }
+    
+    func endRefreshing() {
+        refreshControl.endRefreshing()
+    }
+        
+}
+
+extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        viewModel.numberOfSections()
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.numberOfRows(in: section)
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let arguments = viewModel.cellForRow(at: indexPath) else {
+            return UITableViewCell()
+        }
+        
+        let cell: FavoriteCell = tableView.dequeueReusableCell(for: indexPath)
+        let presenter = FavoriteCellPresenter(view: cell, arguments: arguments)
+        presenter.delegate = self
+        cell.presenter = presenter
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        viewModel.didSelectRow(at: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        viewModel.heightForRow(at: indexPath)
+    }
+    
+    
+}
+
+extension FavoritesViewController: EmptyStateViewDelegate {
+    
+
+    func didTapActionButton() {
+        viewModel.didTapEmptyStateActionButton()
+    }
+    
+}
+
+extension FavoritesViewController: Searchable {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.searchTextDidChange(searchText)
+    }
+}
+
+extension FavoritesViewController: FavoriteCellDelegate {
+    
+    func didTapDeleteButton(with indexPath: IndexPath) {
+        viewModel.didTapDeleteButton(with: indexPath)
+    }
+    
+}
+
