@@ -18,6 +18,8 @@ final class AdsViewModel {
     private let productService: ProductService
     
     private var ads = [MyProductResponse]()
+    private var filteredAds = [MyProductResponse]()
+    private var isSearchActive: Bool = false
     
     private var loadingState: LoadingState = .loading {
         didSet {
@@ -70,9 +72,14 @@ final class AdsViewModel {
 
     }
     
+    private func getItems() -> [MyProductResponse] {
+        isSearchActive ? filteredAds : ads
+    }
+    
 }
 
 extension AdsViewModel: AdsViewModelProtocol {
+    
     
     // MARK: - Lifecycle Methods
     
@@ -136,15 +143,15 @@ extension AdsViewModel: AdsViewModelProtocol {
     }
     
     func numberOfRows(in section: Int) -> Int {
-        ads.count
+        getItems().count
     }
     
     func cellForRow(at indexPath: IndexPath) -> AdCellArguments? {
-        guard ads.indices.contains(indexPath.row) else {
+        guard getItems().indices.contains(indexPath.row) else {
             return nil
         }
         
-        let ad = ads[indexPath.row]
+        let ad = getItems()[indexPath.row]
         
         if let imageUrl = ad.imageUrl {
             return AdCellArguments(brand: ad.brand, name: ad.name, imageUrl: imageUrl, price: ad.price.toString())
@@ -157,17 +164,25 @@ extension AdsViewModel: AdsViewModelProtocol {
     
     func didSelectRow(at indexPath: IndexPath) {
         
-        guard ads.indices.contains(indexPath.row) else {
+        guard getItems().indices.contains(indexPath.row) else {
             return
         }
         
-        let argument = EditAddAdArguments(id: ads[indexPath.row].id)
+        let argument = EditAddAdArguments(id: getItems()[indexPath.row].id)
         
         router.navigate(to: .add(.editAd(argument)))
     }
     
     func heightForRow(at indexPath: IndexPath) -> CGFloat {
         80
+    }
+    
+    func searchTextDidChange(_ searchText: String) {
+        isSearchActive = !searchText.trimmed.isEmpty
+        filteredAds = ads.filter {
+            $0.name.lowercased().contains(searchText.lowercased()) || $0.brand.lowercased().contains(searchText.lowercased())
+        }
+        delegate?.reloadTableView()
     }
     
     private func fetchMyAds() {
