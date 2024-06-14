@@ -47,7 +47,20 @@ enum NetworkConstants {
             static let getProductById = "/products/"
             static let updateProduct = "/products"
             static let deleteProduct = "/products/"
+            static let getProducts = "/products"
         }
+        
+        enum Favorite {
+            static let getFavorites = "/favorites"
+            static let toggleFavorite = "/favorites"
+        }
+        
+    }
+    
+    enum Constraints {
+        static let paginationSize = 10
+        static let infinityScrollLateLimitSecond = 1.0
+        static let infinityScrollPercentage = 0.9
     }
     
 }
