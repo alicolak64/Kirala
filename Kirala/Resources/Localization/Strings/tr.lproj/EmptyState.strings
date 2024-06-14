@@ -65,6 +65,10 @@
 "NoLoginAdsDesc" = "İlanlarınızı görüntüleyebilmek için lütfen giriş yapın.";
 "NoLoginAdsButton" = "Giriş Yap";
 
+"NoLoginFavoritesTitle" = "Favorilerim";
+"NoLoginFavoritesDesc" = "Favorilerinizi görüntüleyebilmek için lütfen giriş yapın.";
+"NoLoginFavoritesButton" = "Giriş Yap";
+
 "InvalidOrExpireTokenTitle" = "Geçersiz veya Süresi Dolmuş Token";
 "InvalidOrExpireTokenDesc" = "Token süresi dolmuş veya geçersiz. Lütfen daha sonra tekrar deneyin.";
 "InvalidOrExpireTokenButton" = "Girişe geri dön";

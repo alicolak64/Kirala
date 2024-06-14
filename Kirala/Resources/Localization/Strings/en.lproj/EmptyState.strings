@@ -65,6 +65,10 @@
 "NoLoginAdsDesc" = "Please log in to view your ads.";
 "NoLoginAdsButton" = "Log In";
 
+"NoLoginFavoritesTitle" = "My Favorites";
+"NoLoginFavoritesDesc" = "Please log in to view your favorites.";
+"NoLoginFavoritesButton" = "Log In";
+
 "InvalidOrExpireTokenTitle" = "Invalid or Expired Token";
 "InvalidOrExpireTokenDesc" = "Your session has expired. Please try again.";
 "InvalidOrExpireTokenButton" = "Back to Login";
