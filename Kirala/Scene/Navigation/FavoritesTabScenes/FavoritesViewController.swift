@@ -28,13 +28,29 @@ final class FavoritesViewController: UIViewController {
         return view
     }()
     
+    private lazy var headerView: UIView = {
+        let view = UIView()
+        view.makeHeaderStyle()
+        view.backgroundColor = ColorBackground.secondary.dynamicColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var searchBarView = searchBar
     
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.separatorStyle = .none
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
+    private lazy var productsCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 16
+        layout.minimumInteritemSpacing = 16
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = ColorBackground.secondary.dynamicColor
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return collectionView
     }()
     
     private lazy var refreshControl: UIRefreshControl = {
@@ -108,7 +124,7 @@ extension FavoritesViewController: FavoritesViewProtocol {
     }
         
     func prepareUI() {
-        view.backgroundColor = ColorBackground.primary.dynamicColor
+        view.backgroundColor = ColorBackground.secondary.dynamicColor
         view.addSubviews([
             emptyCardView,
             loadingView
@@ -128,63 +144,71 @@ extension FavoritesViewController: FavoritesViewProtocol {
         ])
     }
     
-    func prepareTableView() {
+    func prepareCollectionView() {
         
-        view.addSubviews([
-            tableView,
+        headerView.addSubviews([
             searchBarView
         ])
         
-        emptyCardView.hide()
-        
+        view.addSubviews([
+            headerView,
+            productsCollectionView
+        ])
+                
         searchBarView.translatesAutoresizingMaskIntoConstraints = false
         searchBarView.placeholder = Strings.Ad.searchBarPlaceholder.localized
         searchBarView.searchTextField.font = .systemFont(ofSize: 14)
         
+        emptyCardView.isHidden = true
         
         view.addGestureRecognizer(tapGesture)
         
         NSLayoutConstraint.activate([
             
-            searchBarView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            searchBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            searchBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 50),
+            
+            
+            searchBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchBarView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
             searchBarView.heightAnchor.constraint(equalToConstant: 40),
             
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            productsCollectionView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 10),
+            productsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            productsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            productsCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
         ])
         
         searchBar.isHidden = false
-        tableView.isHidden = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(FavoriteCell.self)
-        
+        productsCollectionView.isHidden = false
+        productsCollectionView.delegate = self
+        productsCollectionView.dataSource = self
+        productsCollectionView.register(FavoriteCell.self)
         
     }
     
     func showEmptyState(with state: EmptyState) {
-        tableView.isHidden = true
+        productsCollectionView.isHidden = true
         searchBarView.isHidden = true
         emptyCardView.configure(with: state)
         emptyCardView.show()
     }
         
     func reloadTableView() {
-        tableView.isHidden = false
+        productsCollectionView.isHidden = false
         searchBarView.isHidden = false
-        tableView.reloadData()
+        productsCollectionView.reloadData()
     }
     
     func reloadRows(at indexPaths: [IndexPath]) {
-        tableView.reloadRows(at: indexPaths, with: .automatic)
+        productsCollectionView.reloadItems(at: indexPaths)
     }
     
     func deleteRows(at indexPaths: [IndexPath]) {
-        tableView.deleteRows(at: indexPaths, with: .automatic)
+        productsCollectionView.deleteItems(at: indexPaths)
     }
     
     func showLoading() {
@@ -196,9 +220,9 @@ extension FavoritesViewController: FavoritesViewProtocol {
     }
     
     func addRefreshControl() {
-        tableView.refreshControl = refreshControl
+        productsCollectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshControlPulled), for: .valueChanged)
-        tableView.addSubview(refreshControl)
+        productsCollectionView.addSubview(refreshControl)
     }
     
     func endRefreshing() {
@@ -207,38 +231,39 @@ extension FavoritesViewController: FavoritesViewProtocol {
         
 }
 
-extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
+
+extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+   
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.numberOfSections()
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        viewModel.numberOfItemsInSection()
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.numberOfRows(in: section)
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        viewModel.numberOfItems(in: section)
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let arguments = viewModel.cellForRow(at: indexPath) else {
-            return UITableViewCell()
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let arguments = viewModel.cellForItem(at: indexPath) else {
+            return UICollectionViewCell()
         }
         
-        let cell: FavoriteCell = tableView.dequeueReusableCell(for: indexPath)
+        let cell: FavoriteCell = collectionView.dequeueReusableCell(for: indexPath)
         let presenter = FavoriteCellPresenter(view: cell, arguments: arguments)
         presenter.delegate = self
         cell.presenter = presenter
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.didSelectRow(at: indexPath)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        viewModel.didSelectItem(at: indexPath)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        viewModel.heightForRow(at: indexPath)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        viewModel.sizeForItem(at: indexPath, frame: collectionView.frame.size)
     }
-    
     
 }
 
