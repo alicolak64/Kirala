@@ -31,11 +31,11 @@ protocol FavoritesViewModelProtocol {
     func viewDidDisappear()
     
     // MARK: Data Source Methods
-    func numberOfSections() -> Int
-    func numberOfRows(in section: Int) -> Int
-    func cellForRow(at indexPath: IndexPath) -> FavoriteCellArguments?
-    func didSelectRow(at indexPath: IndexPath)
-    func heightForRow(at indexPath: IndexPath) -> CGFloat
+    func numberOfItemsInSection() -> Int
+    func numberOfItems(in section: Int) -> Int
+    func cellForItem(at indexPath: IndexPath) -> FavoriteCellArguments?
+    func didSelectItem(at indexPath: IndexPath)
+    func sizeForItem(at indexPath: IndexPath, frame: CGSize) -> CGSize
     
     func searchTextDidChange(_ searchText: String)
         
@@ -56,7 +56,7 @@ protocol FavoritesViewProtocol: AnyObject {
     func prepareUI()
     func prepareConstraints()
     func showEmptyState(with state: EmptyState)
-    func prepareTableView()
+    func prepareCollectionView()
     func reloadTableView()
     func reloadRows(at indexPaths: [IndexPath])
     func deleteRows(at indexPaths: [IndexPath])
