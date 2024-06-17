@@ -20,9 +20,9 @@ final class FavoritesRouter: FavoritesRouterProtocol {
     // MARK: - Methods
     func navigate(to route: FavoritesRoute) {
         switch route {
-        case .detail(_):
+        case .detail(let arguments):
             let detailNavController = UINavigationController()
-            let detailViewController = DetailBuilder.build(rootNavigationController: navigationController, navigationController: detailNavController, arguments: DetailArguments(id: "1"))
+            let detailViewController = DetailBuilder.build(rootNavigationController: navigationController, navigationController: detailNavController, arguments: arguments)
             detailNavController.viewControllers = [detailViewController]
             detailNavController.modalPresentationStyle = .fullScreen
             navigationController?.present(detailNavController, animated: true, completion: nil)
