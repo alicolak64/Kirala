@@ -8,7 +8,8 @@
 import UIKit
 
 /// Enum representing different empty states.
-enum EmptyState {
+enum EmptyState: Equatable {
+    
     case error(ErrorResponse)
     case noData
     case noInternet
@@ -60,6 +61,30 @@ enum EmptyState {
             return UnknownState()
         }
     }
+    
+    static func == (lhs: EmptyState, rhs: EmptyState) -> Bool {
+        switch (lhs, rhs) {
+        case (.error, .error),
+             (.noData, .noData),
+             (.noInternet, .noInternet),
+             (.noSearchResult, .noSearchResult),
+             (.noFavorites, .noFavorites),
+             (.noAds, .noAds),
+             (.noNotification, .noNotification),
+             (.noOrder, .noOrder),
+             (.noLoginNotification, .noLoginNotification),
+             (.noLoginOrder, .noLoginOrder),
+             (.noLoginAds, .noLoginAds),
+             (.noLoginProfile, .noLoginProfile),
+             (.noLoginFavorites, .noLoginFavorites),
+             (.invalidOrExpireToken, .invalidOrExpireToken),
+             (.unknown, .unknown):
+            return true
+        default:
+            return false
+        }
+    }
+    
 }
 
 /// Protocol defining the properties of an empty state.
