@@ -15,24 +15,14 @@ enum ColorBackground: Colorable {
     case quaternary
     case warning
     
-    var lightHex: String {
-        switch self {
-        case .primary: return "#FFFFFF"
-        case .secondary: return "#F5F5F5"
-        case .tertiary: return "#F0F0F0"
-        case .quaternary: return "#515151"
-        case .warning: return "#F6DDE1"
-            
-        }
-    }
     
-    var darkHex: String {
+    var hex: ColorHex {
         switch self {
-        case .primary: return "#1A1A1A"
-        case .secondary: return "#0D0D0D"
-        case .tertiary: return "#333333"
-        case .quaternary: return "#515151"
-        case .warning: return "#F6DDE1"
+        case .primary: return ColorHex(light: "#FFFFFF", dark: "#1A1A1A")
+        case .secondary: return ColorHex(light: "#F5F5F5", dark: "#0D0D0D")
+        case .tertiary: return ColorHex(light: "#F0F0F0", dark: "#333333")
+        case .quaternary: return ColorHex(same: "#515151")
+        case .warning: return ColorHex(same: "#F6DDE1")
         }
     }
     
