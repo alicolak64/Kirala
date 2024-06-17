@@ -19,48 +19,18 @@ enum ColorPalette: Colorable {
     case gray
     case black
     
-    /// The hexadecimal color value for light mode.
-    var lightHex: String {
+    var hex: ColorHex {
         switch self {
-        case .appPrimary:
-            return "#EB3B59"
-        case .appSecondary:
-            return "#F46E82"
-        case .appTertiary:
-            return "#FCE2E0"
-        case .border:
-            return "#C0C0C0"
-        case .lightBorder:
-            return "#E5E5E6"
-        case .white:
-            return "#FFFFFF"
-        case .gray:
-            return "#808080"
-        case .black:
-            return "#000000"
+        case .appPrimary: return ColorHex(light: "#EB3B59", dark: "#FF5B77")
+        case .appSecondary: return ColorHex(light: "#F46E82", dark: "#FF7D97")
+        case .appTertiary: return ColorHex(same: "#FCE2E0")
+        case .border: return ColorHex(light: "#C0C0C0", dark: "#8A8A8A")
+        case .lightBorder: return ColorHex(same: "#E5E5E6")
+        case .white: return ColorHex(same: "#FFFFFF")
+        case .gray: return ColorHex(light: "#808080", dark: "#A9A9A9")
+        case .black: return ColorHex(same: "#000000")
         }
     }
     
-    /// The hexadecimal color value for dark mode.
-    var darkHex: String {
-        switch self {
-        case .appPrimary:
-            return "#FF5B77"
-        case .appSecondary:
-            return "#FF7D97"
-        case .appTertiary:
-            return "#FCE2E0"
-        case .border:
-            return "#8A8A8A"
-        case .lightBorder:
-            return "#E5E5E6"
-        case .white:
-            return "#FFFFFF"
-        case .gray:
-            return "#A9A9A9"
-        case .black:
-            return "#000000"
-        }
-    }
 }
 
