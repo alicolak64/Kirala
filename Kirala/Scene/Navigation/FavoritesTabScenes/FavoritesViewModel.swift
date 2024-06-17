@@ -130,10 +130,9 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
             return
         }
         
-        guard !favorites.isEmpty else {
-            emptyState = .noFavorites
-            delegate?.showEmptyState(with: .noFavorites)
-            return
+        if emptyState == .noLoginFavorites {
+            fetchMyFavorites()
+            emptyState = nil
         }
         
     }
@@ -167,15 +166,15 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
         
     }
     
-    func numberOfSections() -> Int {
+    func numberOfItemsInSection() -> Int {
         1
     }
     
-    func numberOfRows(in section: Int) -> Int {
+    func numberOfItems(in section: Int) -> Int {
         getItems().count
     }
         
-    func cellForRow(at indexPath: IndexPath) -> FavoriteCellArguments? {
+    func cellForItem(at indexPath: IndexPath) -> FavoriteCellArguments? {
         
         guard getItems().indices.contains(indexPath.row) else {
             return nil
@@ -187,7 +186,7 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
         
     }
     
-    func didSelectRow(at indexPath: IndexPath) {
+    func didSelectItem(at indexPath: IndexPath) {
         
         guard getItems().indices.contains(indexPath.row) else {
             return
@@ -198,8 +197,8 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
         router.navigate(to: .detail(argument))
     }
     
-    func heightForRow(at indexPath: IndexPath) -> CGFloat {
-        150
+    func sizeForItem(at indexPath: IndexPath, frame: CGSize) -> CGSize {
+        CGSize(width: frame.width, height: 150)
     }
     
     func searchTextDidChange(_ searchText: String) {
@@ -311,7 +310,7 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
             return
         }
         
-        delegate?.prepareTableView()
+        delegate?.prepareCollectionView()
         delegate?.reloadTableView()
         
     }
