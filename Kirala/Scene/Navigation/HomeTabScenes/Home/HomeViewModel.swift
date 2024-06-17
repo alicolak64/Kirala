@@ -212,6 +212,8 @@ extension HomeViewModel: HomeViewModelProtocol {
         
         loadingState = .loading
         
+        error = nil
+        
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             self.fetchCampaigns()
@@ -337,11 +339,18 @@ extension HomeViewModel: HomeViewModelProtocol {
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     let products = data.content
+                    let startIndex = self.allProducts.count
+                    let endIndex = startIndex + products.count
+                    let indexPaths = (startIndex..<endIndex).map { IndexPath(row: $0, section: HomeCompositionalLayoutSection.allProducts.rawValue) }
                     self.allProducts.append(contentsOf: products.map { Product(brand: $0.brand, name: $0.name, price: $0.price.toCurrencyString(), imageUrl: $0.imageUrl ?? String.noImageURLString, id: $0.id, favoriteState: $0.isFavorite ? .favorited : .nonFavorited) })
                     self.allProductsPage = data.pageable.pageNumber
                     self.allProductIsLastPage = data.isLast
                     self.paginationLoadingState = .loaded(.none)
-                    self.delegate?.reloadSections(type: .compositionalLayout, at: IndexSet(integer: HomeCompositionalLayoutSection.allProducts.rawValue))
+                    if startIndex == 0 {
+                        self.delegate?.reloadSections(type: .compositionalLayout, at: IndexSet(integer: HomeCompositionalLayoutSection.allProducts.rawValue))
+                    } else {
+                        self.delegate?.insertItems(type: .compositionalLayout, at: indexPaths)
+                    }
                 }
             case .failure(let error):
                 print(error)
