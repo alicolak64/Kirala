@@ -31,7 +31,7 @@ final class DetailViewModel {
             switch loadingState {
             case .loading:
                 delegate?.showLoading()
-            case .loaded(let _):
+            case .loaded:
                 delegate?.hideLoading(loadResult: .none)
             }
         }
