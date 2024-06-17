@@ -98,11 +98,18 @@ extension AdsViewModel: AdsViewModelProtocol {
     }
     
     func viewWillAppear() {
+        
         guard authService.isLoggedIn else {
             delegate?.showEmptyState(with: .noLoginAds)
             emptyState = .noLoginAds
             return
         }
+        
+        if emptyState == .noLoginAds {
+            fetchMyAds()
+            emptyState = nil
+        }
+        
     }
     
     func viewDidAppear() {
@@ -154,9 +161,9 @@ extension AdsViewModel: AdsViewModelProtocol {
         let ad = getItems()[indexPath.row]
         
         if let imageUrl = ad.imageUrl {
-            return AdCellArguments(brand: ad.brand, name: ad.name, imageUrl: imageUrl, price: ad.price.toString())
+            return AdCellArguments(brand: ad.brand, name: ad.name, imageUrl: imageUrl, price: ad.price.toCurrencyString())
         } else {
-            return AdCellArguments(brand: ad.brand, name: ad.name, imageUrl: String.noImageURLString, price: ad.price.toString())
+            return AdCellArguments(brand: ad.brand, name: ad.name, imageUrl: String.noImageURLString, price: ad.price.toCurrencyString())
         }
         
         
