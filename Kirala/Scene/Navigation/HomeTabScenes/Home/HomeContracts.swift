@@ -159,6 +159,7 @@ protocol HomeViewProtocol: AnyObject {
     func reloadRows(type: HomeCollectionViewTag, at indexPaths: [IndexPath])
     func reloadCollectionView(type: HomeCollectionViewTag)
     func reloadSections(type: HomeCollectionViewTag, at indexSet: IndexSet)
+    func insertItems(type: HomeCollectionViewTag, at indexPaths: [IndexPath])
     func reloadFavoriteState(indexPath: IndexPath, favoriteState: FavoriteState)
         
     func showActionSheet(title: String, message: String, actionTitle: String, completion: @escaping () -> Void)
