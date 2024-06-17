@@ -60,7 +60,7 @@ extension AdCellPresenter: AdCellPresenterProtocol {
     func load() {
         view?.setNameLabel(with: arguments.brand + " " + arguments.name, brand: arguments.brand, name: arguments.name)
         view?.setImageURL(arguments.imageUrl.imageUrl)
-        view?.setPriceLabel(arguments.price + " TL")
+        view?.setPriceLabel(arguments.price)
         view?.setPerDayLabel(Strings.Common.perDay.localized)
         view?.showBottomSeparator()
     }
