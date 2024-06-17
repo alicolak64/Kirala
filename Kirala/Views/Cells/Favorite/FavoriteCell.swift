@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FavoriteCell: UITableViewCell, ReusableView {
+final class FavoriteCell: UICollectionViewCell, ReusableView {
     
     // MARK: - Properties
     
@@ -62,31 +62,26 @@ final class FavoriteCell: UITableViewCell, ReusableView {
         return button
     }()
     
-    private lazy var bottomSeparator: UIView = {
-        let view = UIView()
-        view.backgroundColor = ColorPalette.border.dynamicColor
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     // MARK: - Init
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
         setupUI()
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Setup UI
     
     private func setupUI() {
         
+        makeCardStyle()
+                
         contentView.addSubviews([
-            bottomSeparator,
             image,
             nameLabel,
             priceLabel,
@@ -115,11 +110,6 @@ final class FavoriteCell: UITableViewCell, ReusableView {
             deleteButton.centerYAnchor.constraint(equalTo: priceLabel.centerYAnchor),
             deleteButton.widthAnchor.constraint(equalToConstant: 20),
             deleteButton.heightAnchor.constraint(equalToConstant: 20),
-            
-            bottomSeparator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            bottomSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            bottomSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            bottomSeparator.heightAnchor.constraint(equalToConstant: 0.5),
             
         ])
         
@@ -150,9 +140,6 @@ extension FavoriteCell: FavoriteCellViewProtocol {
     func setPerDayLabel(_ perDay: String) {
         perDayLabel.text = perDay
     }
-    
-    func showBottomSeparator() {
-        bottomSeparator.isHidden = false
-    }
+
     
 }
