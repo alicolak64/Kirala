@@ -302,6 +302,17 @@ extension HomeViewController: HomeViewProtocol {
         }
     }
     
+    func insertItems(type: HomeCollectionViewTag, at indexPaths: [IndexPath]) {
+        switch type {
+        case .categories:
+            categoriesCollectionView.insertItems(at: indexPaths)
+        case .compositionalLayout:
+            contentCompositinalLayoutCollectionView.performBatchUpdates({
+                contentCompositinalLayoutCollectionView.insertItems(at: indexPaths)
+            }, completion: nil)
+        }
+    }
+    
     func didScrollToItem(at indexPath: IndexPath) {
         viewModel.didScrollToItem(at: indexPath)
     }
