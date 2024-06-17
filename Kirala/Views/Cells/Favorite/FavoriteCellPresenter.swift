@@ -39,7 +39,6 @@ protocol FavoriteCellViewProtocol: AnyObject {
     func setImageURL(_ imageUrl: URL)
     func setPriceLabel(_ price: String)
     func setPerDayLabel(_ perDay: String)
-    func showBottomSeparator()
 }
 
 /// Presenter class for the Favorite Cell.
@@ -71,9 +70,8 @@ extension FavoriteCellPresenter: FavoriteCellPresenterProtocol {
     func load() {
         view?.setNameLabel(with: arguments.brand + " " + arguments.name, brand: arguments.brand, name: arguments.name)
         view?.setImageURL(arguments.imageUrl.imageUrl)
-        view?.setPriceLabel(arguments.price + " TL")
+        view?.setPriceLabel(arguments.price)
         view?.setPerDayLabel(Strings.Common.perDay.localized)
-        view?.showBottomSeparator()
     }
     
     func didTapDeleteButton() {
