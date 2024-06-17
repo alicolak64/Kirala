@@ -109,6 +109,18 @@ extension UIView {
         layer.insertSublayer(shadowLayer, at: 0)
     }
     
+    func addBottomShadow(color: UIColor = .black, opacity: Float = 0.5, offset: CGSize = CGSize(width: 0, height: 2), radius: CGFloat = 10) {
+        let shadowLayer = CAShapeLayer()
+        shadowLayer.path = UIBezierPath(rect: bounds).cgPath
+        shadowLayer.fillColor = backgroundColor?.cgColor
+        shadowLayer.shadowColor = color.cgColor
+        shadowLayer.shadowPath = UIBezierPath(rect: CGRect(x: bounds.origin.x, y: bounds.maxY, width: bounds.width, height: offset.height)).cgPath
+        shadowLayer.shadowOffset = offset
+        shadowLayer.shadowOpacity = opacity
+        shadowLayer.shadowRadius = radius
+        layer.insertSublayer(shadowLayer, at: 0)
+    }
+    
     func makeCardStyle() {
         backgroundColor = ColorBackground.primary.dynamicColor
         layer.cornerRadius = 20
@@ -128,6 +140,14 @@ extension UIView {
         isUserInteractionEnabled = true
     }
     
+    func makeHeaderStyle() {
+        backgroundColor = ColorBackground.primary.dynamicColor
+        addBottomBorder(color: ColorPalette.lightBorder.dynamicColor, width: 0.5)
+        addBottomShadow(color: ColorPalette.border.dynamicColor, opacity: 0.5, offset: .zero, radius: 15)
+        translatesAutoresizingMaskIntoConstraints = false
+        isUserInteractionEnabled = true
+    }
+    
     func addTopBorder(color: UIColor, width: CGFloat) {
         let border = UIView()
         border.backgroundColor = color
@@ -136,6 +156,20 @@ extension UIView {
         
         NSLayoutConstraint.activate([
             border.topAnchor.constraint(equalTo: topAnchor),
+            border.leadingAnchor.constraint(equalTo: leadingAnchor),
+            border.trailingAnchor.constraint(equalTo: trailingAnchor),
+            border.heightAnchor.constraint(equalToConstant: width)
+        ])
+    }
+    
+    func addBottomBorder(color: UIColor = .black, width: CGFloat = 1) {
+        let border = UIView()
+        border.backgroundColor = color
+        border.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(border)
+        
+        NSLayoutConstraint.activate([
+            border.bottomAnchor.constraint(equalTo: bottomAnchor),
             border.leadingAnchor.constraint(equalTo: leadingAnchor),
             border.trailingAnchor.constraint(equalTo: trailingAnchor),
             border.heightAnchor.constraint(equalToConstant: width)
