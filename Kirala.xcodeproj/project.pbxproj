@@ -521,7 +521,6 @@
 		E652DD002BF7DA6C00CD4866 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		E652DD022BF7DA7C00CD4866 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		E652DD042BF7FA1400CD4866 /* Searchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searchable.swift; sourceTree = "<group>"; };
-		E65A7D792BF98307006A2E15 /* SliderCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCounter.swift; sourceTree = "<group>"; };
 		E65A7D7C2BF983C2006A2E15 /* CampaignCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignCellPresenter.swift; sourceTree = "<group>"; };
 		E65A7D7E2BF983CA006A2E15 /* CampaignCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignCell.swift; sourceTree = "<group>"; };
 		E661497F2C18E57400BE5659 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProductService.swift; path = ../Local/ProductService.swift; sourceTree = "<group>"; };
@@ -1094,7 +1093,6 @@
 			isa = PBXGroup;
 			children = (
 				E645F14D2BE6D3AF0038075F /* AlertMessage.swift */,
-				E65A7D792BF98307006A2E15 /* SliderCounter.swift */,
 				E603AD0A2C02549400AAC17B /* Review.swift */,
 			);
 			path = CommonModels;
@@ -1794,7 +1792,6 @@
 			children = (
 				E60816CA2C15A063005346D2 /* PickerView */,
 				E60816CD2C15A063005346D2 /* TextFieldWithTitle */,
-				E62760212C10C6F10043039F /* ProgressHUD */,
 				E630537C2C087715007FE3A4 /* Filter */,
 				E6BF172B2C08214500C6EA2D /* SortPopup */,
 				E6A939BB2C08EED40015B6F3 /* FilterPopup */,
@@ -1809,9 +1806,10 @@
 				E6350DA92C0110FD0026D72F /* PasswordContainer */,
 				E6350DA82C0110F30026D72F /* EmailContainer */,
 				E6E55D662C0FBB080036C814 /* NameContainer */,
-				E6350DA52C0109530026D72F /* AutoCompleteTextField */,
 				E6B294AE2BF7527C00BBC20F /* Loading */,
 				E6B294AD2BF7527200BBC20F /* EmptyState */,
+				E62760212C10C6F10043039F /* ProgressHUD */,
+				E6350DA52C0109530026D72F /* AutoCompleteTextField */,
 				E603AD022C02520E00AAC17B /* PinchableImageView */,
 				E632A5FA2BFFFE9300727DFF /* ImageSlider */,
 			);
