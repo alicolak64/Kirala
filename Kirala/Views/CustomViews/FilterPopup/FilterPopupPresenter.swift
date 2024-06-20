@@ -45,7 +45,7 @@ enum FilterType: Int, CaseIterable {
     }
 }
 
-struct FilterOption {
+struct FilterOption: Equatable {
     let title: String
     let type: FilterType
     var selectedItems: [String]
