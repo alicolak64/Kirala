@@ -570,18 +570,24 @@ extension SearchViewModel: SearchablePopupDelegate {
     }
     
     func viewWillDisappear(with selectedItems: [SearchablePopupItem], type: SearchablePopupType) {
+        
+        let oldFilterOptions = filterOptions[type.convertFilterType().rawValue]
         changeSearchableFilterOptions(with: selectedItems, type: type)
         changeBadgeCount()
         delegate?.closeExpandedCell(type: type.convertFilterType())
         delegate?.reloadFilterCell(type: type.convertFilterType())
         
-        getFilteredProducts(
-            searhText: searchQuery,
-            categoryIds: filterOptions[FilterType.category.rawValue].selectedIds,
-            brandIds: filterOptions[FilterType.brand.rawValue].selectedIds,
-            cityIds: filterOptions[FilterType.city.rawValue].selectedIds,
-            renterIds: filterOptions[FilterType.renter.rawValue].selectedIds
-        )
+        if oldFilterOptions != filterOptions[type.convertFilterType().rawValue] {
+            getFilteredProducts(
+                searhText: searchQuery,
+                categoryIds: filterOptions[FilterType.category.rawValue].selectedIds,
+                brandIds: filterOptions[FilterType.brand.rawValue].selectedIds,
+                cityIds: filterOptions[FilterType.city.rawValue].selectedIds,
+                renterIds: filterOptions[FilterType.renter.rawValue].selectedIds
+            )
+        }
+        
+        
         
     }
     
@@ -603,7 +609,9 @@ extension SearchViewModel: SearchablePopupDelegate {
     }
     
     private func changeSearchableFilterOptions(with items: [SearchablePopupItem], type: SearchablePopupType) {
+        
         searchbalePopupOptions[type] = items
+        
         let selectedItems = items.filter { $0.selectionState == .selected }
         
         filterOptions = filterOptions.map { option in
