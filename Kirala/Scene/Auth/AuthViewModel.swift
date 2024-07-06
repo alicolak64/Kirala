@@ -73,6 +73,18 @@ extension AuthViewModel: AuthViewModelProtocol {
     func viewDidDisappear() {
         delegate?.removeSwipeGesture()
         delegate?.removeGestureRecognizers()
+        if cardState == .resetPassword {
+            DispatchQueue.global().async { [weak self] in
+                self?.authService.removeResetPasswordToken()
+            }
+        }
+        
+        if authService.isErrorAvailable {
+            DispatchQueue.global().async { [weak self] in
+                self?.authService.removeError()
+            }
+        }
+        
     }
     
     func viewDidLayoutSubviews() {
@@ -97,7 +109,7 @@ extension AuthViewModel: AuthViewModelProtocol {
     }
     
     private func configureErrorCard() {
-        guard (authService.getError()) != nil else { return }
+        guard authService.isErrorAvailable else { return }
         delegate?.showEmptyState(type: .invalidOrExpireToken)
         DispatchQueue.global().async { [weak self] in
             self?.authService.removeError()
