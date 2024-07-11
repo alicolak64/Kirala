@@ -68,8 +68,7 @@ class SelectLocationViewController: UIViewController, BackNavigatable {
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
         
-        geocoder.reverseGeocodeLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)) { [weak self] (placemarks, error) in
-            guard let self = self else { return }
+        geocoder.reverseGeocodeLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)) { (placemarks, error) in
             if let error = error {
                 print("Failed to get address: \(error.localizedDescription)")
             } else if let placemark = placemarks?.first {
