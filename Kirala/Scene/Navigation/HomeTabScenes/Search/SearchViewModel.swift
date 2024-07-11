@@ -171,7 +171,6 @@ extension SearchViewModel: SearchViewModelProtocol {
     }
     
     func didSelectItem(at indexPath: IndexPath) {
-        print("Selected item at \(indexPath.row)")
         router.navigate(to: .detail(DetailArguments(id: products[indexPath.row].id)))
     }
     
