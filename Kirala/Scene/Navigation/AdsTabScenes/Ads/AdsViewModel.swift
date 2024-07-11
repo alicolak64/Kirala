@@ -62,9 +62,8 @@ final class AdsViewModel {
     }
     
     @objc private func productsChanged(_ notification: Notification) {
-        print("Products changed")
         guard let userInfo = notification.userInfo,
-              let productId = userInfo[NotificationCenterOutputs.productId.rawValue] as? String else {
+              let _ = userInfo[NotificationCenterOutputs.productId.rawValue] as? String else {
             return
         }
         
