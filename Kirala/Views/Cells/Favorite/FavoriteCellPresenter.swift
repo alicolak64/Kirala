@@ -9,7 +9,7 @@ import Foundation
 
 /// Arguments to configure the category cell.
 struct FavoriteCellArguments {
-    let indexPath: IndexPath
+    let id: String
     let brand: String
     let name: String
     let imageUrl: String
@@ -17,7 +17,7 @@ struct FavoriteCellArguments {
 }
 
 protocol FavoriteCellDelegate: AnyObject {
-    func didTapDeleteButton(with indexPath: IndexPath)
+    func didTapDeleteButton(with id: String)
 }
 
 
@@ -75,7 +75,7 @@ extension FavoriteCellPresenter: FavoriteCellPresenterProtocol {
     }
     
     func didTapDeleteButton() {
-        delegate?.didTapDeleteButton(with: arguments.indexPath)
+        delegate?.didTapDeleteButton(with: arguments.id)
     }
     
 }
