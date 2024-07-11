@@ -20,6 +20,8 @@ final class FavoritesViewModel {
     private var favorites = [Product]()
     private var filteredFavorites = [Product]()
     private var isSearchActive: Bool = false
+    private var isRequiredRefresh: Bool = false
+    private var requiredDeleteIds = [String]()
     
     private var loadingState: LoadingState = .loading {
         didSet {
@@ -56,7 +58,7 @@ final class FavoritesViewModel {
     private func addObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(favoritesChanged(_:)), name: .changedFavorite, object: nil)
     }
- 
+    
     private func removeObserver() {
         NotificationCenter.default.removeObserver(self, name: .changedFavorite, object: nil)
     }
@@ -71,29 +73,11 @@ final class FavoritesViewModel {
             return
         }
         
-
+        
         if isFavorite {
-            fetchMyFavoritesBackground()
+            isRequiredRefresh = true
         } else {
-            guard let index = favorites.firstIndex(where: { $0.id == productId }) else {
-                return
-            }
-            favorites.remove(at: index)
-            if isSearchActive {
-                guard let index = filteredFavorites.firstIndex(where: { $0.id == productId }) else {
-                    return
-                }
-                filteredFavorites.remove(at: index)
-                delegate?.deleteRows(at: [IndexPath(row: index, section: 0)])
-                if filteredFavorites.isEmpty {
-                    delegate?.showEmptyState(with: .noFavorites)
-                }
-            } else {
-                delegate?.deleteRows(at: [IndexPath(row: index, section: 0)])
-                if favorites.isEmpty {
-                    delegate?.showEmptyState(with: .noFavorites)
-                }
-            }
+            requiredDeleteIds.append(productId)
         }
         
     }
@@ -109,6 +93,7 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
     // MARK: - Lifecycle Methods
     
     func viewDidLoad() {
+        
         delegate?.prepareNavigationBar()
         delegate?.prepareUI()
         delegate?.addRefreshControl()
@@ -134,6 +119,39 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
             fetchMyFavorites()
             emptyState = nil
         }
+        
+        if emptyState == .noFavorites {
+            delegate?.showEmptyState(with: .noFavorites)
+            emptyState = .noFavorites
+        }
+        
+        if isRequiredRefresh {
+            fetchMyFavorites()
+            isRequiredRefresh = false
+            requiredDeleteIds.removeAll()
+        }
+        
+        if !requiredDeleteIds.isEmpty {
+            
+            if isSearchActive {
+                filteredFavorites.removeAll { requiredDeleteIds.contains($0.id) }
+                delegate?.reloadTableView()
+                if filteredFavorites.isEmpty {
+                    delegate?.showEmptyState(with: .noFavorites)
+                }
+            } else {
+                favorites.removeAll { requiredDeleteIds.contains($0.id) }
+                delegate?.reloadTableView()
+                if favorites.isEmpty {
+                    delegate?.showEmptyState(with: .noFavorites)
+                }
+            }
+            
+            requiredDeleteIds.removeAll()
+            
+        }
+        
+        
         
     }
     
@@ -173,16 +191,14 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
     func numberOfItems(in section: Int) -> Int {
         getItems().count
     }
-        
+    
     func cellForItem(at indexPath: IndexPath) -> FavoriteCellArguments? {
         
-        guard getItems().indices.contains(indexPath.row) else {
+        guard let product = getItems()[safe: indexPath.row] else {
             return nil
         }
         
-        let product = getItems()[indexPath.row]
-        
-        return FavoriteCellArguments(indexPath: indexPath, brand: product.brand, name: product.name, imageUrl: product.imageUrl, price: product.price)
+        return FavoriteCellArguments(id: product.id, brand: product.brand, name: product.name, imageUrl: product.imageUrl, price: product.price)
         
     }
     
@@ -209,36 +225,30 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
         delegate?.reloadTableView()
     }
     
-    func didTapDeleteButton(with indexPath: IndexPath) {
+    func didTapDeleteButton(with id: String) {
         
         guard
-            let id = getItems()[safe: indexPath.row]?.id,
-            let token = authService.getAuthToken()
+            let token = authService.getAuthToken(),
+            let index = getItems().firstIndex(where: { $0.id == id })
         else {
             return
         }
-
+        
         if isSearchActive {
-            filteredFavorites.remove(at: indexPath.row)
+            filteredFavorites.remove(at: index)
         } else {
-            favorites.remove(at: indexPath.row)
+            favorites.remove(at: index)
         }
         
         notifyFavoriteProductChanged(id: id, isFavorite: false)
-        delegate?.deleteRows(at: [indexPath])
+        delegate?.deleteRows(at: [IndexPath(row: index, section: 0)])
         
         if getItems().isEmpty {
+            emptyState = .noFavorites
             delegate?.showEmptyState(with: .noFavorites)
         }
         
-        favoriteService.toggleFavorite(productId: id, token: token) { result in
-            switch result {
-            case .success(let response):
-                print("Success: \(response)")
-            case .failure(let error):
-                print(error)
-            }
-        }
+        favoriteService.toggleFavorite(productId: id, token: token) { result in }
         
     }
     
@@ -270,27 +280,6 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
         
     }
     
-    private func fetchMyFavoritesBackground() {
-        
-        guard let token = authService.getAuthToken() else { return }
-                        
-        favoriteService.getFavorites(token: token) { [weak self] result in
-            guard let self = self else { return }
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                switch result {
-                case .success(let response):
-                    guard let products = response.data else { return }
-                    self.favorites = products.map { Product(brand: $0.brand, name: $0.name, price: $0.price.toCurrencyString(), imageUrl: $0.imageUrl ?? String.noImageURLString, id: $0.id, favoriteState: FavoriteState(isFavorite: $0.isFavorite) ) }
-                    self.assignData()
-                case .failure(let error):
-                    print(error)
-                }
-            }
-        }
-        
-    }
-    
     private func notifyFavoriteProductChanged(id: String, isFavorite: Bool) {
         NotificationCenter.default.post(
             name: .changedFavorite,
@@ -303,7 +292,7 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
     }
     
     private func assignData() {
-                
+        
         guard !favorites.isEmpty else {
             emptyState = .noFavorites
             delegate?.showEmptyState(with: .noFavorites)
