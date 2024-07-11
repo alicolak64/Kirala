@@ -41,7 +41,7 @@ protocol FavoritesViewModelProtocol {
         
     // MARK: Actions
     func didTapEmptyStateActionButton()
-    func didTapDeleteButton(with indexPath: IndexPath)
+    func didTapDeleteButton(with id: String)
     
     func refresh()
     
