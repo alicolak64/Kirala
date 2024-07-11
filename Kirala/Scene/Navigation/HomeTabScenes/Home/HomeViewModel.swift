@@ -174,9 +174,7 @@ final class HomeViewModel {
         else {
             return
         }
-        
-        print("Home Scene Favorites changed", allProducts[index].name, isFavorite)
-        
+                
         allProducts[index].favoriteState = isFavorite ? .favorited : .nonFavorited
         delegate?.reloadFavoriteState(indexPath: IndexPath(row: index, section: HomeCompositionalLayoutSection.allProducts.rawValue), favoriteState: allProducts[index].favoriteState)
         
@@ -282,7 +280,6 @@ extension HomeViewModel: HomeViewModelProtocol {
             case .success(let response):
                 guard let data = response.data else { return }
                 let products = data.content
-                print(products.count)
                 self.allProducts.append(contentsOf: products.map { Product(brand: $0.brand, name: $0.name, price: $0.price.toCurrencyString(), imageUrl: $0.imageUrl ?? String.noImageURLString, id: $0.id, favoriteState: $0.isFavorite ? .favorited : .nonFavorited) })
                 self.allProductsPage = data.pageable.pageNumber
                 self.allProductIsLastPage = data.isLast
@@ -622,14 +619,7 @@ extension HomeViewModel: HomeViewModelProtocol {
     
     func toogleProductFavoriteState(with id: String) {
         guard let token = authService.getAuthToken() else { return }
-        favoriteService.toggleFavorite(productId: id, token: token) { result in
-            switch result {
-            case .success(let response):
-                print("Success: \(response)")
-            case .failure(let error):
-                print(error)
-            }
-        }
+        favoriteService.toggleFavorite(productId: id, token: token) { result in}
     }
     
     private func notifyFavoriteProductChanged(id: String, isFavorite: Bool) {
