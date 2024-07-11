@@ -29,6 +29,14 @@ final class DetailViewController: UIViewController, SwipePerformable, BackNaviga
         return view
     }()
     
+    private lazy var emptyCardView: EmptyStateView = {
+        let view = EmptyStateView()
+        view.delegate = self
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var contentScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -243,6 +251,8 @@ final class DetailViewController: UIViewController, SwipePerformable, BackNaviga
 extension DetailViewController: DetailViewProtocol {
     
     
+    
+    
     func showLoading() {
         loadingView.showLoading()
     }
@@ -251,6 +261,10 @@ extension DetailViewController: DetailViewProtocol {
         loadingView.hideLoading()
     }
     
+    func showEmptyState(with emptyState: EmptyState) {
+        emptyCardView.configure(with: emptyState)
+        emptyCardView.show()
+    }
     
     func prepareNavigationBar() {
         navigationItem.hidesBackButton = true
@@ -261,12 +275,18 @@ extension DetailViewController: DetailViewProtocol {
     }
     
     func prepareLoadingView() {
-        view.addSubview(loadingView)
+        view.addSubviews([
+            loadingView,
+            emptyCardView
+        ])
         NSLayoutConstraint.activate([
-            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
-            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            emptyCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIDevice.deviceHeight * 0.2),
+            emptyCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            emptyCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            emptyCardView.heightAnchor.constraint(equalToConstant: UIDevice.deviceHeight * 0.3)
         ])
     }
     
@@ -515,6 +535,15 @@ extension DetailViewController: DetailViewProtocol {
     
     func setRentButtonTitle(with text: String) {
         chooseDateButton.setTitle(text, for: .normal)
+    }
+    
+}
+
+extension DetailViewController: EmptyStateViewDelegate {
+    
+
+    func didTapActionButton() {
+        viewModel.didTapEmptyStateActionButton()
     }
     
 }
