@@ -119,7 +119,6 @@ extension AuthViewModel: AuthViewModelProtocol {
     private func checkEmailVerificationError(error: ErrorResponse, email: String) {
         
         if error.serverResponse?.returnMessage?.contains("Email not verified") ?? false {
-            print("Email is not verified")
             delegate?.showActionSheet(
                 title: Strings.Auth.resendVerifyEmailTitle.localized,
                 message: Strings.Auth.resendVerifyEmailMessage.localized,
