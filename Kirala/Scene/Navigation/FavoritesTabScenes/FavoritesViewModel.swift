@@ -299,6 +299,8 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
             return
         }
         
+        emptyState = nil
+        
         delegate?.prepareCollectionView()
         delegate?.reloadTableView()
         
