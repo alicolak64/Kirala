@@ -8,6 +8,20 @@
 import Foundation
 import MapKit
 
+struct DetailProduct {
+    let id: String
+    let brand: String
+    let name: String
+    let city: String
+    let price: Double
+    let description: String
+    let rentalPeriodRange: RentalPeriodRange
+    let location: Location
+    let imageUrls: [String]
+    let closedRanges: [ClosedRange]
+    var favoriteState: FavoriteState
+}
+
 final class DetailViewModel {
     
     // MARK: - Dependency Properties
@@ -19,9 +33,10 @@ final class DetailViewModel {
     private let router: DetailRouterProtocol
     private let authService: AuthService
     private let productService: ProductService
+    private let favoriteService: FavoriteService
     private let arguments: DetailArguments
     
-    private var detailProduct: ProductDetailResponse?
+    private var detailProduct: DetailProduct?
     private var detailProductMock: SearchProduct = SearchProduct.mockSearchProducts.randomElement()!
     
     private let calendar: Calendar = .current
@@ -101,14 +116,51 @@ final class DetailViewModel {
     
     init(router: DetailRouterProtocol, dependencies: [Dependency: Any], arguments: DetailArguments) {
         guard let authService = dependencies[.authService] as? AuthService,
-              let productService = dependencies[.productService] as? ProductService
+              let productService = dependencies[.productService] as? ProductService,
+              let favoriteService = dependencies[.favoriteService] as? FavoriteService
         else {
             fatalError("AuthService or ProductService not found")
         }
         self.router = router
         self.authService = authService
         self.productService = productService
+        self.favoriteService = favoriteService
         self.arguments = arguments
+    }
+    
+    deinit {
+        removeObserver()
+    }
+    
+    // MARK: - Private Functions
+    
+    private func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(favoritesChanged(_:)), name: .changedFavorite, object: nil)
+    }
+    
+    private func removeObserver() {
+        NotificationCenter.default.removeObserver(self, name: .changedFavorite, object: nil)
+    }
+    
+    @objc private func favoritesChanged(_ notification: Notification) {
+        
+        
+        guard let userInfo = notification.userInfo,
+              let productId = userInfo[NotificationCenterOutputs.productId.rawValue] as? String,
+              let isFavorite = userInfo[NotificationCenterOutputs.isFavorite.rawValue] as? Bool,
+              detailProduct?.id == productId
+        else {
+            return
+        }
+        
+        if isFavorite {
+            delegate?.setFavoritedIcon(animated: false)
+            detailProduct?.favoriteState = .favorited
+        } else {
+            delegate?.setNonfavoritedIcon(animated: false)
+            detailProduct?.favoriteState = .nonFavorited
+        }
+        
     }
     
 }
@@ -170,7 +222,19 @@ extension DetailViewModel: DetailViewModelProtocol {
                     guard let product = response.data else { return }
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else { return }
-                        self.detailProduct = product
+                        self.detailProduct = DetailProduct(
+                            id: product.id,
+                            brand: product.brand,
+                            name: product.name,
+                            city: product.city,
+                            price: product.price,
+                            description: product.description,
+                            rentalPeriodRange: product.rentalPeriodRange,
+                            location: product.location,
+                            imageUrls: product.imageUrls,
+                            closedRanges: product.closedRanges,
+                            favoriteState: FavoriteState(isFavorite: product.isFavorite)
+                        )
                         self.loadingState = .loaded(.none)
                         delegate?.prepareNavigationBar()
                         delegate?.prepareUI()
@@ -209,7 +273,7 @@ extension DetailViewModel: DetailViewModelProtocol {
                     
                 case .failure(let error):
                     self.loadingState = .loaded(.none)
-                    //                    self.delegate?.showEmptyState(with: .error(error))
+                    self.delegate?.showEmptyState(with: .error(error))
                 }
             }
         }
@@ -234,6 +298,18 @@ extension DetailViewModel: DetailViewModelProtocol {
     }
     
     // MARK: - Actions
+    
+    func didTapEmptyStateActionButton() {
+        if arguments.id == "1" {
+            router.navigate(to: .back)
+        } else {
+            guard authService.isLoggedIn else {
+                router.navigate(to: .back)
+                return
+            }
+            fetchProductDetail()
+        }
+    }
     
     func didTapCancelButton() {
         router.navigate(to: .back)
@@ -298,13 +374,36 @@ extension DetailViewModel: DetailViewModelProtocol {
             
         }
         
-        //        detailProduct.favoriteState.toggle()
-        //        switch detailProduct.favoriteState {
-        //        case .favorited:
-        //            delegate?.setFavoritedIcon(animated: true)
-        //        case .nonFavorited:
-        //            delegate?.setNonfavoritedIcon(animated: true)
-        //        }
+        detailProduct?.favoriteState.toggle()
+        
+        switch detailProduct?.favoriteState {
+        case .favorited:
+            delegate?.setFavoritedIcon(animated: true)
+        case .nonFavorited:
+            delegate?.setNonfavoritedIcon(animated: true)
+        case .none:
+            break
+        }
+        
+        notifyFavoriteProductChanged(id: detailProduct?.id ?? "", isFavorite: detailProduct?.favoriteState.isFavorite ?? false)
+        toogleProductFavoriteState(with: detailProduct?.id ?? "")
+        
+    }
+    
+    private func toogleProductFavoriteState(with id: String) {
+        guard let token = authService.getAuthToken() else { return }
+        favoriteService.toggleFavorite(productId: id, token: token) { result in}
+    }
+    
+    private func notifyFavoriteProductChanged(id: String, isFavorite: Bool) {
+        NotificationCenter.default.post(
+            name: .changedFavorite,
+            object: nil,
+            userInfo: [
+                NotificationCenterOutputs.productId.rawValue: id,
+                NotificationCenterOutputs.isFavorite.rawValue: isFavorite
+            ]
+        )
     }
     
 }
