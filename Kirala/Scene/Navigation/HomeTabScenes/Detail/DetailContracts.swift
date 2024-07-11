@@ -37,6 +37,7 @@ protocol DetailViewModelProtocol {
     func viewDidDisappear()
         
     // MARK: Actions
+    func didTapEmptyStateActionButton()
     func didTapCancelButton()
     func didTapShareButton()
     func didTapSearchButton()
@@ -89,6 +90,8 @@ protocol DetailViewProtocol: AnyObject {
     func setDescriptionLabel(with text: String)
     
     func showRentButton()
+    
+    func showEmptyState(with emptyState: EmptyState)
     
     func showAlert(with alertMessage: AlertMessage)
 
