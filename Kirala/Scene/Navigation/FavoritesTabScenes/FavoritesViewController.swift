@@ -284,8 +284,9 @@ extension FavoritesViewController: Searchable {
 
 extension FavoritesViewController: FavoriteCellDelegate {
     
-    func didTapDeleteButton(with indexPath: IndexPath) {
-        viewModel.didTapDeleteButton(with: indexPath)
+    
+    func didTapDeleteButton(with id: String) {
+        viewModel.didTapDeleteButton(with: id)
     }
     
 }
