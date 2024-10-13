@@ -99,7 +99,7 @@ extension SubcategoryCell: SubcategoryCellViewProtocol {
     }
     
     func setImageURL(_ imageURL: URL) {
-        imageView.kf.setImage(with: imageURL)
+        imageView.setImage(with: imageURL)
     }
     
     
