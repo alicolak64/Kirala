@@ -232,24 +232,15 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     func configureContentCompositionalLayout() {
+        
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex,enviroment in
             
             guard let self = self, let section = HomeCompositionalLayoutSection(rawValue: sectionIndex) else { return nil }
             
-            switch section {
-            case .campaign:
-                return self.layoutGenerator.getLayout(type: .campaign)
-            case .newAdded:
-                return self.layoutGenerator.getLayout(type: .newAdded)
-            case .bestSellers:
-                return self.layoutGenerator.getLayout(type: .bestSellers)
-            case .mostRated:
-                return self.layoutGenerator.getLayout(type: .mostRated)
-            case .allProducts:
-                return self.layoutGenerator.getLayout(type: .allProducts)
-            }
+            return layoutGenerator.getLayout(type: section)
             
         }
+        
         contentCompositinalLayoutCollectionView.setCollectionViewLayout(layout, animated: true)
     }
     
