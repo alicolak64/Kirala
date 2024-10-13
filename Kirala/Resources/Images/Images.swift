@@ -12,5 +12,7 @@ enum Images: Imageable {
     case splash
     case logo
     case google
+    case placeholder
+    case error
     
 }
