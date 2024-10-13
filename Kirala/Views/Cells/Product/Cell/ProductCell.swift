@@ -149,7 +149,7 @@ extension ProductCell: ProductCellViewProtocol {
     }
     
     func setImageURL(_ imageURL: URL) {
-        imageView.kf.setImage(with: imageURL)
+        imageView.setImage(with: imageURL)
     }
     
     func setPrice(_ price: String) {
