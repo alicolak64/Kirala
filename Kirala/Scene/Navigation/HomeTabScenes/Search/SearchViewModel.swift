@@ -194,7 +194,7 @@ extension SearchViewModel: SearchViewModelProtocol {
             return
             
         }
-        
+        products[indexPath.row].favoriteState.toggle()
         delegate?.reloadFavoriteState(indexPath: indexPath, favoriteState: products[indexPath.row].favoriteState)
         
     }
@@ -251,13 +251,6 @@ extension SearchViewModel: SearchViewModelProtocol {
         
         addObserver()
         
-    }
-    
-    func viewWillAppear() {
-        
-    }
-    
-    func viewDidAppear() {
         delegate?.addSwipeGesture()
         switch searchOption {
         case .noneSearch:
@@ -278,8 +271,18 @@ extension SearchViewModel: SearchViewModelProtocol {
         
     }
     
+    func viewWillAppear() {
+        
+    }
+    
+    func viewDidAppear() {
+
+        
+    }
+    
     func viewDidDisappear() {
         delegate?.removeSwipeGesture()
+        delegate?.closeSearchBar()
     }
     
     func viewDidLayoutSubviews() {
