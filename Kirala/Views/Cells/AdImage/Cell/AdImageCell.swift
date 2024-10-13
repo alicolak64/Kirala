@@ -138,7 +138,7 @@ extension AdImageCell: AdImageCellViewProtocol {
     }
     
     func setImageURL(with imageUrl: URL) {
-        image.kf.setImage(with: imageUrl)
+        image.setImage(with: imageUrl)
     }
     
     func showBottomSeparator() {
