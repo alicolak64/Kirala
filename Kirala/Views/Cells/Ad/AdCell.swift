@@ -132,7 +132,7 @@ extension AdCell: AdCellViewProtocol {
     }
     
     func setImageURL(_ imageURL: URL) {
-        image.kf.setImage(with: imageURL)
+        image.setImage(with: imageURL)
     }
     
     func setPriceLabel(_ price: String) {
