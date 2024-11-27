@@ -10,12 +10,12 @@ enum ImageLoadingError: Error {
 
 extension UIImageView {
     func setImage(with path: String?,
-                  placeholder: UIImage? = Images.placeholder.image,
-                  failureImage: UIImage? = Images.error.image,
+                  //placeholder: UIImage? = Images.placeholder.image,
+                  //failureImage: UIImage? = Images.error.image,
                   completion: ImageLoadingCompletion? = nil) {
         guard let unwrappedPath = path?.trimmingCharacters(in: .whitespacesAndNewlines), let url = URL(string: unwrappedPath) else {
             completion?(.failure(.noImage))
-            self.image = failureImage
+            //self.image = failureImage
             return
         }
         
