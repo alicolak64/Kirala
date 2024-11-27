@@ -84,7 +84,8 @@ final class CampaignCell: UICollectionViewCell, ReusableView {
 
 extension CampaignCell: CampaignCellViewProtocol {
     func setImageURL(_ imageURL: URL) {
-        imageView.setImage(with: imageURL)
+        //imageView.setImage(with: imageURL)
+        imageView.setCampaignImage(with: imageURL)
     }
     
     func setCountLabelText(_ text: String) {
