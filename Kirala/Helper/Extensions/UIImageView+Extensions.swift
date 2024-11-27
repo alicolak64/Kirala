@@ -10,6 +10,8 @@ import Kingfisher
 
 extension UIImageView {
     
+
+    
     /// Loads an image using Kingfisher with a provided URL. Shows a failure image if loading fails, and tracks download progress.
     /// - Parameters:
     ///   - url: The URL of the image to be loaded.
@@ -20,12 +22,16 @@ extension UIImageView {
                   failureImage: UIImage? = Images.error.image) {
         
         // Set placeholder image
-        self.image = placeholder
+        //self.image = placeholder
+        
+        let randomUrl = NetworkConstants.mockImageUrls[Int.random(in: 0..<NetworkConstants.mockImageUrls.count)]
         
         // Load the image using Kingfisher with progress tracking
         self.kf.setImage(
-            with: url,
-            placeholder: placeholder,
+            //with: url,
+            with: randomUrl,
+            //placeholder: placeholder,
+            placeholder: nil,
             options: nil,
             progressBlock: { receivedSize, totalSize in
                 let percentage = (Double(receivedSize) / Double(totalSize)) * 100
