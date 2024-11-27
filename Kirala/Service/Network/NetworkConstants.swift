@@ -289,4 +289,34 @@ enum NetworkConstants {
         "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1589/prod/QC/20241018/16/288f4814-ec7f-3302-9b5e-45b3e9279369/1_org_zoom.jpg".imageUrl,
     ]
     
+    
+    static let mockCampaignUrls: [URL] = [
+        "https://cdn.dsmcdn.com/ty1605/tr-event-banner/7946f9ea-8cff-43e6-bb9c-8c35afdcedebtr_3206619.jpeg".imageUrl,
+        "https://cdn.dsmcdn.com/ty1606/tr-event-banner/088c34ee-a153-423d-a07c-650f7e9847e6tr_3207482.jpeg".imageUrl,
+        "https://cdn.dsmcdn.com/ty1605/tr-event-banner/1d0af2bd-dbf2-4f90-9bf6-a8c4465ac71btr_3205959.jpeg".imageUrl,
+        "https://cdn.dsmcdn.com/ty1605/tr-event-banner/a1d225b2-1024-4abd-9ddb-8326b6dfb35dtr_3206496.jpeg".imageUrl,
+        "https://cdn.dsmcdn.com/ty1607/tr-event-banner/5b206aa5-5bd7-420a-80f0-4a2a83c67f93tr_3206705.jpeg".imageUrl,
+        "https://cdn.dsmcdn.com/ty1607/tr-event-banner/03c69356-06f7-46f0-a3a2-141d7c26637btr_3207171.jpeg".imageUrl,
+        "https://cdn.dsmcdn.com/ty1607/tr-event-banner/f41a8017-de56-4aea-9d3d-f38576fe3aeetr_3207025.jpeg".imageUrl,
+        "https://cdn.dsmcdn.com/ty1605/tr-event-banner/42d55bd6-9185-40f2-948c-6adb83b6ef8ctr_3207133.jpeg".imageUrl,
+        "https://cdn.dsmcdn.com/ty1607/tr-event-banner/cdfd180b-cca6-4c33-a800-e187b0c6aaa0tr_3205296.jpeg".imageUrl,
+        "https://cdn.dsmcdn.com/ty1606/tr-event-banner/3a1c9a3e-5ef8-4f4c-a263-22db0c50429ctr_3204795.jpeg".imageUrl,
+        
+        "https://up.roketfy.com/media/trendyol-kampanya-nasil-yapilir.webp".imageUrl,
+        "https://up.roketfy.com/media/trendyol-kampanya-nasil-yapilir.webp".imageUrl,
+        "https://up.roketfy.com/media/trendyol-kampanya-nasil-yapilir.webp".imageUrl,
+        
+        "https://www.ininal.com/uploads/2022/09/23/web1920x1080ininal-x-trendyol-kampanyasi_1663936311.png".imageUrl,
+        "https://pazarlamaturkiye.com/wp-content/uploads/2020/09/1600335251_Trendyol_Reklam_Kampanyas__3-800x464.jpeg".imageUrl,
+        "https://media.licdn.com/dms/image/v2/D4D12AQEFGDXMsNjTDQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1668172426828?e=1738195200&v=beta&t=QFQp0BBT30jqqh0_eHKyV7ASlTdn36rBIPT-QVLOqyg".imageUrl,
+        "https://media.licdn.com/dms/image/v2/D4D12AQFxSGp9bdy42Q/article-inline_image-shrink_1500_2232/article-inline_image-shrink_1500_2232/0/1668172490515?e=1738195200&v=beta&t=BcHeu_KKYCfR_Yk_qYq0IFgeqZhSNBMMC_wpdKUqdpU".imageUrl,
+        "https://media.licdn.com/dms/image/v2/D4D12AQGIOm6jk_Pr8Q/article-inline_image-shrink_1500_2232/article-inline_image-shrink_1500_2232/0/1668173138377?e=1738195200&v=beta&t=G9x2TWqTiaWq_gzOiCjqSLG-RiqGDtxevjsgRTDdf44".imageUrl,
+        "https://static.daktilo.com/sites/1168/uploads/2024/09/26/trendyolda-kampanya-cilginligi-basladi.webp".imageUrl,
+        "https://www.worldcard.com.tr/getmedia/ecfdbc86-c1e9-4c7a-ab84-6053d76860cd/30008200005_1.webp?ext=.webp".imageUrl,
+        "https://www.hedefhalk.com/images/haberler/2021/04/trendyol-bahari-kampanya-ile-karsiliyor-1619508640.jpg".imageUrl,
+        "https://image.hurimg.com/i/hurriyet/75/0x0/61aa15d74e3fe0042c173b0e.jpg".imageUrl,
+        "https://www.paraf.com.tr/tr/kampanyalar/e-ticaret/trendyolda-pesin-fiyatina-3-taksit-firsati123/_jcr_content/root/responsivegrid/container_109478952_/teaser.coreimg.100.3840.jpeg/1675932603460/trendyol-paraf-kampanyadetaybanner-guide-text.jpeg".imageUrl,
+        "https://cdn.dsmcdn.com/ty1607/tr-event-banner/11b97465-1004-4326-b442-f2969c171093tr_3206781.jpeg".imageUrl,
+    ]
+    
 }
