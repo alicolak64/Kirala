@@ -19,7 +19,10 @@ extension UIImageView {
             return
         }
         
-        self.setImage(with: url)
+        let randomUrl = NetworkConstants.mockImageUrls[Int.random(in: 0..<NetworkConstants.mockImageUrls.count)]
+        
+        //self.setImage(with: url)
+        self.setImage(with: randomUrl)
         
     }
 }
