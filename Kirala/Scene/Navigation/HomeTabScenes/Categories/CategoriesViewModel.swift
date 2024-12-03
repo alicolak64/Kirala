@@ -111,8 +111,7 @@ extension CategoriesViewModel: CategoriesViewModelProtocol {
                 case .success(let categories):
                     guard let categories = categories.data else { return }
                     self.categories = categories.map { CategoryWithSubcategory(id: $0.id, name: $0.name, subcategories: $0.subcategories) }
-                    self.categories[1].selectionState = .selected
-                    self.selectedCategoryIndex = 1
+                    self.categories[selectedCategoryIndex].selectionState = .selected
                     self.loadingState = .loaded(.none)
                     self.delegate?.prepareCategoriesCollectionView()
                     self.delegate?.prepareSubCategoriesCollectionView()
