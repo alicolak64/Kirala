@@ -1484,8 +1484,8 @@
 		E67563602BE8488900959F1A /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				E6D43E332C00C6EB00B7B01D /* Auth */,
 				E689FE532BF29851001884D6 /* Splash */,
+				E6D43E332C00C6EB00B7B01D /* Auth */,
 				E67563612BE848B700959F1A /* TabBar */,
 				E654680F2BF2C92B005532DF /* Navigation */,
 			);
