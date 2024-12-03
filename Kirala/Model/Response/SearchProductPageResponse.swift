@@ -11,12 +11,14 @@ struct SearchProductPageResponse: Codable {
     let numberOfElements: Int
     let pageable: PageableResponse
     let content: SearchProductContentResponse
+    let searchText: String?
     let isLast: Bool
     
     private enum CodingKeys: String, CodingKey {
         case numberOfElements = "numberOfElements"
         case pageable = "pageable"
         case content = "content"
+        case searchText = "searchText"
         case isLast = "last"
     }
 }
