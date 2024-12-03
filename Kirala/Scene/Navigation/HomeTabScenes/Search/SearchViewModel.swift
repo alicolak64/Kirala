@@ -65,6 +65,11 @@ final class SearchViewModel {
     private var products = [SearchProduct]()
     
     private var searchCount = 0
+    private var productPage = 0
+    private var isLastPage = false
+    private var lastRequestTime: Date?
+    
+    private var error: ErrorResponse?
     
     private var loadingState: LoadingState = .loading {
         didSet {
@@ -73,6 +78,17 @@ final class SearchViewModel {
                 delegate?.showLoading()
             case .loaded(let result):
                 self.delegate?.hideLoading(loadResult: result)
+            }
+        }
+    }
+    
+    private var paginationLoadingState: LoadingState = .loaded(.none) {
+        didSet {
+            switch paginationLoadingState {
+            case .loading:
+                delegate?.showPaginationLoading()
+            case .loaded(_):
+                delegate?.hidePaginationLoading()
             }
         }
     }
@@ -369,6 +385,7 @@ extension SearchViewModel: SearchViewModelProtocol {
     }
     
     private func getFilteredProducts(
+        pageIndex: Int = 0,
         searhText: String? = nil,
         categoryIds: [String] = [],
         brandIds: [String] = [],
@@ -381,7 +398,12 @@ extension SearchViewModel: SearchViewModelProtocol {
         maxRentalPeriod: Int? = nil
     ) {
         
-        loadingState = .loading
+        if pageIndex == 0 {
+            loadingState = .loading
+            products.removeAll()
+        } else {
+            paginationLoadingState = .loading
+        }
         
         productService.getFilteredProducts(
             searhText: searhText,
@@ -393,47 +415,134 @@ extension SearchViewModel: SearchViewModelProtocol {
             maxPrice: maxPrice,
             minRentPeriod: minRentalPeriod,
             maxRentPeriod: maxRentalPeriod,
-            pageIndex: 0,
-            pageSize: 10,
+            pageIndex: pageIndex,
+            pageSize: NetworkConstants.Constraints.paginationSize,
             token: authService.getAuthToken()
         ) { [weak self] result in
             guard let self = self else { return }
-            switch result {
-            case .success(let response):
-                guard let data = response.data else { return }
-                self.searchCount = data.numberOfElements
-                self.products = data.content.products.map {
-                    let imageUrls = $0.imageUrls.map { $0 ?? String.noImageURLString }
-                    let review = ReviewProduct (count: Int.random(in: 1...100), rating: Double.random(in: 1...5))
-                    return SearchProduct(id: $0.id, brand: $0.brand, name: $0.name, price: $0.price, imageUrls: imageUrls, review: review, favoriteState: FavoriteState(isFavorite: $0.isFavorite))
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let response):
+                    guard let data = response.data else { return }
+                    let responseProducts = data.content.products
+                    self.searchCount = data.numberOfElements
+                    let startIndex = self.products.count
+                    let endIndex = startIndex + responseProducts.count
+                    let indexPaths = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
+                    self.products.append(contentsOf: responseProducts.map {
+                        let imageUrls = $0.imageUrls.map { $0 ?? String.noImageURLString }
+                        let review = ReviewProduct (count: Int.random(in: 1...100), rating: Double.random(in: 1...5))
+                        return SearchProduct(id: $0.id, brand: $0.brand, name: $0.name, price: $0.price, imageUrls: imageUrls, review: review, favoriteState: FavoriteState(isFavorite: $0.isFavorite))
+                    })
+                    
+                    if let searchQuery = data.searchText {
+                        self.delegate?.setSearchBarPlaceHolder(
+                            with:
+                                searchQuery + " | " +
+                                data.numberOfElements.description + " " + Strings.Common.product.localized)
+                    } else {
+                        var searchQuery = ""
+                        if data.content.subcategories.count == 1 {
+                            searchQuery += data.content.subcategories[0].name
+                        }
+                        if data.content.brands.count == 1 &&
+                            searchQuery.count + data.content.brands[0].name.count < 20 {
+                            searchQuery += " " + data.content.brands[0].name
+                        }
+                        if data.content.cities.count == 1 &&
+                            searchQuery.count + data.content.cities[0].name.count < 20 {
+                            searchQuery += " " + data.content.cities[0].name
+                        }
+                        if data.content.renters.count == 1 &&
+                            searchQuery.count + data.content.renters[0].name.count < 20 {
+                            searchQuery += " " + data.content.renters[0].name
+                        }
+                        
+                        self.delegate?.setSearchBarPlaceHolder(
+                            with:
+                                searchQuery.prefix(25) + " | " +
+                                data.numberOfElements.description + " " + Strings.Common.product.localized
+                        )
+                    }
+                    
+                    if startIndex == 0 {
+                        self.loadingState = .loaded(.none)
+                        
+                        DispatchQueue.main.async { [weak self] in
+                            guard let self = self else { return }
+                            self.delegate?.prepareProductsCollectionView()
+                            self.delegate?.showProductsCollectionView()
+                            self.delegate?.reloadCollectionView()
+                            self.delegate?.showFilterView()
+                            self.changeBadgeCount()
+                            self.changeSearchableFilterOptions(with: data.content.subcategories.map { SearchablePopupItem(id: $0.id, name: $0.name, selectionState: SelectionState(isSelected: $0.isSelected)) }, type: .category)
+                            self.changeSearchableFilterOptions(with: data.content.brands.map { SearchablePopupItem(id: $0.id, name: $0.name, selectionState: SelectionState(isSelected: $0.isSelected)) }, type: .brand)
+                            self.changeSearchableFilterOptions(with: data.content.cities.map { SearchablePopupItem(id: String($0.id), name: $0.name, selectionState: SelectionState(isSelected: $0.isSelected)) }, type: .city)
+                            self.changeSearchableFilterOptions(with: data.content.renters.map { SearchablePopupItem(id: $0.id, name: $0.name, selectionState: SelectionState(isSelected: $0.isSelected)) }, type: .renter)
+                            self.delegate?.closeExpandedCell(type: .category)
+                            self.delegate?.reloadFilterCell(type: .category)
+                            self.delegate?.closeExpandedCell(type: .brand)
+                            self.delegate?.reloadFilterCell(type: .brand)
+                            self.delegate?.closeExpandedCell(type: .renter)
+                            self.delegate?.reloadFilterCell(type: .renter)
+                            self.delegate?.closeExpandedCell(type: .city)
+                            self.delegate?.reloadFilterCell(type: .city)
+                            self.changeBadgeCount()
+                        }
+                        
+                    } else {
+                        self.paginationLoadingState = .loaded(.none)
+                        DispatchQueue.main.async { [weak self] in
+                            guard let self = self else { return }
+                            self.delegate?.insertItems(at: indexPaths)
+                        }
+                    }
+                    
+                    self.productPage = data.pageable.pageNumber
+                    self.isLastPage = data.isLast
+                    
+                    
+                case .failure(let error):
+                    print(error)
                 }
                 
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    self.loadingState = .loaded(.none)
-                    self.delegate?.prepareProductsCollectionView()
-                    self.delegate?.showProductsCollectionView()
-                    self.delegate?.reloadCollectionView()
-                    self.delegate?.showFilterView()
-                    self.delegate?.setSearchBarPlaceHolder(with: data.numberOfElements.description + " " + Strings.Common.product.localized)
-                    self.changeBadgeCount()
-                    self.changeSearchableFilterOptions(with: data.content.subcategories.map { SearchablePopupItem(id: $0.id, name: $0.name, selectionState: SelectionState(isSelected: $0.isSelected)) }, type: .category)
-                    self.changeSearchableFilterOptions(with: data.content.brands.map { SearchablePopupItem(id: $0.id, name: $0.name, selectionState: SelectionState(isSelected: $0.isSelected)) }, type: .brand)
-                    self.changeSearchableFilterOptions(with: data.content.cities.map { SearchablePopupItem(id: String($0.id), name: $0.name, selectionState: SelectionState(isSelected: $0.isSelected)) }, type: .city)
-                    self.changeSearchableFilterOptions(with: data.content.renters.map { SearchablePopupItem(id: $0.id, name: $0.name, selectionState: SelectionState(isSelected: $0.isSelected)) }, type: .renter)
-                    self.delegate?.closeExpandedCell(type: .category)
-                    self.delegate?.reloadFilterCell(type: .category)
-                    self.delegate?.closeExpandedCell(type: .brand)
-                    self.delegate?.reloadFilterCell(type: .brand)
-                    self.delegate?.closeExpandedCell(type: .renter)
-                    self.delegate?.reloadFilterCell(type: .renter)
-                    self.delegate?.closeExpandedCell(type: .city)
-                    self.delegate?.reloadFilterCell(type: .city)
-                    self.changeBadgeCount()
-                }
-            case .failure(let error):
-                print(error)
             }
+            
+        }
+        
+    }
+    
+    func scrollViewDidScroll(contentOffset: CGPoint, contentSize: CGSize, bounds: CGRect) {
+        guard !isLastPage && !paginationLoadingState.isLoading() else { return }
+        
+        
+        let contentHeight = contentSize.height
+        let visibleHeight = bounds.height
+        let scrollOffset = contentOffset.y
+        
+        let scrollPercentage = (scrollOffset + visibleHeight) / contentHeight
+        
+        if scrollPercentage >= NetworkConstants.Constraints.infinityScrollPercentage && products.count > 0 {
+            
+            let now = Date()
+            
+            if let lastRequestTime = lastRequestTime,  Date().timeIntervalSince(lastRequestTime) < NetworkConstants.Constraints.infinityScrollLateLimitSecond{
+                return
+            }
+            
+            getFilteredProducts(
+                pageIndex: productPage + 1,
+                searhText: searchQuery,
+                categoryIds: filterOptions[FilterType.category.rawValue].selectedIds,
+                brandIds: filterOptions[FilterType.brand.rawValue].selectedIds,
+                cityIds: filterOptions[FilterType.city.rawValue].selectedIds,
+                renterIds: filterOptions[FilterType.renter.rawValue].selectedIds
+            )
+            
+            lastRequestTime = now
+            
         }
         
     }
