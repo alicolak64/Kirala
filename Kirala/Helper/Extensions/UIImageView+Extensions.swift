@@ -47,7 +47,7 @@ extension UIImageView {
                     print("Image successfully loaded.")
                 case .failure(let error):
                     // Set the failure image
-                    self.image = failureImage
+                    //self.image = failureImage
                     print("Error loading image: \(error)")
                 }
             }
@@ -90,7 +90,7 @@ extension UIImageView {
                     print("Image successfully loaded.")
                 case .failure(let error):
                     // Set the failure image
-                    self.image = failureImage
+                    //self.image = failureImage
                     print("Error loading image: \(error)")
                 }
             }

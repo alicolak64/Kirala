@@ -60,6 +60,16 @@ final class SearchViewController: UIViewController, SwipePerformable, BackNaviga
         return collectionView
     }()
     
+    private lazy var produstsCollectionViewActivityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.style = .medium
+        activityIndicator.color = ColorPalette.appPrimary.dynamicColor
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.isHidden = true
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
+    }()
+    
     // MARK: - Initializers
     init(viewModel: SearchViewModel) {
         self.viewModel = viewModel
@@ -141,7 +151,8 @@ extension SearchViewController: SearchViewProtocol {
             emptyCardView,
             loadingView,
             filterView,
-            produstsCollectionView
+            produstsCollectionView,
+            produstsCollectionViewActivityIndicator
         ])
     }
     
@@ -165,9 +176,14 @@ extension SearchViewController: SearchViewProtocol {
             produstsCollectionView.topAnchor.constraint(equalTo: filterView.bottomAnchor),
             produstsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             produstsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            produstsCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            produstsCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            produstsCollectionViewActivityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            produstsCollectionViewActivityIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
             
         ])
+
+        
     }
     
     func prepareProductsCollectionView() {
@@ -190,6 +206,22 @@ extension SearchViewController: SearchViewProtocol {
     
     func hideLoading(loadResult: LoadingResult) {
         loadingView.hideLoading(loadResult: loadResult)
+    }
+    
+    func showPaginationLoading() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.produstsCollectionViewActivityIndicator.isHidden = false
+            self.produstsCollectionViewActivityIndicator.startAnimating()
+        }
+    }
+    
+    func hidePaginationLoading() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.produstsCollectionViewActivityIndicator.isHidden = true
+            self.produstsCollectionViewActivityIndicator.stopAnimating()
+        }
     }
     
     func openSearchBar() {
@@ -217,7 +249,9 @@ extension SearchViewController: SearchViewProtocol {
     }
     
     func setSearchBarPlaceHolder(with placeholder: String) {
-        searchBarView.placeholder = placeholder
+        DispatchQueue.main.async { [weak self] in
+            self?.searchBarView.placeholder = placeholder
+        }
     }
     
     func closeSearchBar() {
@@ -235,6 +269,14 @@ extension SearchViewController: SearchViewProtocol {
     
     func reloadCollectionView() {
         produstsCollectionView.reloadData()
+    }
+    
+    func insertItems(at indexPaths: [IndexPath]) {
+        produstsCollectionView.performBatchUpdates {
+            produstsCollectionView.insertItems(at: indexPaths)
+        } completion: { _ in
+            
+        }
     }
     
     func reloadFavoriteState(indexPath: IndexPath, favoriteState: FavoriteState) {
@@ -289,7 +331,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let presenter = SearchProductCellPresenter(view: cell, arguments: arguments)
         presenter.delegate = self
         cell.presenter = presenter
-        return cell        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -298,6 +340,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         viewModel.sizeForItem(at: indexPath, frame: collectionView.frame.size)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        viewModel.scrollViewDidScroll(contentOffset: scrollView.contentOffset, contentSize: scrollView.contentSize, bounds: scrollView.bounds)
     }
     
 }

@@ -110,9 +110,12 @@ protocol SearchViewProtocol: AnyObject {
     
     func showLoading()
     func hideLoading(loadResult: LoadingResult)
+    func showPaginationLoading()
+    func hidePaginationLoading()
     
     func reloadRows(at indexPaths: [IndexPath])
     func reloadCollectionView()
+    func insertItems(at indexPaths: [IndexPath])
     func reloadFavoriteState(indexPath: IndexPath, favoriteState: FavoriteState)
     func closeExpandedCell(type: FilterType)
     func reloadFilterCell(type: FilterType)
