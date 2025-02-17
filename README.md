@@ -1,6 +1,22 @@
-## Kirala - Rental Platform
+# Kirala - Rental Platform
 
-###  Description  
+## Table of Contents
+1. [Description](#description)
+2. [App Features](#app-features)
+3. [Development](#development)
+4. [Installation](#installation)
+   - [Requirements](#requirements)
+   - [Steps](#steps)
+5. [Usage](#usage)
+6. [Detailed Description](#detailed-description)
+7. [Screenshots](#screenshots)
+   - [Home](#home)
+   - [Favorite](#favorite)
+   - [Detail](#detail)
+   - [Others](#others)
+
+
+##  Description  
 Kirala is an iOS application that enables users to rent out underutilized items from their homes and allows others to rent them for short-term needs. Users can list items, manage rental requests, and browse available rentals. The app offers secure authentication, favorites, cart, and order tracking, ensuring a seamless and user-friendly rental experience while promoting sustainable consumption.  
 
 ## App Features
@@ -90,3 +106,26 @@ Furthermore, the design and development of the Kirala application are guided by 
 The development of Kirala involves a comprehensive approach, including backend development for data management and user authentication, iOS development for a robust user interface, and deployment strategies for continuous integration and continuous deployment (CI/CD). Testing procedures are conducted to ensure the functionality and reliability of the application, addressing any issues before deployment.
 
 Overall, the Kirala project aims to create a dynamic and efficient rental platform that connects users looking to rent out their unused items with those in need of short-term rentals. By providing a secure, user-friendly, and well-designed application, Kirala strives to enhance the rental experience for all users, fostering a community of shared resources and sustainable consumption.
+
+## Screenshots
+
+### Home
+
+| Home Screen 1 | Home Screen 2 | Home Screen 3 | Home Screen 4 | Detail Share | Dark Mode |
+|--|--|--|--|--|--|
+|<img width="350" alt="Home Screen 1" src="https://github.com/alicolak64/UniTurkey/assets/71923609/f2522272-cb8b-45dc-9578-4f7db0bc0fb4"> |<img width="350" alt="Home Screen 2" src="https://github.com/alicolak64/UniTurkey/assets/71923609/e42a38f0-5de3-4fe4-9d5d-6a9c1ac15124">|<img width="350" alt="Home Screen 3" src="https://github.com/alicolak64/UniTurkey/assets/71923609/177d5790-f29c-428b-833c-55aa0970b829">|<img width="350" alt="Home Screen 4" src="https://github.com/alicolak64/UniTurkey/assets/71923609/935e859c-d574-413b-bcdf-9517801a0cd6">|<img width="350" alt="Detail Share" src="https://github.com/alicolak64/UniTurkey/assets/71923609/928f23fe-0a07-4bba-9d70-9301cd7405e0">|<img width="350" alt="Dark Mode" src="https://github.com/alicolak64/UniTurkey/assets/71923609/856cd838-3daf-4ac7-831c-fc3b7888a28f">
+
+### Favorite
+| Favorite Screen 1 | Favorite Screen 2 | Favorite Screen 3 | Dark Mode |
+|--|--|--|--|
+|<img width="350" alt="Favorite1" src="https://github.com/alicolak64/UniTurkey/assets/71923609/994bb841-755b-4b5f-a1f1-7b5c8e508084">|<img width="350" alt="Favorite2" src="https://github.com/alicolak64/UniTurkey/assets/71923609/9f589d41-dbfe-46fd-8e04-4ad4688ada66">|<img width="350" alt="Favorite3" src="https://github.com/alicolak64/UniTurkey/assets/71923609/3d2a6419-5a79-478a-98a9-ba5d79c407b2">|<img width="350" alt="Favorite4" src="https://github.com/alicolak64/UniTurkey/assets/71923609/32b74c6d-5ebe-4bcc-9376-b91e04899166">
+
+### Detail
+| Detail Screen 1 | Detail Screen 2 | Detail Screen 3 | Detail Screen 4 | Dark Mode |
+|--|--|--|--|--|
+<img width="350" alt="Detail1" src="https://github.com/alicolak64/UniTurkey/assets/71923609/37fd3730-13b4-4631-a984-0bb510bd5ba0"> |<img width="350" alt="Detail2" src="https://github.com/alicolak64/UniTurkey/assets/71923609/b9669428-ea83-4895-90e6-fce23fd5dc72"> |<img width="350" alt="Detail3" src="https://github.com/alicolak64/UniTurkey/assets/71923609/2e3d16cf-74d2-4b75-94ac-b5c59e42888b"> |<img width="350" alt="Detail4" src="https://github.com/alicolak64/UniTurkey/assets/71923609/04fd1919-eea1-448e-bebe-79a475175efd"> |<img width="350" alt="Detail5" src="https://github.com/alicolak64/UniTurkey/assets/71923609/9d29928a-e148-407a-a4e2-3c12eb397214">
+
+### Others
+| Splash | Onboarding Screen 1 | Onboarding Screen 2 | Map Action | Safari Action |
+|--|--|--|--|--|
+|<img width="350" alt="Splash" src="https://github.com/alicolak64/UniTurkey/assets/71923609/4532a08f-f5e5-4ece-8fd2-b2e4d3615f4c">|<img width="350" alt="Onboarding" src="https://github.com/alicolak64/UniTurkey/assets/71923609/dae36c8d-c04b-494c-aac4-f926a82376f1">|<img width="350" alt="Screenshot 2024-04-26 at 14 26 34" src="https://github.com/alicolak64/UniTurkey/assets/71923609/d2e0cd34-b643-40c2-909a-ff5eec014835">|<img width="350" alt="Action2" src="https://github.com/alicolak64/UniTurkey/assets/71923609/b7388927-e5f9-4d8e-a0aa-31bd3f6d1ebe">|<img width="350" alt="Action1" src="https://github.com/alicolak64/UniTurkey/assets/71923609/24298258-c30a-4296-ba54-db6ef1141535">|
